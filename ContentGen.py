@@ -42,6 +42,8 @@ def write_to_pandas(data):
     except Exception as e:
         print(f"Error writing to pandas: {e}")
 
+def main():
+    pass
 
 if __name__ == "__main__":
     

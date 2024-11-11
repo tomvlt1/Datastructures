@@ -1,6 +1,5 @@
 
 import pandas as pd
-import time
 from openai import OpenAI
 
 
@@ -16,7 +15,7 @@ def GenerateDatabase(variable_description, size):
         completion = client.chat.completions.create(
     model="gpt-4o",
     messages=[
-        {"role": "system", "content": "You are a machine learning model seeking to generate a database. Do not include any information but the data istself, no headers or additional text."},
+        {"role": "system", "content": "You are a machine learning model seeking to generate a database. Do not include any information but the data istself,absolutely no additional text. Do not write ```csv or ```"},
         {
             "role": "user",
             "content": prompt
@@ -48,7 +47,7 @@ if __name__ == "__main__":
     
     
     variable_description = """first name	last name	age	nationality	country of residence	degree	Graduation year	GPA	Availability
-Generic first name	Generate last name	Range from 17- 35	Any nationality with a europe focus	Any with a focus of europe but not necessarily the same as nationaliy		from 2024 - 2028	from 0-10 with an average around 8	Hours per week available 2-20"""
+Generic first name	Generate last name	Range from 17- 35	Any nationality with a europe focus	Any with a focus of europe but not necessarily the same as nationaliy	Choose from: Business Management , Data Science, International Relations, Data Science, Business Management and Data Science, Computer Science, Biochemical Engineering, Law, Medicine, Economics, Applied Maths	from 2024 - 2028	from 0-10 with an average around 8	Hours per week available 2-20"""
     generated_data = GenerateDatabase(variable_description, 10)
     
     

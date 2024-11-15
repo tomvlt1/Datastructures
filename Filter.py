@@ -30,6 +30,18 @@ def FilterGPA(data, min_gpa, max_gpa):
         data = data[data['gpa'] <= max_gpa]
     return data
 
+def FilterCountryOfResidence(data, country):
+    return data[data['country_of_residence'].str.lower() == country.lower()]
+
+def FilterDegree(data, degree):
+    return data[data['degree'].str.lower() == degree.lower()]
+
+def FilterAvailability(data, min_hours):
+    return data[data['availability'] >= min_hours]
+
+def FilterLookingFor(data, looking_for):
+    return data[data['looking_for'].str.lower() == looking_for.lower()]
+
 
 
 

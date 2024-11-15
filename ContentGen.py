@@ -81,18 +81,20 @@ email_suffixes = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@
 def generate_email(first_name):
     return first_name.lower() + random.choice(email_suffixes)
 
-looking_fors = ["Internship", "Project", "Full-time Job", "Student Job", "Thesis", "Volunteering", "Part-time Job", "Freelancing", "Remote Work", "Startup"]
+topics_of_interest = ["Computer Science", "Entrepreneurship", "Art", "Music", "Sports", "Tech", "Machine Learning", "Data Science", "Business", "Finance", "Economics", "Politics", "Philosophy", "History", "Literature", "Languages", "Mathematics", "Physics", "Chemistry", "Biology", "Medicine", "Psychology", "Sociology", "Anthropology", "Geography", "Environmental Science", "Law", "Architecture", "Design", "Fashion", "Film", "Theatre", "Dance", "Photography", "Culinary Arts", "Travel", "Fitness", "Health", "Nutrition", "Yoga", "Meditation", "Mindfulness", "Sustainability", "Climate Change", "Renewable Energy", "Urban Planning", "Transportation", "Public Policy", "International Relations", "Global Affairs", "Development", "Human Rights", "Social Justice", "Equality", "Diversity", "Inclusion", "Feminism", "LGBTQ+", "Mental Health", "Wellness", "Self-Care", "Parenting", "Education", "Child Development", "Youth Empowerment", "Elderly Care", "Disability Rights", "Animal Rights", "Veganism", "Vegetarianism", "Healthy Living", "Fitness", "Sports", "Outdoor Activities", "Adventure", "Travel", "Exploration", "Camping", "Hiking", "Cycling", "Running", "Swimming", "Skiing", "Snowboarding", "Surfing", "Skateboarding", "Basketball", "Football", "Soccer", "Tennis", "Golf", "Cricket", "Rugby", "Baseball", "Softball", "Volleyball", "Handball", "Table Tennis", "Badminton", "Squash", "Gymnastics", "Dance", "Yoga", "Pilates", "Martial Arts", "Boxing", "Wrestling", "Weightlifting", "CrossFit", "Bodybuilding", "Powerlifting", "Parkour", "Rock Climbing", "Mountaineering", "Sailing", "Rowing", "Canoeing", "Kayaking", "Surfing", "Kitesurfing", "Windsurfing", "Scuba Diving", "Snorkeling", "Fishing", "Hunting", "Cycling", "Mountain Biking"]
 def generate_random_data(num_rows):
     data = []
 
     for _ in range(num_rows):
-        
+        # random amount of topics of interest and random topics
+        num_topics = random.randint(1, 10)
+        topics = random.sample(topics_of_interest, num_topics)
         first_name = random.choice(first_names)
         last_name = random.choice(last_names)
         rating = random.randint(1, 5)
         age = random.randint(17, 35)
         nationality = random.choice(nationalities)
-        looking_for = random.choice(looking_fors)
+    
         email = generate_email(first_name)
         description = f"Hello my name is {first_name} {last_name}: Generic description "
         additional_information = f"My linkedin profile is: {first_name}{last_name}linkedin.com and my github profile is: {first_name}{last_name}github.com"
@@ -102,21 +104,20 @@ def generate_random_data(num_rows):
         degree = random.choice(degrees)
         graduation_year = random.randint(2024, 2028)
         
-        
         gpa = round(random.gauss(8, 1), 2)
         gpa = max(0, min(10, gpa))  
         
         availability = random.randint(2, 20)
         sort_value = 0.0
 
-        
-        data.append([first_name, last_name,rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, looking_for, email, description, additional_information, sort_value])
+        # Add 'looking_for' to the list of columns
+        data.append([first_name, last_name, rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, topics, email, description, additional_information, sort_value])
 
     return data
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name","rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information", "Sort Value"]
+    headers = ["First Name", "Last Name","Rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Topics of Interest", "Email", "Description", "Additional Information", "Sort Value"]
 
     
     df = pd.DataFrame(data, columns=headers)
@@ -127,7 +128,7 @@ def write_to_csv(data, filename):
 
 def main():
     
-    generated_data = generate_random_data(10000)
+    generated_data = generate_random_data(50000)
     
     
     write_to_csv(generated_data, 'generated_database.csv')

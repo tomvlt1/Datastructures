@@ -1,7 +1,15 @@
 import pandas as pd
 
 # Load the CSV file
-data = pd.read_csv("generated_database.csv", header=None, names=["first_name", "last_name", "age", "nationality", "country_of_study", "field_of_study", "graduation_year", "gpa", "completed_credits"])
+data = pd.read_csv("generated_database.csv", header=None, names=[
+    "first_name", "last_name", "age", "nationality", "country_of_residence", 
+    "degree", "graduation_year", "gpa", "availability", "looking_for", 
+    "email", "description", "additional_information"
+])
+
+data['age'] = pd.to_numeric(data['age'], errors='coerce') 
+data['gpa'] = pd.to_numeric(data['gpa'], errors='coerce')  
+data['availability'] = pd.to_numeric(data['availability'], errors='coerce') 
 
 # Filtering functions 
 def FilterAge(data, min_age, max_age):
@@ -14,11 +22,11 @@ def FilterAge(data, min_age, max_age):
 def FilterNationality(data, nationality):
     return data[data['nationality'].str.lower() == nationality.lower()]
 
-def FilterCountryOfStudy(data, country):
-    return data[data['country_of_study'].str.lower() == country.lower()]
+def FilterCountryOfResidence(data, country):
+    return data[data['country_of_residence'].str.lower() == country.lower()]
 
-def FilterFieldOfStudy(data, field):
-    return data[data['field_of_study'].str.lower() == field.lower()]
+def FilterDegree(data, degree):
+    return data[data['degree'].str.lower() == degree.lower()]
 
 def FilterGraduationYear(data, year):
     return data[data['graduation_year'] == year]
@@ -30,19 +38,11 @@ def FilterGPA(data, min_gpa, max_gpa):
         data = data[data['gpa'] <= max_gpa]
     return data
 
-def FilterCountryOfResidence(data, country):
-    return data[data['country_of_residence'].str.lower() == country.lower()]
-
-def FilterDegree(data, degree):
-    return data[data['degree'].str.lower() == degree.lower()]
-
 def FilterAvailability(data, min_hours):
     return data[data['availability'] >= min_hours]
 
 def FilterLookingFor(data, looking_for):
     return data[data['looking_for'].str.lower() == looking_for.lower()]
-
-
 
 
 

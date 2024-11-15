@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match-IE Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <h1 class="logo">Match-IE</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/collaborators">Collaborators</a>
+        <a href="/projects">Projects</a>
+        <a href="/mentor">Mentor</a>
+        <a href="/profile">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="banner">
+      <h2>Recent Activity</h2>
+    </section>
+
+    <section class="activity-section">
+      <div class="activity-container">
+        <div class="activity-column">
+          <h3>Collaborators</h3>
+          <div class="activity-box">👤</div>
+          <div class="activity-box">👤</div>
+        </div>
+        <div class="activity-column">
+          <h3>Projects</h3>
+          <div class="activity-box">
+            <p>Thomas just launched a new website building project</p>
+            <button>+ More info</button>
+          </div>
+          <div class="activity-box">🔨</div>
+        </div>
+        <div class="activity-column">
+          <h3>Mentors</h3>
+          <div class="activity-box">👤</div>
+          <div class="activity-box">👤</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Contact Us: dreamteam@gmail.com</p>
+  </footer>
+</body>
+</html>

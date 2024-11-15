@@ -49,7 +49,7 @@ def generate_random_data(num_rows):
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name", "Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additonal Information" ]
+    headers = ["First Name", "Last Name", "Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information" ]
 
     
     df = pd.DataFrame(data, columns=headers)

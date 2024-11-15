@@ -96,16 +96,6 @@ def UserGPA():
             added=True
     return GPA
 
-def UserLookingFor():
-    looking_for_info=[]
-    add_more=True
-    while add_more:
-        user_looking_for = input("Characteristics looking for <Enter to end>:")
-        looking_for_info.append(user_looking_for)
-        if not user_looking_for:
-            add_more=False
-    return looking_for_info
-
 def UserInterests():
     interests=[]
     add_more=True
@@ -161,8 +151,6 @@ def main():
     user_profile.append(study_status)
     User_GPA = UserGPA()
     user_profile.append(User_GPA)
-    looking_for = UserLookingFor()
-    user_profile.append(looking_for)
     interests = UserInterests()
     user_profile.append(interests)
     user_email = UserEmail()

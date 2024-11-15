@@ -23,11 +23,9 @@ def Embedding(person1, person2):
                 outputs2 = model(**inputs2).last_hidden_state.mean(dim=1)
             cos_sim = torch.nn.functional.cosine_similarity(outputs1, outputs2)
             interest.append(cos_sim.item())
-    return interest
+    return (sum(interest)/len(interest))
 
 
 
-
-    
 
 

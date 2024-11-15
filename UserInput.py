@@ -8,6 +8,7 @@ def UserName():
     return user_name
 
 def UserLastName():
+    added = False
     while not added:
         last_name = input("Last Name:")
         if last_name:
@@ -16,6 +17,7 @@ def UserLastName():
 
 
 def UserBirthYear():
+    added = False
     while not added:
         birth_year = int(input("Birth Year:"))
         if birth_year:
@@ -23,46 +25,82 @@ def UserBirthYear():
     return birth_year
 
 def UserBirthDay():
-    birth_day= int(input("Birth Day:"))
+    added = False
+    while not added:
+        birth_day= int(input("Birth Day:"))
+        if birth_day:
+            added=True
     return birth_day
 
 def UserBirthMonth():
-    birth_month= int(input("Birth Month:"))
+    added = False
+    while not added:
+        birth_month= int(input("Birth Month:"))
+        if birth_month:
+            added=True
     return birth_month
 
 def Usernationality():
-    nationality = input("Nationality:")
+    added = False
+    while not added:
+        nationality = input("Nationality:")
+        if nationality:
+            added=True
     return nationality
 
 def UserCountryRes():
-    nationality = input("Country of residence:")
-    return nationality
+    added = False
+    while not added:
+        country_res = input("Country of residence:")
+        if country_res:
+            added=True
+    return country_res
 
 def UserDegree():
-    degree = input("University degree:")
+    added = False
+    while not added:
+        degree = input("University degree:")
+        if degree:
+            added=True
     return degree
 
 def UserGradYear():
-    grad_year = int(input("Graduation Year"))
+    added = False
+    while not added:
+        grad_year = int(input("Graduation Year:"))
+        if grad_year:
+            added=True
     return grad_year
 
-def UserAvalibility():
-    avalibility = int(input("Availability per week in hours"))
-    return avalibility
+def UserAvailability():
+    added = False
+    while not added:
+        availability = int(input("Availability per week in hours:"))
+        if availability:
+            added=True
+    return availability
 
 def UserStudyStatus():
-    study_status = input("Alumni/Student")
+    added = False
+    while not added:
+        study_status = input("Alumni/Student:")
+        if study_status:
+            added=True
     return study_status
 
-def User_GPA():
-    study_status = input("GPA")
-    return study_status
+def UserGPA():
+    added = False
+    while not added:
+        GPA = int(input("GPA:"))
+        if GPA:
+            added=True
+    return GPA
 
 def UserLookingFor():
     looking_for_info=[]
     add_more=True
     while add_more:
-        user_looking_for = input("Characteristics <Enter to end>:")
+        user_looking_for = input("Characteristics looking for <Enter to end>:")
         looking_for_info.append(user_looking_for)
         if not user_looking_for:
             add_more=False
@@ -72,38 +110,71 @@ def UserInterests():
     interests=[]
     add_more=True
     while add_more:
-        user_looking_for = input("Characteristics <Enter to end>:")
+        user_looking_for = input("Characteristics of your interest <Enter to end>:")
         interests.append(user_looking_for)
         if not user_looking_for:
             add_more=False
     return interests
 
 def UserEmail():
-    email_address = input("Email Address:")
+    added = False
+    while not added:
+        email_address = input("Email Address:")
+        if email_address:
+            added=True
     return email_address
 
 def UserPhoneNumber():
     phone_number = int(input("Phone Number:"))
+    if not phone_number:
+        phone_number = None
     return phone_number
 
-def UserLinkedin():
-    Linkedin = input("Phone Number:")
-    return Linkedin
+def UserAdditionalInformation():
+    additional = input("additional info:")
+    if not additional:
+        additional = None
+    return additional
 
 
-#def main():
+def main():
+    user_profile = []
     user_name = UserName()
+    user_profile.append(user_name)
     last_name = UserLastName()
+    user_profile.append(last_name)
     birth_year = UserBirthYear()
+    user_profile.append(birth_year)
     birth_day = UserBirthDay()
+    user_profile.append(birth_day)
     birth_month = UserBirthMonth()
+    user_profile.append(birth_month)
     nationality = Usernationality()
+    user_profile.append(nationality)
     degree = UserDegree()
+    user_profile.append(degree)
     grad_year = UserGradYear()
-    avalibility = UserAvalibility()
+    user_profile.append(grad_year)
+    avalibility = UserAvailability()
+    user_profile.append(avalibility)
     study_status = UserStudyStatus()
-    User_GPA = User_GPA()
+    user_profile.append(study_status)
+    User_GPA = UserGPA()
+    user_profile.append(User_GPA)
     looking_for = UserLookingFor()
+    user_profile.append(looking_for)
     interests = UserInterests()
+    user_profile.append(interests)
+    user_email = UserEmail()
+    user_profile.append(user_email)
+    User_phone_number= UserPhoneNumber()
+    user_profile.append(User_phone_number)
+    additional_info = UserAdditionalInformation()
+    user_profile.append(additional_info)
+
+
+    print(user_profile)
+
+
 
 main()

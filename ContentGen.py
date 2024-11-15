@@ -128,7 +128,7 @@ def write_to_csv(data, filename):
 
 def main():
     
-    generated_data = generate_random_data(10000)
+    generated_data = generate_random_data(50000)
     
     
     write_to_csv(generated_data, 'generated_database.csv')

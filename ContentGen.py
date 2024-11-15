@@ -7,10 +7,75 @@ last_names = ["Smith", "Johnson", "Brown", "Taylor", "Anderson", "Thomas", "Jack
 nationalities = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
 countries_of_residence = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
 degrees = [
-    "Business Management", "Data Science", "International Relations", 
-    "Business Management and Data Science", "Computer Science", 
-    "Biochemical Engineering", "Law", "Medicine", "Economics", "Applied Maths"
+    # IE Business School
+    "Bachelor in Business Administration",
+    "Bachelor in Economics",
+    "Bachelor in Data and Business Analytics",
+    "International MBA",
+    "Global Online MBA",
+    "Master in Management",
+    "Master in Management & Strategy",
+    "Master in Finance",
+    "Master in Business Analytics and Big Data",
+    "Master in Sustainability Business Transformation",
+    "Executive MBA",
+    "Global Executive MBA",
+    "IE Brown Executive MBA",
+    "Executive MBA Presencial",
+    "Executive Master in Digital Transformation & Innovation Leadership",
+    "Master in Digital Business & Innovation",
+    "Master in Applied Economics",
+
+    # IE Law School
+    "Bachelor of Laws (LL.B)",
+    "Master of Laws (LL.M)",
+    "Master in Global Corporate Compliance",
+    "Executive Master in International Business Law",
+    "Executive LL.M.",
+    "Master in International Legal Studies (LL.M.)",
+
+    # IE School of Politics, Economics and Global Affairs
+    "Bachelor in International Relations",
+    "Bachelor in Political Science",
+    "Bachelor in Philosophy, Politics, Law & Economics (PPLE)",
+    "Master in International Development",
+    "Master in International Relations",
+    "Executive Master in International Development",
+
+    # IE School of Architecture and Design
+    "Bachelor in Architectural Studies",
+    "Bachelor in Design",
+    "Bachelor in Design: Comprehensive Design Track",
+    "Bachelor in Design: Videogame Design And Virtual Environments Track",
+    "Bachelor in Design: Interior Design Track",
+    "Bachelor in Fashion Design",
+    "Master in Business for Architecture and Design",
+    "Master in Strategic Design of Spaces",
+    "Master in Real Estate Development",
+    "Master in Architecture",
+    "Master in Creative Direction, Content & Branding",
+    "Programa Avanzado BuiltTech",
+    "Sustainable Project Leadership",
+    "(MDES) Master in Interior Design",
+    "(MDES) Master in Videogame Design and Virtual Environments",
+
+    # IE School of Science and Technology
+    "Bachelor in Computer Science and Artificial Intelligence",
+    "Bachelor in Applied Mathematics",
+    "Bachelor in Environmental Sciences for Sustainability",
+    "Master in Computer Science and Business Technology",
+    "Master in Cybersecurity",
+    "Master in Technology + Global Affairs",
+
+    # IE School of Human Sciences and Technology
+    "Bachelor in Communication and Digital Media",
+    "Bachelor in Behavioral and Social Sciences",
+    "Master in Visual and Digital Media",
+    "Bachelor in Humanities",
+    "Master in Customer Experience & Innovation",
+    "Master in Talent Development & Human Resources"
 ]
+
 email_suffixes = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@icloud.com", "@protonmail.com", "@aol.com", "@zoho.com", "@yandex.com", "@mail.com"]
 #randomly selects first name and email suffix and pastes them together in one line
 def generate_email(first_name):
@@ -42,15 +107,16 @@ def generate_random_data(num_rows):
         gpa = max(0, min(10, gpa))  
         
         availability = random.randint(2, 20)
+        sort_value = 0.0
 
         
-        data.append([first_name, last_name,rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, looking_for, email, description, additional_information])
+        data.append([first_name, last_name,rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, looking_for, email, description, additional_information, sort_value])
 
     return data
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name","rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information" ]
+    headers = ["First Name", "Last Name","rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information", "Sort Value"]
 
     
     df = pd.DataFrame(data, columns=headers)

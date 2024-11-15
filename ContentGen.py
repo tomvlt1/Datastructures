@@ -24,6 +24,7 @@ def generate_random_data(num_rows):
         
         first_name = random.choice(first_names)
         last_name = random.choice(last_names)
+        rating = random.randint(1, 5)
         age = random.randint(17, 35)
         nationality = random.choice(nationalities)
         looking_for = random.choice(looking_fors)
@@ -43,13 +44,13 @@ def generate_random_data(num_rows):
         availability = random.randint(2, 20)
 
         
-        data.append([first_name, last_name, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, looking_for, email, description, additional_information])
+        data.append([first_name, last_name,rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, looking_for, email, description, additional_information])
 
     return data
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name", "Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information" ]
+    headers = ["First Name", "Last Name","rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Looking For", "Email", "Description", "Additional Information" ]
 
     
     df = pd.DataFrame(data, columns=headers)

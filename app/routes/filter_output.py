@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Blueprint, render_template, request
 import pandas as pd
 
-app = Flask(__name__)
+# Define the blueprint
+collaborators_bp = Blueprint('collaborators', __name__)
 
 # Load the CSV file
 data = pd.read_csv("generated_database.csv", header=None, names=[
@@ -61,12 +62,12 @@ def FilterLookingFor(data, looking_for):
         return data[data['Looking_for'].str.lower() == looking_for.lower()]
     return data
 
-@app.route('/')
-def index():
+@collaborators_bp.route('/')
+def collaborators():
     filtered_data = data
-    return render_template('filter_results.html', tables=filtered_data.to_html(classes='table table-striped table-bordered', index=False))
+    return render_template('collaborators.html', tables=filtered_data.to_html(classes='table table-striped table-bordered', index=False))
 
-@app.route('/filter', methods=['POST'])
+@collaborators_bp.route('/filter', methods=['POST'])
 def filter_data():
     filtered_data = data
 
@@ -111,6 +112,3 @@ def filter_data():
     else:
         filtered_data_html = filtered_data.to_html(classes='table table-striped table-bordered', index=False)
     return render_template('filter_results.html', tables=filtered_data_html)
-
-if __name__ == '__main__':
-    app.run(debug=True)

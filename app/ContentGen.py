@@ -86,11 +86,11 @@ def generate_random_data(num_rows):
     data = []
     
     for _ in range(num_rows):
-        day = random.randint(1, 29)
+        day = random.randint(1, 28)
         month = random.randint(1, 12)
         year = random.randint(1990, 2007)
         DOB = date(year, month, day)
-        age = date.today() - DOB
+        age = date.today().year - DOB.year - ((date.today().month, date.today().day) < (DOB.month, DOB.day))
 
         # random amount of topics of interest and random topics
         num_topics = random.randint(1, 10)
@@ -127,7 +127,7 @@ def generate_email(first_name, email_suffixes):
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name","Rating" ,"Age", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Topics of Interest", "Email", "Description", "Additional Information", "Sort Value"]
+    headers = ["First Name", "Last Name","Rating" ,"Age","DOB", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Topics of Interest", "Email", "Description", "Additional Information", "Sort Value"]
 
     
     df = pd.DataFrame(data, columns=headers)
@@ -142,4 +142,4 @@ def main():
     write_to_csv(generated_data, 'generated_database.csv')
     
 
-
+main()

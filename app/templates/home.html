@@ -9,6 +9,10 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     .navbar {
       display: flex;
@@ -30,16 +34,21 @@
       text-align: center;
       padding: 2rem;
       background: #f0f0f0;
+      font-size: 1.5rem;
     }
     .activity-section {
       padding: 2rem;
+      flex: 1; /* Allows the section to take up space */
     }
     .activity-container {
       display: flex;
       justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
     }
     .activity-column {
-      width: 30%;
+      width: 100%;
+      max-width: 30%;
       background-color: #fafafa;
       border-radius: 8px;
       padding: 1rem;
@@ -48,6 +57,7 @@
     .activity-column h3 {
       text-align: center;
       margin-bottom: 1rem;
+      font-size: 1.25rem;
     }
     .activity-box {
       display: flex;
@@ -58,17 +68,14 @@
       border: 1px solid #ddd;
       border-radius: 8px;
       background-color: #fff;
-    }
-    .activity-box p {
-      margin: 0;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
     footer {
       text-align: center;
       padding: 1rem;
       background: #333;
       color: #fff;
-      margin-top: 2rem;
+      margin-top: auto; /* Pushes footer to the bottom */
     }
   </style>
 </head>
@@ -77,11 +84,8 @@
     <div class="navbar">
       <h1 class="logo">Match-IE</h1>
       <nav>
-        <a href="/">Home</a>
-        <a href="/collaborators">Collaborators</a>
-        <a href="/projects">Projects</a>
-        <a href="/mentor">Mentor</a>
-        <a href="/profile">Profile</a>
+        <a href="{{ url_for('home.home') }}">Home</a>
+        <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
       </nav>
     </div>
   </header>
@@ -97,33 +101,33 @@
           <h3>Collaborators</h3>
           <div class="activity-box">
             <p>Jane Doe joined as a collaborator.</p>
-            <a href="/collaborators" class="btn btn-primary btn-sm">View Profile</a>
+            <a href="{{ url_for('collaborators.collaborators') }}" class="btn btn-primary btn-sm">View Profile</a>
           </div>
           <div class="activity-box">
             <p>John Smith added new skills to his profile.</p>
-            <a href="/collaborators" class="btn btn-primary btn-sm">View Profile</a>
+            <a href="{{ url_for('collaborators.collaborators') }}" class="btn btn-primary btn-sm">View Profile</a>
           </div>
         </div>
         <div class="activity-column">
           <h3>Projects</h3>
           <div class="activity-box">
             <p>Thomas launched a new website building project.</p>
-            <a href="/projects" class="btn btn-secondary btn-sm">+ More info</a>
+            <a href="#" class="btn btn-secondary btn-sm">+ More info</a>
           </div>
           <div class="activity-box">
             <p>Emma started a marketing campaign project.</p>
-            <a href="/projects" class="btn btn-secondary btn-sm">+ More info</a>
+            <a href="#" class="btn btn-secondary btn-sm">+ More info</a>
           </div>
         </div>
         <div class="activity-column">
           <h3>Mentors</h3>
           <div class="activity-box">
             <p>Dr. Sarah Lee became available for mentoring.</p>
-            <a href="/mentor" class="btn btn-info btn-sm">Contact Mentor</a>
+            <a href="#" class="btn btn-info btn-sm">Contact Mentor</a>
           </div>
           <div class="activity-box">
             <p>Prof. David Green added new time slots.</p>
-            <a href="/mentor" class="btn btn-info btn-sm">Contact Mentor</a>
+            <a href="#" class="btn btn-info btn-sm">Contact Mentor</a>
           </div>
         </div>
       </div>
@@ -135,4 +139,3 @@
   </footer>
 </body>
 </html>
-

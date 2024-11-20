@@ -65,6 +65,16 @@
         <h2>Filters</h2>
         <form action="/filter" method="post">
             <div class="mb-3">
+                <label for="looking_for" class="form-label">Looking For:</label>
+                <input type="text" id="looking_for" name="looking_for" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label for="looking_for_degree" class="form-label">Looking For Degree:</label>
+                <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
+            </div>
+
+            <div class="mb-3">
                 <label for="age_slider" class="form-label">Age Range:</label>
                 <div id="age_slider" class="mb-3"></div>
                 <input type="hidden" id="min_age" name="min_age">
@@ -105,12 +115,7 @@
                 <input type="number" id="graduation_year" name="graduation_year" min="1900" max="2100" class="form-control">
             </div>
 
-            <div class="mb-3">
-                <label for="looking_for" class="form-label">Looking For:</label>
-                <input type="text" id="looking_for" name="looking_for" class="form-control">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <button type="submit" class="btn btn-primary">Apply</button>
         </form>
       </aside>
 

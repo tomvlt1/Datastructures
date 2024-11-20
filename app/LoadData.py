@@ -1,6 +1,6 @@
 import pandas as pd
 
-data = pd.read_csv("generated_database.csv", header=None, names=[
+data = pd.read_csv("app/generated_database.csv", header=None, names=[
     "First_name", "Last_name", "Age", "Nationality", "Country_of_residence", 
     "Degree", "Graduation_year", "GPA", "Availability", "Looking_for", 
     "Email", "Description", "Additional_information"

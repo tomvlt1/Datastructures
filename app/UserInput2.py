@@ -50,7 +50,7 @@ def GetLookingFor():
         return looking_for_list
     return []  
 
-def GetDegreeEmbeeding():
+def GetLookingForDegree():
     degree = request.form.get('degree')
     if degree:
         degree_list = [item.strip() for item in degree.split(',')]

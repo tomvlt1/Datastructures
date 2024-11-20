@@ -1,5 +1,5 @@
-from app.routes.home_routes import home_bp
-from app.routes.FilterOutput import collaborators_bp
+from app.routes.Home_Routes import home_bp
+from app.routes.Collaborators_Routes import collaborators_bp
 from flask import Flask
 
 app = Flask(__name__)

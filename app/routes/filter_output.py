@@ -1,66 +1,6 @@
 from flask import Blueprint, render_template, request
-import pandas as pd
 
-# Define the blueprint
 collaborators_bp = Blueprint('collaborators', __name__)
-
-# Load the CSV file
-data = pd.read_csv("generated_database.csv", header=None, names=[
-    "First_name", "Last_name", "Age", "Nationality", "Country_of_residence", 
-    "Degree", "Graduation_year", "GPA", "Availability", "Looking_for", 
-    "Email", "Description", "Additional_information"
-])
-
-data['Age'] = pd.to_numeric(data['Age'], errors='coerce')
-data['GPA'] = pd.to_numeric(data['GPA'], errors='coerce')
-data['Availability'] = pd.to_numeric(data['Availability'], errors='coerce')
-
-# Filtering functions
-def FilterAge(data, min_age, max_age):
-    if min_age is not None and min_age >= 0:
-        data = data[data['Age'] >= min_age]
-    if max_age is not None and max_age >= 0:
-        data = data[data['Age'] <= max_age]
-    return data
-
-def FilterNationality(data, nationality):
-    if nationality:
-        return data[data['Nationality'].str.lower() == nationality.lower()]
-    return data
-
-def FilterCountryOfResidence(data, country):
-    if country:
-        return data[data['Country_of_residence'].str.lower() == country.lower()]
-    return data
-
-def FilterDegree(data, degree):
-    if degree:
-        return data[data['Degree'].str.lower() == degree.lower()]
-    return data
-
-def FilterGraduationYear(data, year):
-    if year:
-        return data[data['Graduation_year'] == year]
-    return data
-
-def FilterGPA(data, min_gpa, max_gpa):
-    if min_gpa is not None and min_gpa >= 0:
-        data = data[data['GPA'] >= min_gpa]
-    if max_gpa is not None and max_gpa >= 0:
-        data = data[data['GPA'] <= max_gpa]
-    return data
-
-def FilterAvailability(data, min_hours, max_hours):
-    if min_hours is not None and min_hours >= 0:
-        data = data[data['Availability'] >= min_hours]
-    if max_hours is not None and max_hours >= 0:
-        data = data[data['Availability'] <= max_hours]
-    return data
-
-def FilterLookingFor(data, looking_for):
-    if looking_for:
-        return data[data['Looking_for'].str.lower() == looking_for.lower()]
-    return data
 
 @collaborators_bp.route('/')
 def collaborators():

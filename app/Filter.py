@@ -12,7 +12,7 @@ def FilterAge(data, min_age, max_age):
 def FilterNationality(data, nationality):
     return data[data['Nationality'].str.lower() == nationality.lower()]
 
-def FilterCountryOfStudy(data, country):
+def FilterCountryOfResidence(data, country):
     return data[data['Country of Residence'].str.lower() == country.lower()]
 
 def FilterDegree(data, field):
@@ -29,19 +29,21 @@ def FilterGPA(data, min_gpa, max_gpa):
 
 def FilterAvailability(data, min_hours):
     return data[data['Availability'] >= min_hours]
+
+def FilterGraduationYear(data, year):
+    if year:
+        return data[data['Graduation_year'] == year]
+    return data
     
 def main():
     filtered_data = pd.read_csv('generated_database.csv')
     filtered_data = FilterAge(filtered_data, 20, 25)
     filtered_data = FilterNationality(filtered_data, "germany")
-    filtered_data = FilterCountryOfStudy(filtered_data, "germany")
-
-    
+    filtered_data = FilterCountryOfResidence(filtered_data, "germany")
     filtered_data = FilterGPA(filtered_data, 8.0, 10.0)
-    
-    
     filtered_data = FilterAvailability(filtered_data, 10)
-
+    filtered_data = FilterGraduationYear(filtered_data, 2028)
     return(filtered_data)
 
-main()
+
+

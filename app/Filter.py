@@ -44,3 +44,4 @@ def main():
 
     return(filtered_data)
 
+main()

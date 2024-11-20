@@ -45,4 +45,17 @@ def GetGraduationYear():
 
 def GetLookingFor():
     looking_for = request.form.get('looking_for')
-    return looking_for
+    if looking_for:
+        looking_for_list = [item.strip() for item in looking_for.split(',')]
+        return looking_for_list
+    return []  
+
+def GetDegreeEmbeeding():
+    degree = request.form.get('degree')
+    if degree:
+        degree_list = [item.strip() for item in degree.split(',')]
+        return degree_list
+    return []  
+
+
+

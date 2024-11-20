@@ -27,8 +27,6 @@ def FilterGPA(data, min_gpa, max_gpa):
         
     return data
 
-
-
 def FilterAvailability(data, min_hours):
     return data[data['Availability'] >= min_hours]
     

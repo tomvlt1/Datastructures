@@ -2,11 +2,17 @@ import pandas as pd
 import random
 
 
-first_names = ["Alex", "Taylor", "Jordan", "Casey", "Morgan", "Jamie", "Riley", "Quinn", "Cameron", "Drew", "John", "Michael", "Robert", "David", "James", "William", "Joseph", "Charles", "Thomas", "Daniel"]
-last_names = ["Smith", "Johnson", "Brown", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall"]
-nationalities = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
-countries_of_residence = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
-degrees = [
+
+
+
+
+def generate_random_data(num_rows):
+    topics_of_interest = ["Computer Science", "Entrepreneurship", "Art", "Music", "Sports", "Tech", "Machine Learning", "Data Science", "Business", "Finance", "Economics", "Politics", "Philosophy", "History", "Literature", "Languages", "Mathematics", "Physics", "Chemistry", "Biology", "Medicine", "Psychology", "Sociology", "Anthropology", "Geography", "Environmental Science", "Law", "Architecture", "Design", "Fashion", "Film", "Theatre", "Dance", "Photography", "Culinary Arts", "Travel", "Fitness", "Health", "Nutrition", "Yoga", "Meditation", "Mindfulness", "Sustainability", "Climate Change", "Renewable Energy", "Urban Planning", "Transportation", "Public Policy", "International Relations", "Global Affairs", "Development", "Human Rights", "Social Justice", "Equality", "Diversity", "Inclusion", "Feminism", "LGBTQ+", "Mental Health", "Wellness", "Self-Care", "Parenting", "Education", "Child Development", "Youth Empowerment", "Elderly Care", "Disability Rights", "Animal Rights", "Veganism", "Vegetarianism", "Healthy Living", "Fitness", "Sports", "Outdoor Activities", "Adventure", "Travel", "Exploration", "Camping", "Hiking", "Cycling", "Running", "Swimming", "Skiing", "Snowboarding", "Surfing", "Skateboarding", "Basketball", "Football", "Soccer", "Tennis", "Golf", "Cricket", "Rugby", "Baseball", "Softball", "Volleyball", "Handball", "Table Tennis", "Badminton", "Squash", "Gymnastics", "Dance", "Yoga", "Pilates", "Martial Arts", "Boxing", "Wrestling", "Weightlifting", "CrossFit", "Bodybuilding", "Powerlifting", "Parkour", "Rock Climbing", "Mountaineering", "Sailing", "Rowing", "Canoeing", "Kayaking", "Surfing", "Kitesurfing", "Windsurfing", "Scuba Diving", "Snorkeling", "Fishing", "Hunting", "Cycling", "Mountain Biking"]
+    first_names = ["Alex", "Taylor", "Jordan", "Casey", "Morgan", "Jamie", "Riley", "Quinn", "Cameron", "Drew", "John", "Michael", "Robert", "David", "James", "William", "Joseph", "Charles", "Thomas", "Daniel"]
+    last_names = ["Smith", "Johnson", "Brown", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall"]
+    nationalities = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
+    countries_of_residence = ["Germany", "France", "Italy", "Spain", "Netherlands", "Belgium", "Sweden", "Norway", "Denmark", "Switzerland", "United Kingdom", "United States", "Canada", "Australia", "New Zealand", "Japan", "South Korea", "China", "India", "Brazil"]
+    degrees = [
     # IE Business School
     "Bachelor in Business Administration",
     "Bachelor in Economics",
@@ -73,16 +79,9 @@ degrees = [
     "Master in Visual and Digital Media",
     "Bachelor in Humanities",
     "Master in Customer Experience & Innovation",
-    "Master in Talent Development & Human Resources"
-]
+    "Master in Talent Development & Human Resources"]
+    email_suffixes = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@icloud.com", "@protonmail.com", "@aol.com", "@zoho.com", "@yandex.com", "@mail.com"]
 
-email_suffixes = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@icloud.com", "@protonmail.com", "@aol.com", "@zoho.com", "@yandex.com", "@mail.com"]
-#randomly selects first name and email suffix and pastes them together in one line
-def generate_email(first_name):
-    return first_name.lower() + random.choice(email_suffixes)
-
-topics_of_interest = ["Computer Science", "Entrepreneurship", "Art", "Music", "Sports", "Tech", "Machine Learning", "Data Science", "Business", "Finance", "Economics", "Politics", "Philosophy", "History", "Literature", "Languages", "Mathematics", "Physics", "Chemistry", "Biology", "Medicine", "Psychology", "Sociology", "Anthropology", "Geography", "Environmental Science", "Law", "Architecture", "Design", "Fashion", "Film", "Theatre", "Dance", "Photography", "Culinary Arts", "Travel", "Fitness", "Health", "Nutrition", "Yoga", "Meditation", "Mindfulness", "Sustainability", "Climate Change", "Renewable Energy", "Urban Planning", "Transportation", "Public Policy", "International Relations", "Global Affairs", "Development", "Human Rights", "Social Justice", "Equality", "Diversity", "Inclusion", "Feminism", "LGBTQ+", "Mental Health", "Wellness", "Self-Care", "Parenting", "Education", "Child Development", "Youth Empowerment", "Elderly Care", "Disability Rights", "Animal Rights", "Veganism", "Vegetarianism", "Healthy Living", "Fitness", "Sports", "Outdoor Activities", "Adventure", "Travel", "Exploration", "Camping", "Hiking", "Cycling", "Running", "Swimming", "Skiing", "Snowboarding", "Surfing", "Skateboarding", "Basketball", "Football", "Soccer", "Tennis", "Golf", "Cricket", "Rugby", "Baseball", "Softball", "Volleyball", "Handball", "Table Tennis", "Badminton", "Squash", "Gymnastics", "Dance", "Yoga", "Pilates", "Martial Arts", "Boxing", "Wrestling", "Weightlifting", "CrossFit", "Bodybuilding", "Powerlifting", "Parkour", "Rock Climbing", "Mountaineering", "Sailing", "Rowing", "Canoeing", "Kayaking", "Surfing", "Kitesurfing", "Windsurfing", "Scuba Diving", "Snorkeling", "Fishing", "Hunting", "Cycling", "Mountain Biking"]
-def generate_random_data(num_rows):
     data = []
 
     for _ in range(num_rows):
@@ -95,7 +94,7 @@ def generate_random_data(num_rows):
         age = random.randint(17, 35)
         nationality = random.choice(nationalities)
     
-        email = generate_email(first_name)
+        email = generate_email(first_name, email_suffixes)
         description = f"Hello my name is {first_name} {last_name}: Generic description "
         additional_information = f"My linkedin profile is: {first_name}{last_name}linkedin.com and my github profile is: {first_name}{last_name}github.com"
         
@@ -110,10 +109,15 @@ def generate_random_data(num_rows):
         availability = random.randint(2, 20)
         sort_value = 0.0
 
-        # Add 'looking_for' to the list of columns
+        
         data.append([first_name, last_name, rating, age, nationality, country_of_residence, degree, graduation_year, gpa, availability, topics, email, description, additional_information, sort_value])
 
     return data
+
+def generate_email(first_name, email_suffixes):
+    #randomly selects first name and email suffix and pastes them together in one line
+
+    return first_name.lower() + random.choice(email_suffixes)
 
 def write_to_csv(data, filename):
     
@@ -129,11 +133,7 @@ def write_to_csv(data, filename):
 def main():
     
     generated_data = generate_random_data(50000)
-    
-    
     write_to_csv(generated_data, 'generated_database.csv')
     
-
-main()
 
 

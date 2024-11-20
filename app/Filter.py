@@ -32,7 +32,7 @@ def FilterAvailability(data, min_hours):
 
 def FilterGraduationYear(data, year):
     if year:
-        return data[data['Graduation_year'] == year]
+        return data[data['Graduation Year'] == year]
     return data
     
 def main():

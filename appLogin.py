@@ -21,9 +21,9 @@ def login():
             return redirect('/home')  
     return "Invalid login credentials"
 
-@app.route('/register')
+@app.route('/registerPage')
 def register_page():
-    return render_template('register.html')
+    return render_template('registerPage.html')
 
 @app.route('/submit_registration', methods=['POST'])
 def register():
@@ -54,5 +54,5 @@ def save_to_csv(first_name, last_name, email, description, additional_info):
 def home():
     return render_template('home.html')
 
-if __name__ == '__home__':
+if __name__ == '__main__':
     app.run(debug=True)

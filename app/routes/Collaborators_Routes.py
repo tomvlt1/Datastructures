@@ -60,7 +60,8 @@ def collaborators():
             #word embedding
 
             sorted_data = AddSortValue(filtered_data, looking_for, looking_for_degree)
-
+            
+            
             data_json = sorted_data.to_dict(orient='records')  #convert the data to json before sending
 
             return jsonify({'data': data_json})

@@ -19,12 +19,15 @@ def AddSortValue(data, looking_for_interest, looking_for_degree):
     return data
 
 def main():
-    
     data = Filter_main()
+    if data is None or data.empty:
+        raise ValueError("Filter_main() returned None or an empty DataFrame.")
+    print(f"Filter_main() returned data with shape: {data.shape}")
+    print(data.head())
+
     data = AddSortValue(data, ["Computer Science", "Artificial Intelligence", "Machine Learning"], 
                         ["Data Science", "Computer Science", "Information Technology"])
     return data
 
-
-print(main().head(50))
+#print(main().head(50))
 

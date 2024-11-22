@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import render_template, request, redirect, Blueprint
 import hashlib
 import csv
 
-app = Flask(__name__)
-
+login_bp = Blueprint('login', __name__)
 user_data = {}
 
 @app.route('/')

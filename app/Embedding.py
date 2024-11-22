@@ -5,19 +5,19 @@ tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v
 model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 
 def TakeFields(person_data, target_data):
-    # If inputs are not lists of strings, handle appropriately
+    
     if isinstance(person_data, str):
-        person_data = [person_data]  # Convert to list if a single string is provided
+        person_data = [person_data]  
     if isinstance(target_data, str):
-        target_data = [target_data]  # Convert to list if a single string is provided
+        target_data = [target_data]  
 
     if all(isinstance(x, str) for x in person_data) and all(isinstance(x, str) for x in target_data):
         return Embedding(person_data, target_data)
     else:
-        return 0  # Default to 0 if invalid inputs
+        return 0.0
 
 def Embedding(person_data, target_data):
-    # Calculate the similarity between person_data and target_data
+    
     similarity_scores = []
 
     for person_item in person_data:

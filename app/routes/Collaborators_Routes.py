@@ -11,7 +11,7 @@ collaborators_bp = Blueprint('collaborators', __name__)
 
 def collaborators():
 
-    print("hola1") #for debuging purposes
+    #print("hola1") #for debuging purposes
 
     try:
 
@@ -27,7 +27,7 @@ def collaborators():
 
             min_age = int(float(filters_values.get('min_age', 0)))  #first to float then to in and value when it cannot convert it
 
-            max_age = int(float(filters_values.get('max_age', 100)))  
+            max_age = int(float(filters_values.get('max_age', 60)))  
 
             min_gpa = float(filters_values.get('min_gpa', 0.0))
 

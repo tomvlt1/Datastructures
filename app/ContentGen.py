@@ -90,7 +90,7 @@ def generate_random_data(num_rows):
         month = random.randint(1, 12)
         year = random.randint(1990, 2007)
         DOB = date(year, month, day)
-        age = date.today().year - DOB.year - ((date.today().month, date.today().day) < (DOB.month, DOB.day))
+        age = date.today().year - DOB.year - ((date.today().month, date.today().day) < (DOB.month, DOB.day)) # calculate age based on date of birth, it check with logical statemnt if the birthday has already passed this year
 
         # random amount of topics of interest and random topics
         num_topics = random.randint(1, 10)
@@ -142,4 +142,4 @@ def main():
     write_to_csv(generated_data, 'generated_database.csv')
     
 
-main()
+

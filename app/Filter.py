@@ -78,11 +78,9 @@ def FilterAvailability(data, min_hours=None, max_hours=None):
 
  
 def FilterGraduationYear(data, graduation_year=''):
-   if graduation_year !='0':
+    return data[data['Graduation Year'] == graduation_year]
 
-        return data[data['Graduation Year'] == graduation_year]
 
-   return data
 
 
 def Filtered_Data(data,min_age,max_age,min_gpa,max_gpa,min_hours,max_hours,nationality,country_of_residence,degree,graduation_year):

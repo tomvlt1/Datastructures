@@ -45,7 +45,7 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 def save_to_csv(first_name, last_name, email, description, additional_info):
-    with open('generated_data.csv', mode='a', newline='') as file:
+    with open('generated_database.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([first_name, last_name, '', '', '', '', '', '', '', '', '', email, description, additional_info])
 

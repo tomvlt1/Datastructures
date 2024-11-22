@@ -1,4 +1,4 @@
-from routes.home_routes import home_bp
+from routes.Home_Routes import home_bp
 from routes.Collaborators_Routes import collaborators_bp
 from flask import Flask
 

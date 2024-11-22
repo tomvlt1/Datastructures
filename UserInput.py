@@ -184,7 +184,6 @@ def main():
     user_profile.append(user_description)
     sort_value = SortValue()
     user_profile.append(sort_value)
-
     print(user_profile)
 
 

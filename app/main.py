@@ -12,10 +12,3 @@ app.register_blueprint(collaborators_bp, url_prefix='/collaborators')
 if __name__ == '__main__':
     app.run(debug=True)
     
-    
-    
-
-    
-
-
-

@@ -1,136 +1,475 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
+ 
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Match-IE Collaborators</title>
+
+ 
+
+  <!-- External Styles and Scripts -->
+
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+ 
+
   <script>
-      function createRangeSlider(sliderId, minVal, maxVal, minInputId, maxInputId) {
-          const slider = document.getElementById(sliderId);
-          noUiSlider.create(slider, {
-              start: [minVal, maxVal],
-              connect: true,
-              range: {
-                  'min': minVal,
-                  'max': maxVal
-              },
-              step: 1
-          });
 
-          slider.noUiSlider.on('update', function (values, handle) {
-              document.getElementById(handle === 0 ? minInputId : maxInputId).value = Math.round(values[handle]);
-          });
-      }
+    window.onload = function() {
 
-      window.onload = function() {
-          createRangeSlider('age_slider', 0, 100, 'min_age', 'max_age');
-          createRangeSlider('gpa_slider', 0, 4, 'min_gpa', 'max_gpa');
-          createRangeSlider('availability_slider', 0, 168, 'min_hours', 'max_hours');
-      }
+      // Obtener datos de Flask y parsearlos para usar con DataTables
+
+      var collaborators_data = {{ data | tojson | safe }};
+
+      console.log("Datos enviados al servidor:", collaborators_data);
+
+ 
+
+      // Configuración de DataTables
+
+      var table = $('#collaborators_table').DataTable({
+
+        data: collaborators_data,  // Asegúrate de que collaborators_data es un array de objetos
+
+        columns: [
+
+        { data: 'First Name', title: 'First Name' },
+
+        { data: 'Last Name', title: 'Last Name' },
+
+        { data: 'Rating', title: 'Rating' },
+
+        { data: 'Age', title: 'Age' },
+
+        { data: 'DOB', title: 'Date of Birth' },
+
+        { data: 'Nationality', title: 'Nationality' },
+
+        { data: 'Country of Residence', title: 'Country of Residence' },
+
+        { data: 'Degree', title: 'Degree' },
+
+        { data: 'Graduation Year', title: 'Graduation Year' },
+
+        { data: 'GPA', title: 'GPA' },
+
+        { data: 'Availability', title: 'Availability (hours/week)' },
+
+        { data: 'Topics of Interest', title: 'Topics of Interest' },
+
+        { data: 'Email', title: 'Email' },
+
+        { data: 'Description', title: 'Description' },
+
+        { data: 'Additional Information', title: 'Additional Information' },
+
+        { data: 'Sort Value', title: 'Sort Value' }
+
+      ],
+
+ 
+
+        paging: true,
+
+        searching: true,
+
+        ordering: true
+
+      });
+
+ 
+
+      // Filtrado dinámico
+
+      $('#filter_form').submit(function(e) {
+
+        e.preventDefault();  // Evita el comportamiento predeterminado del formulario
+
+ 
+
+        var formData = $(this).serializeArray();
+
+        var data = {};
+
+ 
+
+        formData.forEach(function(field) {
+
+          data[field.name] = field.value;
+
+        });
+
+ 
+
+        // Petición AJAX
+
+        $.ajax({
+
+          url: '/collaborators',
+
+          type: 'POST',
+
+          contentType: 'application/json',
+
+          data: JSON.stringify(data),
+
+          success: function(response) {
+
+            console.log("Respuesta parseada:", response);
+
+ 
+
+            // Limpiar la tabla y añadir los nuevos datos
+
+            table.clear();
+
+ 
+
+            // Asegúrate de que response.data es un array de objetos
+
+            if (response && response.data) {
+
+              table.rows.add(response.data);  // response.data debe ser el array de registros
+
+              table.draw();
+
+            } else {
+
+              console.error("La respuesta no contiene los datos esperados.");
+
+            }
+
+          },
+
+          error: function(xhr, status, error) {
+
+            console.error("Error al obtener datos:", error);
+
+            console.log("Respuesta del servidor:", xhr.responseText);
+
+          }
+
+        });
+
+      });
+
+ 
+
+      // Aquí puedes añadir los sliders (si los necesitas)
+
+      var ageSlider = document.getElementById('age_slider');
+
+      noUiSlider.create(ageSlider, {
+
+        start: [18, 99],
+
+        connect: true,
+
+        range: {
+
+          min: 0,
+
+          max: 100
+
+        }
+
+      });
+
+      ageSlider.noUiSlider.on('update', function(values, handle) {
+
+        document.getElementById('min_age').value = values[0];
+
+        document.getElementById('max_age').value = values[1];
+
+      });
+
+ 
+
+      // Slider for GPA Range
+
+      var gpaSlider = document.getElementById('gpa_slider');
+
+      noUiSlider.create(gpaSlider, {
+
+        start: [0.0, 10.0],
+
+        connect: true,
+
+        range: {
+
+          min: 0.0,
+
+          max: 10.0
+
+        }
+
+      });
+
+      gpaSlider.noUiSlider.on('update', function(values, handle) {
+
+        document.getElementById('min_gpa').value = values[0];
+
+        document.getElementById('max_gpa').value = values[1];
+
+      });
+
+ 
+
+      // Slider for Availability (Hours per Week)
+
+      var availabilitySlider = document.getElementById('availability_slider');
+
+      noUiSlider.create(availabilitySlider, {
+
+        start: [0, 40],
+
+        connect: true,
+
+        range: {
+
+          min: 0,
+
+          max: 60
+
+        }
+
+      });
+
+      availabilitySlider.noUiSlider.on('update', function(values, handle) {
+
+        document.getElementById('min_hours').value = values[0];
+
+        document.getElementById('max_hours').value = values[1];
+
+      });
+
+    };  // Cierre correcto de la función window.onload
+
   </script>
+
+ 
+
   <style>
-      .container {
-          display: flex;
-      }
-      .filters {
-          width: 30%;
-          padding-right: 20px;
-      }
-      .content {
-          width: 70%;
-      }
+
+    .container {
+
+      display: flex;
+
+    }
+
+    .filters {
+
+      width: 30%;
+
+      padding-right: 20px;
+
+    }
+
+    .content {
+
+      width: 70%;
+
+    }
+
   </style>
+
 </head>
+
+ 
+
 <body>
+
   <header>
+
     <div class="navbar">
+
       <h1 class="logo">Match-IE</h1>
+
       <nav>
+
         <a href="home.html">Home</a>
+
         <a href="collaborators.html">Collaborators</a>
+
         <a href="#">Projects</a>
+
         <a href="#">Mentor</a>
+
         <a href="profile.html">Profile</a>
+
       </nav>
+
     </div>
+
   </header>
 
+ 
+
   <main>
+
     <div class="container mt-5">
+
       <aside class="filters">
+
         <h2>Filters</h2>
-        <form action="/filter" method="post">
-            <div class="mb-3">
-                <label for="looking_for" class="form-label">Looking For:</label>
-                <input type="text" id="looking_for" name="looking_for" class="form-control">
-            </div>
 
-            <div class="mb-3">
-                <label for="looking_for_degree" class="form-label">Looking For Degree:</label>
-                <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
-            </div>
+        <form id="filter_form" method="post" action="/collaborators">
 
-            <div class="mb-3">
-                <label for="age_slider" class="form-label">Age Range:</label>
-                <div id="age_slider" class="mb-3"></div>
-                <input type="hidden" id="min_age" name="min_age">
-                <input type="hidden" id="max_age" name="max_age">
-            </div>
+          <!-- Filter fields for various criteria -->
 
-            <div class="mb-3">
-                <label for="gpa_slider" class="form-label">GPA Range:</label>
-                <div id="gpa_slider" class="mb-3"></div>
-                <input type="hidden" id="min_gpa" name="min_gpa">
-                <input type="hidden" id="max_gpa" name="max_gpa">
-            </div>
+          <div class="mb-3">
 
-            <div class="mb-3">
-                <label for="availability_slider" class="form-label">Availability (Hours per Week):</label>
-                <div id="availability_slider" class="mb-3"></div>
-                <input type="hidden" id="min_hours" name="min_hours">
-                <input type="hidden" id="max_hours" name="max_hours">
-            </div>
+            <label for="looking_for" class="form-label">Looking For:</label>
 
-            <div class="mb-3">
-                <label for="nationality" class="form-label">Nationality:</label>
-                <input type="text" id="nationality" name="nationality" class="form-control">
-            </div>
+            <input type="text" id="looking_for" name="looking_for" class="form-control">
 
-            <div class="mb-3">
-                <label for="country_of_residence" class="form-label">Country of Residence:</label>
-                <input type="text" id="country_of_residence" name="country_of_residence" class="form-control">
-            </div>
+          </div>
 
-            <div class="mb-3">
-                <label for="degree" class="form-label">Degree:</label>
-                <input type="text" id="degree" name="degree" class="form-control">
-            </div>
+ 
 
-            <div class="mb-3">
-                <label for="graduation_year" class="form-label">Graduation Year:</label>
-                <input type="number" id="graduation_year" name="graduation_year" min="1900" max="2100" class="form-control">
-            </div>
+          <div class="mb-3">
 
-            <button type="submit" class="btn btn-primary">Apply</button>
+            <label for="looking_for_degree" class="form-label">Looking For Degree:</label>
+
+            <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="age_slider" class="form-label">Age Range:</label>
+
+            <div id="age_slider" class="mb-3"></div>
+
+            <input type="hidden" id="min_age" name="min_age">
+
+            <input type="hidden" id="max_age" name="max_age">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="gpa_slider" class="form-label">GPA Range:</label>
+
+            <div id="gpa_slider" class="mb-3"></div>
+
+            <input type="hidden" id="min_gpa" name="min_gpa">
+
+            <input type="hidden" id="max_gpa" name="max_gpa">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="availability_slider" class="form-label">Availability (Hours per Week):</label>
+
+            <div id="availability_slider" class="mb-3"></div>
+
+            <input type="hidden" id="min_hours" name="min_hours">
+
+            <input type="hidden" id="max_hours" name="max_hours">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="nationality" class="form-label">Nationality:</label>
+
+            <input type="text" id="nationality" name="nationality" class="form-control">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="country_of_residence" class="form-label">Country of Residence:</label>
+
+            <input type="text" id="country_of_residence" name="country_of_residence" class="form-control">
+
+          </div>
+
+ 
+
+          <div class="mb-3">
+
+            <label for="degree" class="form-label">Degree:</label>
+
+            <input type="text" id="degree" name="degree" class="form-control">
+
+          </div>
+
+          <div class="mb-3">
+
+            <label for="graduation_year" class="form-label">Graduation Year:</label>
+
+            <input type="text" id="graduation_year" name="graduation_year" class="form-control">
+
+          </div>        
+
+ 
+
+          <button type="submit" class="btn btn-primary">Apply</button>
+
         </form>
+
+        <!-- Botón para recargar page -->
+
+        <button type="button" id="clean_filters" class="btn btn-warning mt-3" onclick="location.reload();">Clean Filters</button>
+
       </aside>
 
+ 
+
       <section class="content">
-        <div class="search-bar">
-          <input type="text" placeholder="Search for collaborators...">
-          <button>🔍</button>
-        </div>
+
         <h2>Potential Collaborators, Suggested</h2>
 
         <div class="table-responsive">
-          {{ tables|safe }}
+
+          <table id="collaborators_table" class="table table-striped table-bordered">
+
+            <!-- DataTables will populate this table with data -->
+
+          </table>
+
         </div>
+
       </section>
+
     </div>
+
   </main>
+
 </body>
+
+ 
+
 </html>

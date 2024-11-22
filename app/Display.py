@@ -1,6 +1,7 @@
 from Filter import main as Filter_main
 from Embedding import TakeFields as TF
 import pandas as pd
+from Quicksort import quicksort_data
 
 def AddSortValue(data, looking_for_interest=None, looking_for_degree=None):
 
@@ -31,7 +32,7 @@ def AddSortValue(data, looking_for_interest=None, looking_for_degree=None):
         + 0.3 * (data['Rating'] / 5)
     )
     
-    return data
+    return quicksort_data(data,'Sorted Value')
 
 
 def main():

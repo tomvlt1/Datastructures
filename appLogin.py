@@ -18,7 +18,7 @@ def login():
     if email in user_data:
         hashed_password = hash_password(password)
         if user_data[email] == hashed_password:
-            return redirect('/main_page')  
+            return redirect('/home')  
     return "Invalid login credentials"
 
 @app.route('/register')
@@ -50,9 +50,9 @@ def save_to_csv(first_name, last_name, email, description, additional_info):
         writer = csv.writer(file)
         writer.writerow([first_name, last_name, '', '', '', '', '', '', '', '', '', email, description, additional_info])
 
-@app.route('/main_page')
-def main_page():
-    return render_template('main_page.html')
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
-if __name__ == '__main__':
+if __name__ == '__home__':
     app.run(debug=True)

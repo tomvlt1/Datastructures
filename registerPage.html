@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Match-IE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesLogin.css') }}">
+</head>
+<body>
+    <header>
+        Match-IE
+    </header>
+
+    <form method="POST" action="/register">
+        <h2>Register for Match-IE</h2>
+        
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="description" placeholder="Short Description (Optional)" rows="3"></textarea>
+        <textarea name="additional_info" placeholder="Additional Information" rows="3"></textarea>
+
+        <select name="user_type" id="user_type" onchange="toggleFields()" required>
+            <option value="">Select your status</option>
+            <option value="student">Student</option>
+            <option value="alumni">Alumni</option>
+        </select>
+
+        <div id="student_fields" style="display:none;">
+            <input type="text" name="degree_studying" placeholder="Degree Studying" required>
+            <input type="number" name="graduation_year" placeholder="Graduation Year" required>
+            <input type="text" name="gpa" placeholder="GPA">
+            <input type="text" name="fields_of_interest" placeholder="Fields of Interest">
+            <input type="number" name="expected_graduation_year" placeholder="Expected Graduation Year">
+            <input type="number" name="months_of_experience" placeholder="Months of Experience">
+        </div>
+
+        <div id="alumni_fields" style="display:none;">
+            <input type="text" name="degree_studied" placeholder="Degree Studied" required>
+            <input type="number" name="graduation_year_alumni" placeholder="Graduation Year" required>
+            <input type="text" name="fields_of_expertise" placeholder="Fields of Expertise">
+            <input type="number" name="years_of_experience" placeholder="Years of Experience">
+        </div>
+
+        <input type="text" name="linkedin" placeholder="LinkedIn URL" required>
+        <input type="tel" name="phone_number" placeholder="Phone Number" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function toggleFields() {
+            var userType = document.getElementById('user_type').value;
+            if (userType === 'student') {
+                document.getElementById('student_fields').style.display = 'block';
+                document.getElementById('alumni_fields').style.display = 'none';
+            } else if (userType === 'alumni') {
+                document.getElementById('student_fields').style.display = 'none';
+                document.getElementById('alumni_fields').style.display = 'block';
+            } else {
+                document.getElementById('student_fields').style.display = 'none';
+                document.getElementById('alumni_fields').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

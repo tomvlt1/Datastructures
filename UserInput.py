@@ -1,4 +1,4 @@
-
+from datetime import date
 def UserName():
     added=False
     while not added:
@@ -15,14 +15,14 @@ def UserLastName():
             added=True
     return last_name
 
-
 def UserBirthYear():
     added = False
     while not added:
-        birth_year = int(input("Birth Year:"))
+        birth_year= int(input("Birth Year:"))
         if birth_year:
             added=True
     return birth_year
+
 
 def UserBirthDay():
     added = False
@@ -72,6 +72,14 @@ def UserGradYear():
             added=True
     return grad_year
 
+def UserGradMonth():
+    added = False
+    while not added:
+        grad_month = int(input("Graduation month:"))
+        if grad_month:
+            added=True
+    return grad_month
+
 def UserAvailability():
     added = False
     while not added:
@@ -80,12 +88,11 @@ def UserAvailability():
             added=True
     return availability
 
-def UserStudyStatus():
-    added = False
-    while not added:
-        study_status = input("Alumni/Student:")
-        if study_status:
-            added=True
+def UserStudyStatus(year,month):
+    if date(year,month+1,1)<date.today():
+        study_status = "Alumni"
+    else:
+        study_status = "Student"
     return study_status
 
 def UserGPA():
@@ -120,11 +127,21 @@ def UserPhoneNumber():
         phone_number = None
     return phone_number
 
+def UserDescription():
+   description = input("Provide a description of yourself:")
+   if not description:
+       description = None
+   return description
+
 def UserAdditionalInformation():
-    additional = input("additional info:")
-    if not additional:
-        additional = None
-    return additional
+   additional = input("additional info:")
+   if not additional:
+       additional = None
+   return additional
+
+
+def SortValue():
+   return 0
 
 
 def main():
@@ -141,13 +158,17 @@ def main():
     user_profile.append(birth_month)
     nationality = Usernationality()
     user_profile.append(nationality)
+    user_res_country = UserCountryRes()
+    user_profile.append(user_res_country)
     degree = UserDegree()
     user_profile.append(degree)
     grad_year = UserGradYear()
     user_profile.append(grad_year)
+    grad_month = UserGradMonth()
+    user_profile.append(grad_month)
     avalibility = UserAvailability()
     user_profile.append(avalibility)
-    study_status = UserStudyStatus()
+    study_status = UserStudyStatus(grad_year,grad_month)
     user_profile.append(study_status)
     User_GPA = UserGPA()
     user_profile.append(User_GPA)
@@ -159,7 +180,10 @@ def main():
     user_profile.append(User_phone_number)
     additional_info = UserAdditionalInformation()
     user_profile.append(additional_info)
-
+    user_description = UserDescription()
+    user_profile.append(user_description)
+    sort_value = SortValue()
+    user_profile.append(sort_value)
 
     print(user_profile)
 

@@ -6,8 +6,26 @@
   font-family: Arial, sans-serif;
 }
 
+/* Usamos flexbox en el body para asegurar que el footer quede al pie de la página */
+
+html, body {
+
+  height: 100%;
+
+  margin: 0;
+
+}
+
 body {
+  display: flex;
   background-color: #f4f4f4;
+  flex-direction: column;  /* Los elementos se apilan verticalmente */
+}
+
+main {
+  background-color: #f4f4f4;
+
+  flex: 1;  /* Hace que el main ocupe todo el espacio disponible */
 }
 
 /* Navbar */

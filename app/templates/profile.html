@@ -1,67 +1,143 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Match-IE Profile</title>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
+
 <body>
+
   <header>
+
     <div class="navbar">
+
       <h1 class="logo">Match-IE</h1>
+
       <nav>
-        <a href="home.html">Home</a>
-        <a href="collaborators.html">Collaborators</a>
+
+        <a href="{{ url_for('home.home') }}">Home</a>
+
+        <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
+
         <a href="#">Projects</a>
+
         <a href="#">Mentor</a>
-        <a href="profile.html">Profile</a>
-      </nav>
-    </div>
-  </header>
+
+   
+
+     
+
+        {% if session.get('IsLogged') == True %}
+
+            <a href="{{ url_for('account.account_page') }}">Profile</a>
+
+            <a href="{{ url_for('logout') }}">Logout</a>
+
+        {% else %}
+
+            <a href="{{ url_for('login.login_page') }}">Login</a>
+
+        {% endif %}
+
+      </nav></header>
+
+ 
 
   <main>
+
     <section class="profile-section">
+
       <div class="profile-header">
+
         <div class="profile-pic-large">👤</div>
+
         <h2>ANTONIO LÓPEZ ROSELL</h2>
+
       </div>
+
+ 
 
       <div class="profile-content">
+
         <div class="profile-info">
+
           <div class="info-item">
+
             <h3>Username</h3>
+
             <button>Edit Username</button>
+
           </div>
+
           <div class="info-item">
+
             <h3>Position</h3>
+
             <button>Edit Position</button>
+
           </div>
+
           <div class="info-item">
+
             <h3>Looking for</h3>
+
             <button>Edit Looking For</button>
+
           </div>
+
           <div class="info-item">
+
             <h3>Offering</h3>
+
             <button>Edit Offering</button>
+
           </div>
+
         </div>
+
         <div class="profile-details">
+
           <div class="detail-item">
+
             <h3>Username</h3>
+
             <span class="username-tag">antonio</span>
+
           </div>
+
           <div class="profile-pic-edit">
+
             <div class="profile-pic">👤</div>
+
             <button>Edit Picture</button>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   </main>
 
+ 
+
   <footer>
+
     <p>Contact Us: dreamteam@gmail.com</p>
+
   </footer>
+
 </body>
+
 </html>

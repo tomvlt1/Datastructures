@@ -1,67 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Match-IE</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesLogin.css') }}">
+
+    <!-- Bootstrap CSS for Enhanced Styling and Responsiveness -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional: Bootstrap Icons for Enhanced UI -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
+
 <body>
+    <!-- Header with Navbar -->
     <header>
-        Match-IE
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('home.home') }}">Match-IE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('home.home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mentor</a>
+                        </li>
+                        {% if session.get('IsLogged') == True %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('account.account_page') }}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login.login_page') }}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <form method="POST" action="/register">
-        <h2>Register for Match-IE</h2>
-        
-        <input type="text" name="first_name" placeholder="First Name" required>
-        <input type="text" name="last_name" placeholder="Last Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="description" placeholder="Short Description (Optional)" rows="3"></textarea>
-        <textarea name="additional_info" placeholder="Additional Information" rows="3"></textarea>
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="POST" action="{{ url_for('login.register') }}" class="p-4 border rounded shadow">
+                    <h2 class="mb-4 text-center">Register for Match-IE</h2>
 
-        <select name="user_type" id="user_type" onchange="toggleFields()" required>
-            <option value="">Select your status</option>
-            <option value="student">Student</option>
-            <option value="alumni">Alumni</option>
-        </select>
+                    <!-- Display Error Message if Exists -->
+                    {% if error_message %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
 
-        <div id="student_fields" style="display:none;">
-            <input type="text" name="degree_studying" placeholder="Degree Studying" required>
-            <input type="number" name="graduation_year" placeholder="Graduation Year" required>
-            <input type="text" name="gpa" placeholder="GPA">
-            <input type="text" name="fields_of_interest" placeholder="Fields of Interest">
-            <input type="number" name="expected_graduation_year" placeholder="Expected Graduation Year">
-            <input type="number" name="months_of_experience" placeholder="Months of Experience">
+                    <!-- Basic Information -->
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <div class="form-text">Password must be at least 8 characters, include one uppercase letter, one number, and one special character.</div>
+                    </div>
+
+                    <!-- Optional Descriptions -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Short Description (Optional)</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Short Description (Optional)" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="additional_info" class="form-label">Additional Information (Optional)</label>
+                        <textarea class="form-control" id="additional_info" name="additional_info" placeholder="Additional Information (Optional)" rows="3"></textarea>
+                    </div>
+
+                    <!-- Additional Fields -->
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" name="age" placeholder="Age" min="0">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nationality" class="form-label">Nationality</label>
+                        <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Nationality">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="country_residence" class="form-label">Country of Residence</label>
+                        <input type="text" class="form-control" id="country_residence" name="country_residence" placeholder="Country of Residence">
+                    </div>
+
+                    <!-- User Type Selection -->
+                    <div class="mb-4">
+                        <label for="user_type" class="form-label">Select Your Status<span class="text-danger">*</span></label>
+                        <select class="form-select" id="user_type" name="user_type" onchange="toggleFields()" required>
+                            <option value="">Select your status</option>
+                            <option value="student">Student</option>
+                            <option value="alumni">Alumni</option>
+                        </select>
+                    </div>
+
+                    <!-- Student-Specific Fields -->
+                    <div id="student_fields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="degree_studied" class="form-label">Degree Studied</label>
+                            <input type="text" class="form-control" id="degree_studied" name="degree_studied" placeholder="Degree Studied">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="graduation_year" class="form-label">Graduation Year</label>
+                            <input type="number" class="form-control" id="graduation_year" name="graduation_year" placeholder="Graduation Year" min="1900" max="2100">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="gpa" class="form-label">GPA</label>
+                            <input type="text" class="form-control" id="gpa" name="gpa" placeholder="GPA">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="availability" class="form-label">Availability</label>
+                            <input type="text" class="form-control" id="availability" name="availability" placeholder="Availability (e.g., 20 hours/week)">
+                        </div>
+                    </div>
+
+                    <!-- Alumni-Specific Fields -->
+                    <div id="alumni_fields" style="display: none;">
+                        <div class="mb-3">
+                            <label for="fields_of_expertise" class="form-label">Fields of Expertise</label>
+                            <input type="text" class="form-control" id="fields_of_expertise" name="fields_of_expertise" placeholder="Fields of Expertise">
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn URL -->
+                    <div class="mb-3">
+                        <label for="linkedin" class="form-label">LinkedIn URL</label>
+                        <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="LinkedIn URL">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+
+                    <!-- Registration Link -->
+                    <p class="mt-3 text-center">
+                        Already have an account? <a href="{{ url_for('login.login_page') }}">Login here</a>
+                    </p>
+                </form>
+            </div>
         </div>
+    </main>
 
-        <div id="alumni_fields" style="display:none;">
-            <input type="text" name="degree_studied" placeholder="Degree Studied" required>
-            <input type="number" name="graduation_year_alumni" placeholder="Graduation Year" required>
-            <input type="text" name="fields_of_expertise" placeholder="Fields of Expertise">
-            <input type="number" name="years_of_experience" placeholder="Years of Experience">
-        </div>
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3 mt-auto">
+        <p>Contact Us: <a href="mailto:dreamteam@gmail.com">dreamteam@gmail.com</a></p>
+    </footer>
 
-        <input type="text" name="linkedin" placeholder="LinkedIn URL" required>
-        <input type="tel" name="phone_number" placeholder="Phone Number" required>
+    <!-- Bootstrap JS Bundle (Includes Popper) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
-        <button type="submit">Register</button>
-    </form>
-
+    <!-- JavaScript to Toggle Fields Based on User Type -->
     <script>
         function toggleFields() {
-            var userType = document.getElementById('user_type').value;
+            const userType = document.getElementById('user_type').value.toLowerCase();
+            const studentFields = document.getElementById('student_fields');
+            const alumniFields = document.getElementById('alumni_fields');
+
             if (userType === 'student') {
-                document.getElementById('student_fields').style.display = 'block';
-                document.getElementById('alumni_fields').style.display = 'none';
+                studentFields.style.display = 'block';
+                alumniFields.style.display = 'none';
             } else if (userType === 'alumni') {
-                document.getElementById('student_fields').style.display = 'none';
-                document.getElementById('alumni_fields').style.display = 'block';
+                studentFields.style.display = 'none';
+                alumniFields.style.display = 'block';
             } else {
-                document.getElementById('student_fields').style.display = 'none';
-                document.getElementById('alumni_fields').style.display = 'none';
+                studentFields.style.display = 'none';
+                alumniFields.style.display = 'none';
             }
         }
+
+        // Initialize fields visibility on page load in case of form repopulation
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleFields();
+        });
     </script>
 </body>
+
 </html>

@@ -1,143 +1,244 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Match-IE Profile</title>
-
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
+  
 </head>
-
 <body>
+  {% if error_message %}
+  <div class="error-message" style="color: red; margin-bottom: 10px;">
+      {{ error_message | safe}}
+  </div>
+{% endif %}
+  <!-- Navbar -->
+  <header class="navbar">
+    <h1 class="logo">Match-IE</h1>
+    <nav>
+      <a href="{{ url_for('home.home') }}">Home</a>
+      <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
+      <a href="#">Projects</a>
+      <a href="#">Mentor</a>
+      {% if session.get('IsLogged') == True %}
+        <a href="{{ url_for('account.account_page') }}">Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login.login_page') }}">Login</a>
+      {% endif %}
+    </nav>
+  </header>
 
-  <header>
-
-    <div class="navbar">
-
-      <h1 class="logo">Match-IE</h1>
-
-      <nav>
-
-        <a href="{{ url_for('home.home') }}">Home</a>
-
-        <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
-
-        <a href="#">Projects</a>
-
-        <a href="#">Mentor</a>
-
-   
-
-     
-
-        {% if session.get('IsLogged') == True %}
-
-            <a href="{{ url_for('account.account_page') }}">Profile</a>
-
-            <a href="{{ url_for('logout') }}">Logout</a>
-
+  <!-- Profile Header -->
+  <section class="profile-header">
+    <div class="profile-left">
+      <!-- Profile picture -->
+      <div class="profile-pic-large">
+        {% if user['Image'] and user['Image'] != 'None' %}
+          <img src="{{ url_for('static', filename='images/' + user['Image']) }}" alt="Profile Image">
         {% else %}
-
-            <a href="{{ url_for('login.login_page') }}">Login</a>
-
+          <span class="default-pic">👤</span>
         {% endif %}
-
-      </nav></header>
-
- 
-
-  <main>
-
-    <section class="profile-section">
-
-      <div class="profile-header">
-
-        <div class="profile-pic-large">👤</div>
-
-        <h2>ANTONIO LÓPEZ ROSELL</h2>
-
+      </div> 
+      <div class="user-info">
+        <p class="user-name"><strong>{{ user['First Name'] }} {{ user['Last Name'] }}</strong></p>
+        <p class="user-email">{{ user['Email'] }}</p>
       </div>
+    </div>
 
- 
+    <div class="upload-container">
+      <button type="button" id="fileButton" onclick="triggerFileInput()">Upload File</button>
+    </div>
+  </section>
 
-      <div class="profile-content">
+ <form id="profile-form" method="POST" action="{{ url_for('account.account_page') }}" enctype="multipart/form-data" >
 
-        <div class="profile-info">
-
-          <div class="info-item">
-
-            <h3>Username</h3>
-
-            <button>Edit Username</button>
-
-          </div>
-
-          <div class="info-item">
-
-            <h3>Position</h3>
-
-            <button>Edit Position</button>
-
-          </div>
-
-          <div class="info-item">
-
-            <h3>Looking for</h3>
-
-            <button>Edit Looking For</button>
-
-          </div>
-
-          <div class="info-item">
-
-            <h3>Offering</h3>
-
-            <button>Edit Offering</button>
-
-          </div>
-
+  <div class="profile-content-wrapper">  
+    <section class="profile-content profile-specific left-section" >     
+      <div class="profile-row">
+        <div class="profile-item">
+          <label for="first_name">First Name</label>
+          <input type="text" id="first_name" name="first_name" value="{{ user['First Name'] }}" disabled>
         </div>
-
-        <div class="profile-details">
-
-          <div class="detail-item">
-
-            <h3>Username</h3>
-
-            <span class="username-tag">antonio</span>
-
-          </div>
-
-          <div class="profile-pic-edit">
-
-            <div class="profile-pic">👤</div>
-
-            <button>Edit Picture</button>
-
-          </div>
-
+        <div class="profile-item">
+          <label for="last_name">Last Name</label>
+          <input type="text" id="last_name" name="last_name" value="{{ user['Last Name'] }}" disabled>
         </div>
-
       </div>
-
+      <div class="profile-row">
+        <div class="profile-item">
+          <label for="description">Short Description</label>
+          <textarea name="description" placeholder="Short Description (Optional)" rows="3" readonly style="width: 100%;">{{ user['Description'] }}</textarea>
+      </div>
+      <div class="profile-item">   
+          <label for="additional_info">Additional Information</label>
+          <textarea name="additional_info" placeholder="Additional Information (Optional)" rows="3" readonly style="width: 100%;">{{ user['Additional Information'] }}</textarea>
+      </div>
+    </div>
+      <div class="profile-row">
+        <div class="profile-item">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" value="{{ user['DOB'] }}" disabled>
+        </div>
+        <div class="profile-item">
+          <label for="nationality">Nationality</label>
+          <input type="text" id="nationality" name="nationality" value="{{ user['Nationality'] }}" disabled>
+        </div>
+      </div>
+      <div class="profile-row">
+        <div class="profile-item">
+          <label for="degree_studied">Degree Studied</label>
+          <input type="text" id="degree_studied" name="degree_studied" value="{{ user['Degree'] }}" disabled>
+        </div>
+        <div class="profile-item">
+          <label for="graduation_year">Graduation Year</label>
+          <input type="number" id="graduation_year" name="graduation_year" value="{{ user['Graduation Year'] }}" disabled>
+        </div>
+        <div class="profile-item">
+          <label for="gpa">GPA</label>
+          <input type="text" id="gpa" name="gpa" value="{{ user['GPA'] }}" disabled>
+        </div>
+      </div>
+      <div class="profile-row">
+        <div class="profile-item">
+          <label for="user_type">User Type</label>
+          <input type="text" id="user_type" name="user_type" value="{{ user['Type'] }}" disabled>
+        </div>
+        <div class="profile-item">
+          <label for="availability">Availability</label>
+          <input type="text" id="availability" name="availability" value="{{ user['Availability'] }}" disabled>
+        </div>
+      </div>
+      <div class="profile-row">        
+        <div class="profile-item">
+          <p><strong>LinkedIn:</strong> <input type="url" id="linkedin" name="linkedin" value="{{ user['LinkedIn'] }}" disabled></p>         
+          <div class="file-upload">
+            <!-- Hidden input to upload image -->
+            <input type="file" id="imagef" name="imagef" accept="image/*" onchange="updateFileName()"> 
+          </div>
+          <!-- Hidden field to store the filename -->
+          <input type="text" id="image" name="image" value="{{ user['Image'] if user['Image'] else '' }}">
+        </div>
+      </div>
     </section>
+      <!-- Topics of Interest Section -->
+      <section class="profile-content profile-specific right-section" style="flex: 2; padding: 20px;">
+        <label class="custom-title">Topics of Interest</label>
+        <div class="topics-container">
+          <!-- Muestra todas las casillas de verificación -->
+          {% for topic in topics %}
+            <div class="topics-column">
+              <div class="topics-item">
+                <!-- Marca las casillas que coinciden -->
+                <input type="checkbox" id="topic_{{ loop.index }}" name="topics" value="{{ topic }}" 
+                       {% if topic in user['Matched Topics'] %}checked{% endif %}
+                       onchange="updateTopics()" disabled> <!-- Actualiza el campo oculto al hacer cambios -->
+                <label for="topic_{{ loop.index }}">{{ topic }}</label>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <!-- Campo para otros temas -->
+        <div>
+          <label for="other_topics">Other Topics:</label>
+          <textarea name="other_topics" placeholder="other topics" rows="3"  readonly style="width: 100%;">{{ ', '.join(user['Other Topics']) }}</textarea>
+         </div>
+      
+        <!-- Campo oculto para enviar los temas seleccionados como lista -->
+        <input type="hidden" id="selected_topics" name="selected_topics" value="{{ ', '.join(user['Matched Topics']) }}">
+      </section>
+         
+      <div class="save-button left-section">
+        <!-- Enable editing button and save button -->
+        <button id="edit-button" type="button" class="btn btn-success">Enable Editing</button>  
+        <button id="save-button" type="submit" class="btn btn-success" disabled>Save Changes</button>
+      </div>
+    </div>
+  </div>
+  </form>
 
-  </main>
-
+  <!-- Scripts -->
  
+  <script>   
+    document.addEventListener('DOMContentLoaded', function () {
+      const editButton = document.getElementById('edit-button');
+      const saveButton = document.getElementById('save-button');
+      const imageButton = document.getElementById('imagef');
+      const imagetext = document.getElementById('image');
+      const formInputs = document.querySelectorAll('#profile-form input, #profile-form select','#profile-form textarea');
+      const formTextareas = document.querySelectorAll('#profile-form textarea');
 
+      // Función para habilitar los campos de formulario
+      function enableEditing() {
+        formInputs.forEach(input => input.disabled = false);  // Habilita los inputs selects y texareas
+        formTextareas.forEach(textarea => textarea.readOnly = false);  // cambia el readonly de los textareas
+        saveButton.disabled = false; // Habilita el botón Save
+        imageButton.disabled = false; // Habilita el botón de subir imagen
+        imagetext.disabled = false; // Habilita el botón de subir imagen
+        editButton.textContent = 'Disable Editing'; // Cambia el texto del botón
+        fileButton
+        
+      }
+
+      // Función para deshabilitar los campos de formulario
+      function disableEditing() {
+        formInputs.forEach(input => input.disabled = true);  // Deshabilita los inputs selects y texareas
+        formTextareas.forEach(textarea => textarea.readOnly = true);  // cambia el readonly de los textareas
+        saveButton.disabled = true; // Deshabilita el botón Save
+        imageButton.disabled = false; // Habilita el botón de subir imagen
+        imagetext.disabled = false; // Habilita el botón de subir imagen
+        editButton.textContent = 'Enable Editing'; // Cambia el texto del botón
+      }
+
+      // Inicialmente, deshabilitamos los campos siempre 
+      disableEditing();
+
+      // Evento para alternar entre habilitar y deshabilitar
+      editButton.addEventListener('click', function () {
+        if (formInputs[0].disabled) {
+          enableEditing(); // Si los inputs están deshabilitados, habilítalos
+        } else {
+          disableEditing(); // Si los inputs están habilitados, deshabilítalos
+        }
+      });
+    });
+
+  </script>
+  <script>
+    // Trigger file input on button click
+    function triggerFileInput() {
+      document.getElementById('imagef').click();
+    }
+  </script>
+  <script>
+    function updateFileName() {
+      // Habilita la edición del formulario
+      const inputs = document.querySelectorAll('#profile-form input');
+      inputs.forEach(input => input.disabled = false);
+      
+      document.getElementById('save-button').disabled = false;
+     
+      // Envía el formulario automáticamente
+      const form = document.getElementById('profile-form');
+      form.submit();
+    }
+
+  </script>
+  <script>
+    function updateTopics() {
+      // Encuentra todos los checks marcados
+      const selected = Array.from(document.querySelectorAll('input[name="topics"]:checked'))
+        .map(checkbox => checkbox.value); // Obtén sus valores
+  
+      // Actualiza el campo oculto con los temas seleccionados como lista
+      document.getElementById('selected_topics').value = selected.join(', ');
+    }
+  </script>
+  <!-- Footer -->
   <footer>
-
     <p>Contact Us: dreamteam@gmail.com</p>
-
   </footer>
-
 </body>
-
 </html>

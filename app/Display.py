@@ -1,6 +1,7 @@
 from Embedding import TakeFields as TF
 import pandas as pd
 from Quicksort import quicksort_data
+from que import DataFramePrioritySorter
 
 def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     data = pd.DataFrame(dataDic) #from json to dataframe 
@@ -28,4 +29,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
 
     data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
     
-    return quicksort_data(data, 'Sort Value')
+    sorter = DataFramePrioritySorter(data,'Sort Value')
+    
+    sorted_data = sorter.sort
+    return sorted_data

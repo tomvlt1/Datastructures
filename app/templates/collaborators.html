@@ -16,16 +16,14 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-
   <script>
-    window.onload = function () {
-      // Fetch data from Flask and parse it for DataTables
-      var collaborators_data = {{ data | tojson | safe }};
-      console.log("Data sent to server:", collaborators_data);
-
+    document.addEventListener('DOMContentLoaded', function () {
+      // Parse JSON data sent from Flask safely
+      var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
+        
       // DataTables configuration
       var table = $('#collaborators_table').DataTable({
-        data: collaborators_data, // Ensure collaborators_data is an array of objects
+        data: collaborators_data,
         columns: [
           { data: 'First Name', title: 'First Name' },
           { data: 'Last Name', title: 'Last Name' },
@@ -44,34 +42,37 @@
           { data: 'Additional Information', title: 'Additional Information' },
           { data: 'Sort Value', title: 'Sort Value' }
         ],
+        ordering: false, // Disable automatic ordering
         paging: true,
         searching: true,
-        ordering: true
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50],
+        info: true,
+        autoWidth: true,
+        dom: '<"top"i>rt<"bottom"flp><"clear">',
       });
-
+  
       // Dynamic Filtering
       $('#filter_form').submit(function (e) {
         e.preventDefault(); // Prevent default form submission
+  
         var formData = $(this).serializeArray();
         var data = {};
-
+  
         formData.forEach(function (field) {
           data[field.name] = field.value;
         });
-
-        // AJAX Request
+  
+        // Make AJAX request
         $.ajax({
-          url: '/collaborators',
-          type: 'POST',
+          url: '/collaborators', // Server URL
+          type: 'POST', // POST method
           contentType: 'application/json',
           data: JSON.stringify(data),
-          success: function (response) {
-            console.log("Parsed response:", response);
+          success: function (response) {  
             table.clear();
-
-            // Ensure response.data is an array of objects
             if (response && response.data) {
-              table.rows.add(response.data); // response.data should be the array of records
+              table.rows.add(response.data);
               table.draw();
             } else {
               console.error("The response does not contain the expected data.");
@@ -83,135 +84,70 @@
           }
         });
       });
-
+  
       // Initialize Sliders
+      // Function to initialize sliders with integer values
+      function initIntegerSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
+        var slider = document.getElementById(sliderId);
+        noUiSlider.create(slider, {
+            start: startValues,
+            connect: true,
+            step: 1, // Values increment by 1
+            range: {
+                min: min,
+                max: max
+            },
+            format: {
+                to: function (value) {
+                    return Math.round(value); // Ensure integer values
+                },
+                from: function (value) {
+                    return value;
+                }
+            }
+        });
+        slider.noUiSlider.on('update', function (values) {
+            // Update the hidden input fields and the labels
+            document.getElementById(minInputId).value = values[0];
+            document.getElementById(maxInputId).value = values[1];
+            document.getElementById(labelMinId).textContent = values[0];
+            document.getElementById(labelMaxId).textContent = values[1];
+        });
+      }
 
-      // Age Slider
-      var ageSlider = document.getElementById('age_slider');
-      noUiSlider.create(ageSlider, {
-        start: [18, 99],
-        connect: true,
-        range: {
-          min: 0,
-          max: 100
-        }
-      });
-      ageSlider.noUiSlider.on('update', function (values) {
-        document.getElementById('min_age').value = values[0];
-        document.getElementById('max_age').value = values[1];
-      });
+      // Function to initialize sliders with decimal values
+      function initDecimalSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
+        var slider = document.getElementById(sliderId);
+        noUiSlider.create(slider, {
+            start: startValues,
+            connect: true,
+            range: {
+                min: min,
+                max: max
+            }
+        });
+        slider.noUiSlider.on('update', function (values) {
+            // Update the hidden input fields and the labels
+            document.getElementById(minInputId).value = values[0];
+            document.getElementById(maxInputId).value = values[1];
+            document.getElementById(labelMinId).textContent = values[0];
+            document.getElementById(labelMaxId).textContent = values[1];
+        });
+      }
 
-      // GPA Slider
-      var gpaSlider = document.getElementById('gpa_slider');
-      noUiSlider.create(gpaSlider, {
-        start: [0.0, 10.0],
-        connect: true,
-        range: {
-          min: 0.0,
-          max: 10.0
-        }
-      });
-      gpaSlider.noUiSlider.on('update', function (values) {
-        document.getElementById('min_gpa').value = values[0];
-        document.getElementById('max_gpa').value = values[1];
-      });
+      // Initialize the slider for age with integer values
+      initIntegerSlider('age_slider', 18, 100, [18, 99], 'min_age', 'max_age', 'age_min_label', 'age_max_label');
 
-      // Availability Slider
-      var availabilitySlider = document.getElementById('availability_slider');
-      noUiSlider.create(availabilitySlider, {
-        start: [0, 40],
-        connect: true,
-        range: {
-          min: 0,
-          max: 60
-        }
-      });
-      availabilitySlider.noUiSlider.on('update', function (values) {
-        document.getElementById('min_hours').value = values[0];
-        document.getElementById('max_hours').value = values[1];
-      });
-    };
+      // Initialize the slider for availability with integer values
+      initIntegerSlider('availability_slider', 0, 60, [0, 40], 'min_hours', 'max_hours', 'hours_min_label', 'hours_max_label');
+
+      // Initialize the slider for GPA with decimal values
+      initDecimalSlider('gpa_slider', 0.0, 10.0, [0.0, 10.0], 'min_gpa', 'max_gpa', 'gpa_min_label', 'gpa_max_label');
+
+    });
   </script>
-
-  <style>
-    /* Remove global line-height */
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    label,
-    input,
-    button {
-      line-height: 1; /* Removes line spacing */
-    }
-
-    .container {
-      display: flex;
-    }
-
-    .filters {
-      width: 30%;
-      padding-right: 20px;
-    }
-
-    .content {
-      width: 70%;
-    }
-
-    /* Optional Enhancements */
-
-    /* Footer Styling */
-    footer {
-      background-color: #f8f9fa;
-      text-align: center;
-      padding: 20px 0;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
-
-    /* Banner Styling */
-    .banner {
-      background-color: #e9ecef;
-      padding: 40px 0;
-      text-align: center;
-    }
-
-    /* Activity Section Styling */
-    .activity-section {
-      padding: 20px 0;
-    }
-
-    .activity-container {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .activity-column {
-      flex: 1;
-    }
-
-    .activity-box {
-      background-color: #ffffff;
-      border: 1px solid #dee2e6;
-      border-radius: 5px;
-      padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .activity-box p {
-      margin-bottom: 10px;
-    }
-  </style>
-
+  
 </head>
-
 <body>
 
   <header>
@@ -239,88 +175,130 @@
       <aside class="filters">
         <h2>Filters</h2>
         <form id="filter_form" method="post" action="/collaborators">
-          <!-- Looking For -->
-          <div class="mb-3">
-            <label for="looking_for" class="form-label">Looking For:</label>
-            <input type="text" id="looking_for" name="looking_for" class="form-control">
+        
+
+          <!-- Row for Looking For -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="looking_for" class="form-label">Looking For:</label>
+                <input type="text" id="looking_for" name="looking_for" class="form-control">
+              </div>
+            </div>
           </div>
 
-          <!-- Looking For Degree -->
-          <div class="mb-3">
-            <label for="looking_for_degree" class="form-label">Looking For Degree:</label>
-            <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
+          <!-- Row for Looking for Degree -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="looking_for_degree" class="form-label">Looking for Degree:</label>
+                <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
+              </div>
+            </div>
           </div>
 
-          <!-- Age Range Slider -->
-          <div class="mb-3">
-            <label for="age_slider" class="form-label">Age Range:</label>
-            <div id="age_slider" class="mb-3"></div>
-            <input type="hidden" id="min_age" name="min_age">
-            <input type="hidden" id="max_age" name="max_age">
+          <!-- Sliders Row -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="age_slider" class="form-label">Age:</label>
+                <div id="age_slider"></div>
+                <div>
+                  <span id="age_min_label">18</span> - <span id="age_max_label">99</span>
+                </div>
+                <input type="hidden" id="min_age" name="min_age" value="18">
+                <input type="hidden" id="max_age" name="max_age" value="99">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="gpa_slider" class="form-label">GPA:</label>
+                <div id="gpa_slider"></div>
+                <div>
+                  <span id="gpa_min_label">0.0</span> - <span id="gpa_max_label">10.0</span>
+                </div>
+                <input type="hidden" id="min_gpa" name="min_gpa" value="0.0">
+                <input type="hidden" id="max_gpa" name="max_gpa" value="10.0">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="availability_slider" class="form-label">Availability (hours/week):</label>
+                <div id="availability_slider"></div>
+                <div>
+                  <span id="hours_min_label">0</span> - <span id="hours_max_label">40</span>
+                </div>
+                <input type="hidden" id="min_hours" name="min_hours" value="0">
+                <input type="hidden" id="max_hours" name="max_hours" value="40">
+              </div>
+            </div>
           </div>
 
-          <!-- GPA Range Slider -->
-          <div class="mb-3">
-            <label for="gpa_slider" class="form-label">GPA Range:</label>
-            <div id="gpa_slider" class="mb-3"></div>
-            <input type="hidden" id="min_gpa" name="min_gpa">
-            <input type="hidden" id="max_gpa" name="max_gpa">
+          <!-- Row for Nationality and Country of Residence -->
+          <div class="row">
+           
+              <div class="mb-3">
+                <label for="nationality" class="form-label">Nationality:</label>
+                <input type="text" id="nationality" name="nationality" class="form-control">
+              </div>
+            
+           
+              <div class="mb-3">
+                <label for="country_of_residence" class="form-label">Country of Residence:</label>
+                <input type="text" id="country_of_residence" name="country_of_residence" class="form-control">
+              </div>
+            
           </div>
 
-          <!-- Availability Slider -->
-          <div class="mb-3">
-            <label for="availability_slider" class="form-label">Availability (Hours per Week):</label>
-            <div id="availability_slider" class="mb-3"></div>
-            <input type="hidden" id="min_hours" name="min_hours">
-            <input type="hidden" id="max_hours" name="max_hours">
+          <!-- Row for Graduation Year and Degree -->
+          <div class="row">
+            
+              <div class="mb-3">
+                <label for="graduation_year" class="form-label">Graduation Year:</label>
+                <input type="text" id="graduation_year" name="graduation_year" class="form-control">
+              
+            </div>
+            
+              <div class="mb-3">
+                <label for="degree" class="form-label">Degree:</label>
+                <input type="text" id="degree" name="degree" class="form-control">
+              </div>
+            
           </div>
 
-          <!-- Nationality -->
-          <div class="mb-3">
-            <label for="nationality" class="form-label">Nationality:</label>
-            <input type="text" id="nationality" name="nationality" class="form-control">
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+            <button type="button" class="btn btn-primary" onclick="location.reload()">Clear</button>
           </div>
-
-          <!-- Country of Residence -->
-          <div class="mb-3">
-            <label for="country_of_residence" class="form-label">Country of Residence:</label>
-            <input type="text" id="country_of_residence" name="country_of_residence" class="form-control">
-          </div>
-
-          <!-- Degree -->
-          <div class="mb-3">
-            <label for="degree" class="form-label">Degree:</label>
-            <input type="text" id="degree" name="degree" class="form-control">
-          </div>
-
-          <!-- Graduation Year -->
-          <div class="mb-3">
-            <label for="graduation_year" class="form-label">Graduation Year:</label>
-            <input type="text" id="graduation_year" name="graduation_year" class="form-control">
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary">Apply</button>
         </form>
-
-        <!-- Button to Clear Filters -->
-        <button type="button" id="clean_filters" class="btn btn-warning mt-3" onclick="location.reload();">Clean Filters</button>
       </aside>
 
-      <!-- Collaborators Content -->
+      <!-- Main Content -->
       <section class="content">
-        <h2>Potential Collaborators, Suggested</h2>
-        <div class="table-responsive">
-          <table id="collaborators_table" class="table table-striped table-bordered">
-            <!-- DataTables will populate this table with data -->
-          </table>
+        <div class="d-flex align-items-start">
+          <h2 class="custom-title me-3 mb-0">Collaborators</h2>
+          <form id="search_form" method="post" action="javascript:void(0);" class="d-flex align-items-start">
+            <input type="text" class="form-control me-2 align-start" placeholder="Search" name="search_query" id="search_query" style="height: 40px; width: 200px; font-size: 0.9rem;">
+            <button class="btn btn-primary align-self-start" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;" onclick="showHello()">Search</button>
+          </form>
+          <span id="hello_message" class="ms-3" style="font-size: 1rem; font-weight: bold;"></span>
         </div>
+        <table id="collaborators_table" class="display table table-bordered"></table>
       </section>
+      
+<script>
+  function showHello()
+  {
+    const messageElement = document.getElementById('hello_message');
+    messageElement.textContent = ''; 
+  }
+</script>
     </div>
   </main>
 
   <footer>
-    <p>Contact Us: dreamteam@gmail.com</p>
+    <p>Match-IE © 2024</p>
   </footer>
 
 </body>

@@ -1,6 +1,5 @@
 def validation_function(user,vorigen):
-    #origen 0: Register
-    #origen 1: Profile    
+      
         vValid=0
         verr='' 
         if vorigen==0:  
@@ -16,7 +15,7 @@ def validation_function(user,vorigen):
                 error_message = "Email is already registered"
                 vValid=1
                 verr = verr + '<br>' + error_message
-      #en todos los demas casos en los que no es cero empezara desde aquí
+     
         if not user.validate_age():
             error_message = "Age must be between 18 and 120"
             vValid=1
@@ -29,6 +28,6 @@ def validation_function(user,vorigen):
             error_message = "Invalid LinkedIn URL format"
             vValid=1
             verr = verr + '<br>' + error_message
-                # Check if email is already registered
+               
        
         return vValid, verr

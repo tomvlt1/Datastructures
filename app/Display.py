@@ -1,6 +1,5 @@
 from Embedding import TakeFields as TF
 import pandas as pd
-from Quicksort import quicksort_data
 from que import DataFramePrioritySorter
 
 def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):

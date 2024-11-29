@@ -9,7 +9,7 @@ class PriorityQueue:
         heapq.heappush(self.heap, (-priority, item))
     
     def pop(self):
-        if len(self.heap) != 0:
+        if not self.is_empty():
             neg_priority, item = heapq.heappop(self.heap)
             return (-neg_priority, item)
         else:
@@ -19,7 +19,12 @@ class PriorityQueue:
         return len(self.heap) == 0
 
 class DataFramePrioritySorter:
+ 
     def __init__(self, dataframe, sort_column):
+   
+        if sort_column not in dataframe.columns:
+            raise ValueError(f"Column '{sort_column}' does not exist in the DataFrame.")
+        
         self.df = dataframe
         self.sort_column = sort_column
         self.priority_queue = PriorityQueue()
@@ -30,9 +35,9 @@ class DataFramePrioritySorter:
             self.priority_queue.push(sort_value, row)
         
         sorted_rows = []
-        while len(self.priority_queue) != 0:
+        while not self.priority_queue.is_empty():
             priority, row = self.priority_queue.pop()
             sorted_rows.append(row)
         
         sorted_df = pd.DataFrame(sorted_rows).reset_index(drop=True)
-        return sorted_df
+        return sorted_df 

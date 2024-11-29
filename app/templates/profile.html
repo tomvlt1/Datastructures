@@ -115,10 +115,10 @@
           <p><strong>LinkedIn:</strong> <input type="url" id="linkedin" name="linkedin" value="{{ user['LinkedIn'] }}" disabled></p>         
           <div class="file-upload">
             <!-- Hidden input to upload image -->
-            <input type="file" id="imagef" name="imagef" accept="image/*" onchange="updateFileName()"> 
+            <input type="file" id="imagef" name="imagef" accept="image/*" onchange="updateFileName()" style="display: none;">
           </div>
           <!-- Hidden field to store the filename -->
-          <input type="text" id="image" name="image" value="{{ user['Image'] if user['Image'] else '' }}">
+          <input type="hidden" id="image" name="image" value="{{ user['Image'] if user['Image'] else '' }}">
         </div>
       </div>
     </section>

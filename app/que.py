@@ -1,21 +1,24 @@
 import pandas as pd
-import heapq 
+import heapq
 
 class PriorityQueue:
     def __init__(self):
         self.heap = []
     
     def push(self, priority, item):
-        heapq.heappush(self.heap, (-priority, item))   # multiply the priority value times -1 in order to invert the order so we can pop the max value later.
-                                                        # heap by default intruduces first the max value in the heap.
+        heapq.heappush(self.heap, (-priority, item))
     
     def pop(self):
         if len(self.heap) != 0:
             neg_priority, item = heapq.heappop(self.heap)
             return (-neg_priority, item)
+        else:
+            raise IndexError("pop from an empty priority queue")
+    
+    def is_empty(self):
+        return len(self.heap) == 0
 
 class DataFramePrioritySorter:
- 
     def __init__(self, dataframe, sort_column):
         self.df = dataframe
         self.sort_column = sort_column
@@ -27,14 +30,9 @@ class DataFramePrioritySorter:
             self.priority_queue.push(sort_value, row)
         
         sorted_rows = []
-        while not self.priority_queue.is_empty():
+        while len(self.priority_queue) != 0:
             priority, row = self.priority_queue.pop()
             sorted_rows.append(row)
         
         sorted_df = pd.DataFrame(sorted_rows).reset_index(drop=True)
         return sorted_df
-
-
-
-
-

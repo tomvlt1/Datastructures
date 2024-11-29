@@ -30,5 +30,5 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     
     sorter = DataFramePrioritySorter(data,'Sort Value')
     
-    sorted_data = sorter.sort
-    return sorted_data
+    sorted_data = sorter.sort()
+    return sorted_data  

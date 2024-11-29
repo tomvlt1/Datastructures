@@ -1,67 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Match-IE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesLogin.css') }}">
+    <style>
+        /* Custom Styles for Layout */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 15px;
+            margin-bottom: 0px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Align nationality and country residence in the same row */
+        .form-row .half-width {
+            flex: 1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #mentor_option {
+            margin-top: 20px;
+        }
+
+        /* Make Graduation Year and GPA same size */
+        #graduation_year,
+        #gpa {
+            width: 100%;
+        }
+    </style>
+    <script>
+        // Prevenir el envío del formulario cuando se presiona Enter
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('myForm');
+            form.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Evita que el formulario se envíe al presionar Enter
+                }
+            });
+        });
+    </script>
 </head>
+
 <body>
     <header>
-        Match-IE
+        <div class="navbar">
+            <h1 class="logo">Match-IE</h1>
+            <nav>
+                <a href="{{ url_for('home.home') }}">Home</a>
+                <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
+                <a href="#">Projects</a>
+                <a href="#">Mentor</a>
+
+                {% if session.get('IsLogged') == True %}
+                    <a href="{{ url_for('account.account_page') }}">Profile</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login.login_page') }}">Login</a>
+                {% endif %}
+            </nav>
+        </div>
     </header>
+    <main>
+        <form method="POST" action="{{ url_for('login.register') }}">
+            <h2>Register for Match-IE</h2>
+            <!-- Show error message if it exists -->
+            {% if error_message %}
+                <div class="error-message" style="color: red; margin-bottom: 10px;">
+                    {{ error_message | safe}}
+                </div>
+            {% endif %}
 
-    <form method="POST" action="/register">
-        <h2>Register for Match-IE</h2>
-        
-        <input type="text" name="first_name" placeholder="First Name" required>
-        <input type="text" name="last_name" placeholder="Last Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="description" placeholder="Short Description (Optional)" rows="3"></textarea>
-        <textarea name="additional_info" placeholder="Additional Information" rows="3"></textarea>
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
 
-        <select name="user_type" id="user_type" onchange="toggleFields()" required>
-            <option value="">Select your status</option>
-            <option value="student">Student</option>
-            <option value="alumni">Alumni</option>
-        </select>
+            <textarea name="description" placeholder="Short Description (Optional)" rows="3"></textarea>
+            <textarea name="additional_info" placeholder="Additional Information (Optional)" rows="3"></textarea>
 
-        <div id="student_fields" style="display:none;">
-            <input type="text" name="degree_studying" placeholder="Degree Studying" required>
-            <input type="number" name="graduation_year" placeholder="Graduation Year" required>
-            <input type="text" name="gpa" placeholder="GPA">
-            <input type="text" name="fields_of_interest" placeholder="Fields of Interest">
-            <input type="number" name="expected_graduation_year" placeholder="Expected Graduation Year">
-            <input type="number" name="months_of_experience" placeholder="Months of Experience">
-        </div>
+            <div class="form-row">
+                <div class="half-width">
+                    <input type="text" name="nationality" placeholder="Nationality">
+                </div>
+                <div class="half-width">
+                    <input type="text" name="country_residence" placeholder="Country of Residence">
+                </div>
+            </div>
+            <label for="dob" class="normal-label">Date of Birth</label>
+            <input type="date" name="dob" id="dob" class="form-control" required>
 
-        <div id="alumni_fields" style="display:none;">
-            <input type="text" name="degree_studied" placeholder="Degree Studied" required>
-            <input type="number" name="graduation_year_alumni" placeholder="Graduation Year" required>
-            <input type="text" name="fields_of_expertise" placeholder="Fields of Expertise">
-            <input type="number" name="years_of_experience" placeholder="Years of Experience">
-        </div>
+            <div class="form-row">
+                <div class="half-width">
+                    <input type="number" name="graduation_year" id="graduation_year" class="form-control" placeholder="Graduation Year">
+                </div>
+                <div class="half-width">
+                    <input type="text" name="gpa" id="gpa" class="form-control" placeholder="GPA">
+                </div>
+            </div>
+            <div class="form-group">
+                <select name="user_type" id="user_type" required onchange="toggleFields()">
+                    <option value="">Select your status</option>
+                    <option value="Student">Student</option>
+                    <option value="Alumni">Alumni</option>
+                </select>
+            </div>
+            <div class="form-group" id="mentor_option" style="display:none;">
+                <label for="mentor">Do you want to be a Mentor?</label>
+                <input type="checkbox" name="mentor" id="mentor" checked> Yes
+            </div>
+            <input type="text" name="degree_studied" placeholder="Degree Studied">
+            <input type="text" name="fields_of_expertise" placeholder="Fields of Expertise (for Alumni)">
+            <input type="text" name="linkedin" placeholder="LinkedIn URL">
+            <button type="submit">Register</button>
+        </form>
 
-        <input type="text" name="linkedin" placeholder="LinkedIn URL" required>
-        <input type="tel" name="phone_number" placeholder="Phone Number" required>
+        <script>
+            // Automatically select user type to 'Alumni' if graduation year is less than the current year
+            document.getElementById('graduation_year').addEventListener('change', function() {
+                const graduationYear = parseInt(this.value); // Convert the value to an integer
+                const currentYear = new Date().getFullYear();
+                const userTypeSelect = document.getElementById('user_type');
+                
+                // Check if the input value is a valid number and less than the current year
+                if (graduationYear && graduationYear < currentYear) {
+                    userTypeSelect.value = 'Alumni'; // Set to alumni if graduation year is in the past
+                    toggleFields();  // Show mentor option for alumni
+                }
+            });
 
-        <button type="submit">Register</button>
-    </form>
-
-    <script>
-        function toggleFields() {
-            var userType = document.getElementById('user_type').value;
-            if (userType === 'student') {
-                document.getElementById('student_fields').style.display = 'block';
-                document.getElementById('alumni_fields').style.display = 'none';
-            } else if (userType === 'alumni') {
-                document.getElementById('student_fields').style.display = 'none';
-                document.getElementById('alumni_fields').style.display = 'block';
-            } else {
-                document.getElementById('student_fields').style.display = 'none';
-                document.getElementById('alumni_fields').style.display = 'none';
+            // Toggle fields visibility based on user type
+            function toggleFields() {
+                const userType = document.getElementById('user_type').value;
+                const mentorOption = document.getElementById('mentor_option');
+                
+                // Show mentor option for Alumni
+                if (userType === 'Alumni') {
+                    mentorOption.style.display = 'block';
+                } else {
+                    mentorOption.style.display = 'none';
+                }
             }
-        }
-    </script>
+        </script>
+        <script>
+            // Calculate Age from Date of Birth and update hidden field
+            function calculateAge() {
+                const dob = document.getElementById('dob').value;
+                const ageField = document.getElementById('age'); // Hidden input field
+        
+                if (dob) {
+                    const birthDate = new Date(dob);
+                    const today = new Date();
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const month = today.getMonth() - birthDate.getMonth();
+        
+                    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+        
+                    // Set the calculated age into the hidden field
+                    ageField.value = age;
+                }
+            }
+        
+            // Add event listener to run the age calculation when DOB changes
+            document.getElementById('dob').addEventListener('change', calculateAge);
+        </script>
+    </main>
 </body>
+
 </html>

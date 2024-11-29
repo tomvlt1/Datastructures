@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Match-IE Collaborators</title>
+  <title>Match-IE Mentors</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -16,13 +16,14 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Parse JSON data sent from Flask safely
       var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
         
       // DataTables configuration
-      var table = $('#collaborators_table').DataTable({
+      var table = $('#mentors_table').DataTable({
         data: collaborators_data,
         columns: [
           { data: 'First Name', title: 'First Name' },
@@ -65,7 +66,7 @@
   
         // Make AJAX request
         $.ajax({
-          url: '/collaborators', // Server URL
+          url: '/mentors', // Server URL
           type: 'POST', // POST method
           contentType: 'application/json',
           data: JSON.stringify(data),
@@ -86,8 +87,8 @@
       });
   
       // Initialize Sliders
-      // Function to initialize sliders with integer values
-      function initIntegerSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
+       // Function to initialize sliders with integer values
+       function initIntegerSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
         var slider = document.getElementById(sliderId);
         noUiSlider.create(slider, {
             start: startValues,
@@ -137,17 +138,18 @@
 
       // Initialize the slider for age with integer values
       initIntegerSlider('age_slider', 18, 100, [18, 99], 'min_age', 'max_age', 'age_min_label', 'age_max_label');
-
       // Initialize the slider for availability with integer values
       initIntegerSlider('availability_slider', 0, 60, [0, 40], 'min_hours', 'max_hours', 'hours_min_label', 'hours_max_label');
 
       // Initialize the slider for GPA with decimal values
       initDecimalSlider('gpa_slider', 0.0, 10.0, [0.0, 10.0], 'min_gpa', 'max_gpa', 'gpa_min_label', 'gpa_max_label');
-
     });
   </script>
+
   
+
 </head>
+
 <body>
 
   <header>
@@ -174,7 +176,7 @@
       <!-- Filters Sidebar -->
       <aside class="filters">
         <h2>Filters</h2>
-        <form id="filter_form" method="post" action="/collaborators">
+        <form id="filter_form" method="post" action="/mentors">
         
 
           <!-- Row for Looking For -->
@@ -277,23 +279,22 @@
       <!-- Main Content -->
       <section class="content">
         <div class="d-flex align-items-start">
-          <h2 class="custom-title me-3 mb-0">Collaborators</h2>
+          <h2 class="custom-title me-3 mb-0">Mentors</h2>
           <form id="search_form" method="post" action="javascript:void(0);" class="d-flex align-items-start">
             <input type="text" class="form-control me-2 align-start" placeholder="Search" name="search_query" id="search_query" style="height: 40px; width: 200px; font-size: 0.9rem;">
             <button class="btn btn-primary align-self-start" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;" onclick="showHello()">Search</button>
           </form>
           <span id="hello_message" class="ms-3" style="font-size: 1rem; font-weight: bold;"></span>
         </div>
-        <table id="collaborators_table" class="display table table-bordered"></table>
+        <table id="mentors_table" class="display table table-bordered"></table>
       </section>
-      
-<script>
-  function showHello()
-  {
-    const messageElement = document.getElementById('hello_message');
-    messageElement.textContent = ''; 
-  }
-</script>
+      <script>
+        function showHello()
+        {
+          const messageElement = document.getElementById('hello_message');
+          messageElement.textContent = ''; 
+        }
+      </script>
     </div>
   </main>
 
@@ -304,3 +305,4 @@
 </body>
 
 </html>
+

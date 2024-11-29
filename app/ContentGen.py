@@ -103,12 +103,12 @@ def generate_random_data(num_rows):
         country_of_residence = random.choice([c for c in countries_of_residence if c != nationality] + [nationality])
         
         degree = random.choice(degrees)
-        graduation_year = random.randint(1980, 2028)
+        graduation_year = random.randint(2024, 2028)
         
         gpa = round(random.gauss(8, 1), 2)
         gpa = max(0, min(10, gpa))  
         
-        availability = random.randint(2, 40)
+        availability = random.randint(2, 20)
         sort_value = 0.0
 
         
@@ -138,5 +138,5 @@ def main():
     write_to_csv(generated_data, 'generated_database.csv')
     
 
-main()
+#main()
 

@@ -3,6 +3,7 @@ from routes.Collaborators_Routes import collaborators_bp
 from routes.Login import login_bp
 from routes.Profile import account_bp
 from routes.Mentors_Routes import mentors_bp
+from routes.Projects import projects_bp
 from flask import Flask,session, redirect, url_for
 
  
@@ -17,7 +18,7 @@ app.register_blueprint(collaborators_bp, url_prefix='/collaborators')
 app.register_blueprint(login_bp, url_prefix='/login')
 app.register_blueprint(account_bp, url_prefix='/account')
 app.register_blueprint(mentors_bp,url_prefix ='/mentors')
- 
+app.register_blueprint(projects_bp,url_prefix ='/projects')
 #la ruta /logout debe estar fuera de cualquier Blueprint para que sea accesible globalmente.
 
 @app.route('/logout')

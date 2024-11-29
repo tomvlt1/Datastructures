@@ -34,7 +34,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     #print(sorted_data)
     Fullname = sorted_data['First Name'] + ' ' + sorted_data['Last Name']
     sorted_data['Full Name'] = Fullname
-    sorted_data = sorted_data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information']]
+    sorted_data = sorted_data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information', 'Sort Value']]
     return sorted_data  
 
 
@@ -68,3 +68,10 @@ def AddSortValueProjects(dataDic, keywords, position):
     
     sorted_data = sorter.sort()
     return sorted_data
+
+
+
+if __name__ == '__main__':
+    data = pd.read_csv('generated_project_database.csv')
+    
+    print(AddSortValueProjects(data, 'Machine Learning', 'Project Manager'))

@@ -68,3 +68,10 @@ def AddSortValueProjects(dataDic, keywords, position):
     
     sorted_data = sorter.sort()
     return sorted_data
+
+
+
+if __name__ == '__main__':
+    data = pd.read_csv('generated_project_database.csv')
+    
+    print(AddSortValueProjects(data, 'Machine Learning', 'Project Manager'))

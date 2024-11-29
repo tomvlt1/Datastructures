@@ -27,14 +27,6 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     data['Rating'] = pd.to_numeric(data['Rating'], errors='coerce') #rating to numefic, if not string 
 
     data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
-    
-    #sorter = DataFramePrioritySorter(data,'Sort Value')
-    
-    #sorted_data = sorter.sort()
-    #print(sorted_data)
-    Fullname = data['First Name'] + ' ' + data['Last Name']
-    data['Full Name'] = Fullname
-    sorted_data = data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information', 'Sort Value']]
     return data  
 
 

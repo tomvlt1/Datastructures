@@ -19,11 +19,13 @@ def collaborators():
             looking_for = ''
             looking_for_degree =''     
             for key, value in filters_values.items(): #items helps you iterate throuth the dictionary, it returns the key: Value
-                if value!='':
+                if value !='':
                     if key == 'looking_for':
-                        looking_for = value                 
+                        looking_for = value  
+                        print(value)               
                     elif key == 'looking_for_degree':
                         looking_for_degree = value
+                        print(value)  
             
             sorted_data = AddSortValue(filtered_data, looking_for, looking_for_degree)   
             # Convert sorted data to dictionary (json). todict

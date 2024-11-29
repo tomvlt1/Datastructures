@@ -19,8 +19,8 @@
     <nav>
       <a href="{{ url_for('home.home') }}">Home</a>
       <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
-      <a href="#">Projects</a>
-      <a href="#">Mentor</a>
+      <a href="{{ url_for('projects.projects') }}">Projects</a>
+      <a href="{{ url_for('mentors.mentors') }}">Mentor</a>
       {% if session.get('IsLogged') == True %}
         <a href="{{ url_for('account.account_page') }}">Profile</a>
         <a href="{{ url_for('logout') }}">Logout</a>

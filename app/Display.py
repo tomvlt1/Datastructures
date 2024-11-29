@@ -2,15 +2,12 @@ from Embedding import TakeFields as TF
 import pandas as pd
 from que import DataFramePrioritySorter
 
+def AddSortValue(data, looking_for_interest=None, looking_for_degree=None):
 
-def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
-    data = pd.DataFrame(dataDic) #from json to dataframe 
-    if data.empty: 
-        return data 
-    
-    if (not looking_for_interest or looking_for_interest =='') and (not looking_for_degree or looking_for_degree ==''): #check for the emty spece aswell
-        data['Sort Value'] = pd.to_numeric(data['Rating'], errors='coerce') / 5 
-        return data 
+    if not looking_for_interest and not looking_for_degree:
+        data['Sort Value'] = pd.to_numeric(data['Rating'], errors='coerce') / 5  # Only normalize Rating
+        return data
+
 
     if looking_for_interest:
         interest_similarities = [TF(interest, looking_for_interest) for interest in data['Topics of Interest']]
@@ -27,10 +24,25 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
         
     data['Rating'] = pd.to_numeric(data['Rating'], errors='coerce') #rating to numefic, if not string 
 
-    data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
+    data['Sort Value'] = (
+        0.5 * data['Interest Similarity']
+        + 0.2 * data['Degree Similarity']
+        + 0.3 * (data['Rating'] / 5)
+    )
     
-    sorter = DataFramePrioritySorter(data,'Sort Value')
-    
-    sorted_data = sorter.sort()
-    return sorted_data
+    return quicksort_data(data,'Sorted Value')
+
+
+def main():
+    data = Filter_main()
+    if data is None or data.empty:
+        raise ValueError("Filter_main() returned None or an empty DataFrame.")
+    print(f"Filter_main() returned data with shape: {data.shape}")
+    print(data.head())
+
+    data = AddSortValue(data, ["Computer Science", "Artificial Intelligence", "Machine Learning"], 
+                        ["Data Science", "Computer Science", "Information Technology"])
+    return data
+
+#print(main().head(50))
 

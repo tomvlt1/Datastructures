@@ -86,7 +86,7 @@ def account_page():
              # Validate user data
               vValid, verr = validation_function(user,1)     
               if vValid==1:
-                    return render_template('profile.html', user=user_data, error_message=verr)
+                    return render_template('app/templates/profile.html', user=user_data, error_message=verr)
               else:
                     
                     User.save_to_csv(user)                  
@@ -94,13 +94,13 @@ def account_page():
                     
                     user_data =user_Topics_function(user_data,topics) 
                                  
-                    return render_template('profile.html', user=user_data,topics=topics)  
+                    return render_template('app/templates/profile.html', user=user_data,topics=topics)  
     else:
        user_data = User.get_user_data_from_csv(session['email'])   
        
        user_data =user_Topics_function(user_data,topics)                           
                 
-       return render_template('profile.html', user=user_data, topics=topics)
+       return render_template('app/templates/profile.html', user=user_data, topics=topics)
   
   
   

@@ -34,7 +34,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     #print(sorted_data)
     Fullname = data['First Name'] + ' ' + data['Last Name']
     data['Full Name'] = Fullname
-    sorted_data = data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information']]
+    sorted_data = data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information', 'Sort Value']]
     return data  
 
 

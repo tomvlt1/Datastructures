@@ -1,6 +1,5 @@
 import datetime
 
-
 def validation_function(user,vorigen):
       
         vValid=0

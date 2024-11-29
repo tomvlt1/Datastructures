@@ -27,7 +27,11 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     data['Rating'] = pd.to_numeric(data['Rating'], errors='coerce') #rating to numefic, if not string 
 
     data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
-    return data  
+    
+    sorter = DataFramePrioritySorter(data,'Sort Value')
+    sorted_data = sorter.sort()
+    
+    return sorted_data 
 
 
 def AddSortValueProjects(dataDic, keywords, position):
@@ -58,8 +62,9 @@ def AddSortValueProjects(dataDic, keywords, position):
     
     sorter = DataFramePrioritySorter(data,'Sort Value')
     sorted_data = sorter.sort()
+    
     return sorted_data
-
+    
 
 
 if __name__ == '__main__':

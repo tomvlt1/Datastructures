@@ -1,4 +1,4 @@
-import hashlib
+
 import re
 from datetime import datetime
 import csv
@@ -34,6 +34,8 @@ class Project:
 
 
         self.start_date = self._validate_date(start_date)
+    
+  
 
     def _validate_number(self, value):
         try:
@@ -76,9 +78,6 @@ class Project:
     def validate_completion_estimate(self):
         return self.completion_estimate_months > 0
 
-    def validate_project_description(self):
-        return bool(self.project_description.strip())
-
     def validate_positions_needed(self):
         return self.positions_needed >= 0
 
@@ -95,15 +94,12 @@ class Project:
             self.validate_positions_needed()
         )
 
-    def hash_project_description(self):
-        return hashlib.sha256(self.project_description.encode()).hexdigest()
-
     def save_to_csv(self):
         fieldnames = [
             "Project Name", "Admin", "Number of People", "Keywords",
             "Project Stage", "Language Spoken", "Start Date",
             "Completion Estimate (Months)", "Project Description",
-            "Positions Needed", "Image"
+            "Positions Needed"
         ]
 
         projects = []
@@ -125,10 +121,8 @@ class Project:
                         row["Completion Estimate (Months)"] = self.completion_estimate_months
                         row["Project Description"] = self.project_description
                         row["Positions Needed"] = self.positions_needed
-                        row["Image"] = self.image
                     projects.append(row)
         except FileNotFoundError:
-            # File doesn't exist, will create a new one
             pass
 
         if not project_exists:

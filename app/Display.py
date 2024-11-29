@@ -32,3 +32,35 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     
     sorted_data = sorter.sort()
     return sorted_data  
+
+
+def AddSortValueProjects(dataDic, keywords, position):
+    data = pd.DataFrame(dataDic) #from json to dataframe 
+    if data.empty: 
+        return data 
+    
+    if (not keywords or keywords =='') and (not position or position ==''): #check for the emty spece aswell
+        data['Sort Value'] = 0
+        return data 
+
+    if keywords:
+        interest_similarities = [TF(interest, keywords) for interest in data['Keywords']]
+        data['Keywords Similarity'] = pd.Series(interest_similarities, index=data.index)
+    else:
+        data['Keywords Similarity'] = 0 
+
+    if position:
+        degree_similarities = [TF(degree, position) for degree in data['Positions Needed']]
+        data['Positions Similarity'] = pd.Series(degree_similarities, index=data.index)
+      
+    else:
+        data['Positions Similarity'] = 0  
+        
+    
+
+    data['Sort Value'] = ( 0.6 * data['Keywords Similarity']  + 0.4 * data['Positions Similarity'] )
+    
+    sorter = DataFramePrioritySorter(data,'Sort Value')
+    
+    sorted_data = sorter.sort()
+    return sorted_data

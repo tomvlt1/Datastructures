@@ -153,7 +153,7 @@ class Project:
             writer.writerows(projects)
 
     @staticmethod
-    def load_all_project_data():
+    def load_all_projects_data():
         projects = []
         try:
             with open("generated_project_database.csv", mode="r", newline="", encoding="utf-8") as file:

@@ -56,10 +56,8 @@ def AddSortValueProjects(dataDic, keywords, position):
 
     data['Sort Value'] = ( 0.6 * data['Keywords Similarity']  + 0.4 * data['Positions Similarity'] )
     
-    sorter = DataFramePrioritySorter(data,'Sort Value')
-    
-    sorted_data = sorter.sort()
-    return sorted_data
+    print(data)
+    return data
 
 
 

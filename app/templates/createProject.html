@@ -34,7 +34,7 @@
             box-sizing: border-box;
         }
 
-        /* Align multiple fields in the same row */
+        /* Align Admin and Language Spoken in the same row */
         .form-row .half-width {
             flex: 1;
         }
@@ -44,12 +44,38 @@
             margin-bottom: 5px;
         }
 
-        /* Additional custom styles if needed */
+        /* Specific Styles for Project Fields */
+        #project_stage,
+        #language_spoken,
+        #keywords,
+        #positions_needed {
+            width: 100%;
+        }
+
+        /* Button Styling */
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Error Message Styling */
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
     <script>
-        // Prevent form submission when pressing Enter
+        // Prevent form submission when Enter is pressed
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('projectForm');
+            const form = document.getElementById('createProjectForm');
             form.addEventListener('keydown', function (event) {
                 if (event.key === 'Enter') {
                     event.preventDefault(); // Prevent form submission on Enter
@@ -79,35 +105,28 @@
         </div>
     </header>
     <main>
-        <form method="POST" action="{{ url_for('projects.create_project') }}" id="projectForm">
+        <form method="POST" action="{{ url_for('projects.create_project') }}" id="createProjectForm">
             <h2>Create a New Project</h2>
             <!-- Show error message if it exists -->
             {% if error_message %}
-                <div class="error-message" style="color: red; margin-bottom: 10px;">
+                <div class="error-message">
                     {{ error_message | safe }}
                 </div>
             {% endif %}
 
-            <div class="form-group">
-                <label for="project_name">Project Name</label>
-                <input type="text" name="project_name" id="project_name" placeholder="Project Name" required>
+            <input type="text" name="project_name" placeholder="Project Name" required>
+            
+            <div class="form-row">
+                <div class="half-width">
+                    <input type="text" name="admin" placeholder="Admin (email)" required>
+                </div>
+                <div class="half-width">
+                    <input type="number" name="number_of_people" placeholder="Number of People" min="1" required>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="admin">Admin</label>
-                <input type="text" name="admin" id="admin" placeholder="Admin Name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="number_of_people">Number of People</label>
-                <input type="number" name="number_of_people" id="number_of_people" placeholder="Number of People" min="1" required>
-            </div>
-
-            <div class="form-group">
-                <label for="keywords">Keywords</label>
-                <input type="text" name="keywords" id="keywords" placeholder="Keywords (comma-separated)" required>
-            </div>
-
+            <input type="text" name="keywords" placeholder="Keywords (comma-separated)">
+            
             <div class="form-group">
                 <label for="project_stage">Project Stage</label>
                 <select name="project_stage" id="project_stage" required>
@@ -115,13 +134,20 @@
                     <option value="Idea">Idea</option>
                     <option value="Planning">Planning</option>
                     <option value="Execution">Execution</option>
-                    <option value="Completion">Completion</option>
+                    <option value="Completed">Completed</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="language_spoken">Language Spoken</label>
-                <input type="text" name="language_spoken" id="language_spoken" placeholder="Language Spoken" required>
+                <select name="language_spoken" id="language_spoken" required>
+                    <option value="">Select Language</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <!-- Add more languages as needed -->
+                </select>
             </div>
 
             <div class="form-row">
@@ -130,26 +156,19 @@
                     <input type="date" name="start_date" id="start_date" required>
                 </div>
                 <div class="half-width">
-                    <label for="completion_estimate">Completion Estimate (Months)</label>
-                    <input type="number" name="completion_estimate" id="completion_estimate" placeholder="Months" min="1" required>
+                    <input type="number" name="completion_estimate" id="completion_estimate" placeholder="Completion Estimate (Months)" min="1" required>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="project_description">Project Description</label>
-                <textarea name="project_description" id="project_description" placeholder="Describe your project" rows="5" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="positions_needed">Positions Needed</label>
-                <textarea name="positions_needed" id="positions_needed" placeholder="List positions needed (e.g., Developer, Designer)" rows="3" required></textarea>
-            </div>
+            <textarea name="project_description" placeholder="Project Description" rows="4" required></textarea>
+            <textarea name="positions_needed" placeholder="Positions Needed (comma-separated)" rows="3"></textarea>
 
             <button type="submit">Create Project</button>
         </form>
 
         <script>
-            // Additional JavaScript if needed for dynamic functionality
+            // Add any additional JavaScript if needed for dynamic behavior
+            // For example, you can add validation or dynamic field display here
         </script>
     </main>
 </body>

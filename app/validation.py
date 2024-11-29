@@ -1,3 +1,6 @@
+import datetime
+
+
 def validation_function(user,vorigen):
       
         vValid=0
@@ -31,3 +34,84 @@ def validation_function(user,vorigen):
                
        
         return vValid, verr
+    
+    
+def validate_project_data(project):
+
+    vValid = 0
+    verr = ''
+
+    if not project.project_name or project.project_name.strip() == '':
+        error_message = "Project name is required."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    if not project.admin or project.admin.strip() == '':
+        error_message = "Admin is required."
+        vValid = 1
+        verr += '<br>' + error_message
+    else:
+        # Optional: Check if the admin exists in the database
+        if not project.admin_exists():
+            error_message = "Admin does not exist."
+            vValid = 1
+            verr += '<br>' + error_message
+
+    # Validate Number of People
+    if not isinstance(project.number_of_people, int) or project.number_of_people <= 0:
+        error_message = "Number of people must be a positive integer."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Project Stage
+    allowed_stages = ['Idea', 'Planning', 'Execution', 'Completed']
+    if project.project_stage not in allowed_stages:
+        error_message = f"Project stage must be one of the following: {', '.join(allowed_stages)}."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Language Spoken
+    allowed_languages = ['English', 'Spanish', 'French', 'German']  # Extend this list as needed
+    if project.language_spoken not in allowed_languages:
+        error_message = f"Language spoken must be one of the following: {', '.join(allowed_languages)}."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Start Date
+    if not isinstance(project.start_date, datetime):
+        error_message = "Invalid start date format. Use YYYY-MM-DD."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Completion Estimate (Months)
+    if not isinstance(project.completion_estimate, int) or project.completion_estimate <= 0:
+        error_message = "Completion estimate must be a positive integer representing months."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Project Description
+    if not project.project_description or project.project_description.strip() == '':
+        error_message = "Project description is required."
+        vValid = 1
+        verr += '<br>' + error_message
+
+    # Validate Positions Needed
+    if project.positions_needed:
+        if not isinstance(project.positions_needed, list) or not all(isinstance(pos, str) for pos in project.positions_needed):
+            error_message = "Positions needed must be a list of position names."
+            vValid = 1
+            verr += '<br>' + error_message
+        elif len(project.positions_needed) == 0:
+            error_message = "At least one position is needed."
+            vValid = 1
+            verr += '<br>' + error_message
+
+    # Optional: Validate Keywords (if necessary)
+    if project.keywords:
+        if not isinstance(project.keywords, list) or not all(isinstance(keyword, str) for keyword in project.keywords):
+            error_message = "Keywords must be a list of keywords."
+            vValid = 1
+            verr += '<br>' + error_message
+
+    return vValid, verr
+

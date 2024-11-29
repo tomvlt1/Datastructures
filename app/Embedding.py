@@ -39,3 +39,7 @@ def Embedding(person_data, target_data):
 
     
     return sum(similarity_scores) / len(similarity_scores) if similarity_scores else 0.0
+
+
+if __name__ == "__main__":
+    print(TakeFields(["Computer Science"], ["Data Science", "Computer Science", "Machine Learning"]))

@@ -28,14 +28,14 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
 
     data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
     
-    sorter = DataFramePrioritySorter(data,'Sort Value')
+    #sorter = DataFramePrioritySorter(data,'Sort Value')
     
-    sorted_data = sorter.sort()
+    #sorted_data = sorter.sort()
     #print(sorted_data)
-    Fullname = sorted_data['First Name'] + ' ' + sorted_data['Last Name']
-    sorted_data['Full Name'] = Fullname
-    sorted_data = sorted_data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information']]
-    return sorted_data  
+    Fullname = data['First Name'] + ' ' + data['Last Name']
+    data['Full Name'] = Fullname
+    sorted_data = data[['Full Name', 'Rating', 'Age', 'GPA', 'Availability', 'Topics of Interest', 'Degree', 'Graduation Year', 'Email', 'Description', 'Additional Information']]
+    return data  
 
 
 def AddSortValueProjects(dataDic, keywords, position):

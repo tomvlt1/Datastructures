@@ -21,37 +21,42 @@
       // Parse JSON data sent from Flask safely
       var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
         
-      // DataTables configuration
-      var table = $('#collaborators_table').DataTable({
-        data: collaborators_data,
-        columns: [
-          { data: 'First Name', title: 'First Name' },
-          { data: 'Last Name', title: 'Last Name' },
-          { data: 'Rating', title: 'Rating' },
-          { data: 'Age', title: 'Age' },
-          { data: 'DOB', title: 'Date of Birth' },
-          { data: 'Nationality', title: 'Nationality' },
-          { data: 'Country of Residence', title: 'Country of Residence' },
-          { data: 'Degree', title: 'Degree' },
-          { data: 'Graduation Year', title: 'Graduation Year' },
-          { data: 'GPA', title: 'GPA' },
-          { data: 'Availability', title: 'Availability (hours/week)' },
-          { data: 'Topics of Interest', title: 'Topics of Interest' },
-          { data: 'Email', title: 'Email' },
-          { data: 'Description', title: 'Description' },
-          { data: 'Additional Information', title: 'Additional Information' },
-          { data: 'Sort Value', title: 'Sort Value' }
-        ],
-        ordering: false, // Disable automatic ordering
-        paging: true,
-        searching: true,
-        pageLength: 5,
-        lengthMenu: [5, 10, 25, 50],
-        info: true,
-        autoWidth: true,
-        dom: '<"top"i>rt<"bottom"flp><"clear">',
-      });
-  
+    // DataTables configuration
+var table = $('#collaborators_table').DataTable({
+  data: collaborators_data,
+  columns: [
+    {
+      // Combine First Name and Last Name into Full Name
+      data: null, // Use null since we'll handle the data rendering
+      title: 'Full Name',
+      render: function (data, type, row) {
+        return row['First Name'] + ' ' + row['Last Name'];
+      }
+    },
+    { data: 'Rating', title: 'Rating' },
+    { data: 'Age', title: 'Age' },
+    // Removed the DOB column
+    { data: 'Nationality', title: 'Nationality' },
+    { data: 'Country of Residence', title: 'Country of Residence' },
+    { data: 'Degree', title: 'Degree' },
+    { data: 'Graduation Year', title: 'Graduation Year' },
+    { data: 'GPA', title: 'GPA' },
+    { data: 'Availability', title: 'Availability (hours/week)' },
+    { data: 'Topics of Interest', title: 'Topics of Interest' },
+    { data: 'Email', title: 'Email' },
+    { data: 'Description', title: 'Description' },
+    { data: 'Additional Information', title: 'Additional Information' },
+  ],
+  ordering: false, // Disable automatic ordering
+  paging: true,
+  searching: true,
+  pageLength: 5,
+  lengthMenu: [5, 10, 25, 50],
+  info: true,
+  autoWidth: true,
+  dom: '<"top"i>rt<"bottom"flp><"clear">',
+});
+
       // Dynamic Filtering
       $('#filter_form').submit(function (e) {
         e.preventDefault(); // Prevent default form submission

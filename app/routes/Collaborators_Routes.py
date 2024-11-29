@@ -22,11 +22,10 @@ def collaborators():
                 if value !='':
                     if key == 'looking_for':
                         looking_for = value  
-                        print(value)               
+                               
                     elif key == 'looking_for_degree':
                         looking_for_degree = value
-                        print(value)  
-            
+                      
             sorted_data = AddSortValue(filtered_data, looking_for, looking_for_degree)   
             # Convert sorted data to dictionary (json). todict
             data_json = sorted_data.to_dict(orient='records')             

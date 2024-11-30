@@ -4,7 +4,7 @@
 
 ## 💡About
 
-Match-IE offers the opportunity for students as well as alumni to collaborate in an effortless
+Match-IE offers the opportunity for students as well as alumni to collaborate in an effortless way.
 
 ![Home](app/static/images/home.png)
 ## 🔀 Installation

@@ -45,12 +45,12 @@ To fully test all the user features we have created a step by step guide. This i
 
 1.**Discovery** Read through the home page and learn more about the company
 
-2.**Discovery part 2**Perhaps go to the LinkedIn of one of the members
+2.**Discovery part 2** Perhaps go to the LinkedIn of one of the members
 
-3. **Account creation**Login or create an account and enter your data, you will be added to our database for others to find you.
+**Account creation** Login or create an account and enter your data, you will be added to our database for others to find you.
 ![Home](app/static/images/login.png)
 
-4. **Page Selection**Now you can start looking for whatever suits your needs best on each page.
+4. **Page Selection** Now you can start looking for whatever suits your needs best on each page.
 
     a. **Look for Collaborators**: If you are looking for people to work with or join one of your projects.
 

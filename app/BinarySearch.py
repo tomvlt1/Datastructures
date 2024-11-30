@@ -47,7 +47,7 @@ def binarysearch(fullnameslist, fullname):
         else:
             start = mid + 1
     
-    return None  
+    return "User not found" 
 
 name_provided = "Quinn Johnson"
 result = binarysearch(lstFullNamesSorted, name_provided)

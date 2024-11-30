@@ -3,7 +3,7 @@
 
 Match-IE offers the opportunity for students as well as alumni to collaborate in an effortless
 
-![Home](static/images/home.png)
+![Home](app/static/images/home.png)
 ## Installation
 Assuming we have made it public or have shared it:
 
@@ -45,7 +45,7 @@ To fully test all the user features we have created a step by step guide. This i
 2.**Discovery part 2**Perhaps go to the LinkedIn of one of the members
 
 3. **Account creation**Login or create an account and enter your data, you will be added to our database for others to find you.
-![Home](static/images/login.png)
+![Home](app/static/images/login.png)
 
 4. **Page Selection**Now you can start looking for whatever suits your needs best on each page.
 

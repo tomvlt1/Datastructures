@@ -26,9 +26,17 @@ def account_page():
     if request.method == 'POST':
             # Get form data
               first_name = request.form.get('first_name')
-              last_name = request.form.get('last_name')  
-              description = request.form.get('description')
-              additional_info = request.form.get('additional_info')              
+              last_name = request.form.get('last_name')              
+              
+              description = request.form.get('description')              
+              description=description.replace('\r\n', '\n') #para uniformizar con windows'
+              description=description.replace('\r', '\n') #para uniformizar con mac antiguo'
+              description=description.replace('\n', '\\n')               
+              additional_info = request.form.get('additional_info') 
+              additional_info=additional_info.replace('\r\n', '\n') #para uniformizar con windows             
+              additional_info=additional_info.replace('\r', '\n') #para uniformizar con mac antiguo'
+              additional_info=additional_info.replace('\n', '\\n') 
+              
               dob = request.form.get('dob')
               nationality = request.form.get('nationality')
               country_residence = request.form.get('country_residence')
@@ -66,7 +74,14 @@ def account_page():
               password=user_data['Password']
               rating=user_data['Rating']
               matched_topics = request.form.get('selected_topics').split(', ')
-              other_topics = request.form.get('other_topics').split(', ')
+              
+              other_topics = request.form.get('other_topics')      
+  
+              other_topics=other_topics.replace('\r\n', '\n') #para uniformizar con windows'
+              other_topics=other_topics.replace('\r', '\n') #para uniformizar con mac antiguo'
+              other_topics=other_topics.replace('\n', '\\n') 
+                       
+              other_topics = other_topics.split(', ')
               all_topics = matched_topics + other_topics 
              
               cleaned_topics = [] 
@@ -93,17 +108,22 @@ def account_page():
                     user_data = User.get_user_data_from_csv(session['email'])   
                     
                     user_data =user_Topics_function(user_data,topics) 
-                                 
+                    #to show some fields I recover the line breaks
+                    user_data['Description'] = user_data['Description'].replace('\\n', '\n') 
+                    user_data['Additional Information'] = user_data['Additional Information'].replace('\\n', '\n')       
+                   
                     return render_template('profile.html', user=user_data,topics=topics)  
     else:
+      
        user_data = User.get_user_data_from_csv(session['email'])   
-       
-       user_data =user_Topics_function(user_data,topics)                           
-                
+      
+       user_data =user_Topics_function(user_data,topics)
+      
+        #to show some fields I recover the line breaks
+       user_data['Description'] = user_data['Description'].replace('\\n', '\n') 
+       user_data['Additional Information'] = user_data['Additional Information'].replace('\\n', '\n')
+              
        return render_template('profile.html', user=user_data, topics=topics)
-  
-  
-  
   
       
 def user_Topics_function(user_data,topicsList):
@@ -127,10 +147,11 @@ def user_Topics_function(user_data,topicsList):
         unmatched_topics = []  
         for topic in user_topics:  
             if topic not in topicsList:  
-                unmatched_topics.append(topic)  
+              topic = topic.replace('\\n', '\n')
+              unmatched_topics.append(topic)  
         
         # Actualizar datos del usuario
-        user_data['Matched Topics'] = matched_topics
+        user_data['Matched Topics'] = matched_topics        
         user_data['Other Topics'] = unmatched_topics           
         return user_data
            

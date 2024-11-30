@@ -1,88 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Match-IE Home</title>
+{% block title %}Match-IE Home{% endblock %}
+{% block stylesAdd %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+<!-- Google Fonts: Lato -->
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+ <!-- Font Awesome for Icons -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="{{ url_for('static', filename='stylesHome.css') }}">
+{% endblock stylesAdd%} 
+{% block scriptshead %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+{% endblock scriptshead%} 
+{% block submenu %}
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-</head>
-
-<body>
-  <header>
-    <div class="navbar">
-      <h1 class="logo">Match-IE</h1>
-      <nav>
-        <a href="{{ url_for('home.home') }}">Home</a>
-        <a href="{{ url_for('collaborators.collaborators') }}">Collaborators</a>
-        <a href="{{ url_for('projects.projects') }}">Projects</a>
-        <a href="{{ url_for('mentors.mentors') }}">Mentor</a>
-
-        {% if session.get('IsLogged') == True %}
-          <a href="{{ url_for('account.account_page') }}">Profile</a>
-          <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-          <a href="{{ url_for('login.login_page') }}">Login</a>
-        {% endif %}
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="banner">
-      <h2>Recent Activity</h2>
-    </section>
-
-    <section class="activity-section">
-      <div class="activity-container">
-        <!-- Collaborators Column -->
-        <div class="activity-column">
-          <h3>Collaborators</h3>
-          <div class="activity-box">
-            <p>Jane Doe joined as a collaborator.</p>
-            <a href="{{ url_for('collaborators.collaborators') }}" class="btn btn-primary btn-sm">View Profile</a>
-          </div>
-          <div class="activity-box">
-            <p>John Smith added new skills to his profile.</p>
-            <a href="{{ url_for('collaborators.collaborators') }}" class="btn btn-primary btn-sm">View Profile</a>
-          </div>
-        </div>
-
-        <!-- Projects Column -->
-        <div class="activity-column">
-          <h3>Projects</h3>
-          <div class="activity-box">
-            <p>Thomas launched a new website building project.</p>
-            <a href="#" class="btn btn-secondary btn-sm">+ More info</a>
-          </div>
-          <div class="activity-box">
-            <p>Emma started a marketing campaign project.</p>
-            <a href="#" class="btn btn-secondary btn-sm">+ More info</a>
-          </div>
-        </div>
-
-        <!-- Mentors Column -->
-        <div class="activity-column">
-          <h3>Mentors</h3>
-          <div class="activity-box">
-            <p>Dr. Sarah Lee became available for mentoring.</p>
-            <a href="#" class="btn btn-info btn-sm">Contact Mentor</a>
-          </div>
-          <div class="activity-box">
-            <p>Prof. David Green added new time slots.</p>
-            <a href="#" class="btn btn-info btn-sm">Contact Mentor</a>
-          </div>
+  <div class="navbar-secondary d-flex align-items-center">
+    <nav class="ms-auto">
+      <a href="#instructions">Instrucciones</a>
+      <a href="#our-purpose">Our Purpose</a>
+      <a href="#data">Datos Importantes</a>
+      <a href="#app-history">Historia de la App</a>
+      <a href="#our-team">Our Team</a>
+    </nav>
+  </div>
+{% endblock submenu%} 
+{% block content %}
+<!-- Sección 1: Carrusel de Pantalla Completa -->
+<section id="carouselSection">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" style="background-image: url({{ url_for('static', filename='images/hero01.jpg') }});">
+        <div class="carousel-caption">
+          <h2>Bienvenido a Match-IE</h2>
+          <p>Conectando talentos con oportunidades.</p>
         </div>
       </div>
-    </section>
-  </main>
+      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='images/slide2carrusel-home-fostering-positive-change-r.png') }}')">
+        <div class="carousel-caption">
+          <h2>Colabora con Expertos</h2>
+          <p>Únete a nuestra comunidad de colaboradores.</p>
+        </div>
+      </div>
+      <div class="carousel-item" style="background-image: url('{{ url_for('static', filename='images/16759572899743.webp') }}')">
+        <div class="carousel-caption">
+          <h2>Desarrolla tus Proyectos</h2>
+          <p>Lleva tus ideas al siguiente nivel.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
+</section>
 
-  <footer>
-    <p>Contact Us: dreamteam@gmail.com</p>
-  </footer>
-</body>
+<!-- Sección 2: Instrucciones -->
+<section id="instructions" class="bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Instrucciones</h2>
+    <p class="text-center">
+      Aquí puedes añadir las instrucciones para que los usuarios sepan cómo utilizar tu sitio web. Este es un texto de ejemplo que puedes reemplazar con el contenido que desees.
+    </p>
+  </div>
+</section>
 
-</html>
+<!-- Sección 3: Our Purpose -->
+<section id="our-purpose">
+  <!-- Título fuera del contenedor para alinear más a la izquierda y posicionarlo más abajo -->
+  <h2 class="section-title">Our Purpose</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 purpose-item">
+        <h4>Fomentar la Innovación</h4>
+        <p>
+          Nuestro propósito es impulsar la innovación y el desarrollo tecnológico, creando un espacio donde las ideas se conviertan en proyectos exitosos.
+        </p>
+      </div>
+      <div class="col-md-6 purpose-item">
+        <h4>Conectar Talentos</h4>
+        <p>
+          Buscamos conectar a profesionales talentosos con oportunidades que les permitan crecer y desarrollarse en sus respectivas áreas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección 4: Datos Importantes -->
+<section id="data">
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <div class="col-md-4 data-item data-item-1">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          <i class="fas fa-users fa-3x mb-3"></i>
+          <h3>Más de 100 Colaboradores</h3>
+          <p>Una red creciente de profesionales comprometidos.</p>
+        </div>
+      </div>
+      <div class="col-md-4 data-item data-item-2">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          <i class="fas fa-project-diagram fa-3x mb-3"></i>
+          <h3>50+ Proyectos Activos</h3>
+          <p>Innovación y desarrollo en diversas áreas.</p>
+        </div>
+      </div>
+      <div class="col-md-4 data-item data-item-3">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+          <i class="fas fa-trophy fa-3x mb-3"></i>
+          <h3>Premios y Reconocimientos</h3>
+          <p>Excelencia en nuestros esfuerzos y logros.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección 5: Historia de la App -->
+<section id="app-history">
+  <!-- Título fuera del contenedor para alinear más a la izquierda y posicionarlo más abajo -->
+  <h2 class="section-title">Historia de la App</h2>
+  <div class="container">
+    <p>
+      <!-- Aquí puedes añadir la historia de la app. Este es un texto de ejemplo que puedes reemplazar con el contenido real. -->
+      Match-IE nació en el año 2020, con la visión de crear una plataforma que facilite la conexión entre profesionales y proyectos innovadores en el ámbito tecnológico y empresarial. Desde sus inicios, la app se ha enfocado en ofrecer herramientas intuitivas que permitan a los usuarios colaborar de manera efectiva, gestionar proyectos de manera eficiente y expandir sus redes profesionales.
+    </p>
+    <p>
+      A lo largo de los años, Match-IE ha evolucionado incorporando nuevas funcionalidades basadas en las necesidades de sus usuarios. Hemos implementado sistemas avanzados de búsqueda y filtrado, integraciones con redes sociales profesionales, y módulos de seguimiento de proyectos que garantizan una experiencia de usuario fluida y enriquecedora. Nuestro compromiso es seguir innovando y adaptándonos para ofrecer siempre el mejor servicio a nuestra comunidad.
+    </p>
+    <p>
+      Actualmente, Match-IE cuenta con más de 500 colaboradores activos, liderando más de 200 proyectos que abarcan desde el desarrollo de software hasta iniciativas de sostenibilidad y responsabilidad social. Nuestro objetivo es continuar creciendo y expandiendo nuestra influencia, creando un impacto positivo en la industria y fomentando el desarrollo profesional de nuestros usuarios.
+    </p>
+  </div>
+</section>
+
+<!-- Sección 6: Nuestro Equipo -->
+<section id="our-team">
+  <div class="container">
+    <h2 class="text-center mb-5">Our Team</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-6 team-member">
+        <img src="{{ url_for('static', filename='images/WhatsApp Image 2024-11-25 at 19.07.43.jpeg') }}" alt="Miembro del Equipo 1">
+        <h4>Nombre 1</h4>
+        <a href="https://www.linkedin.com/in/tu-perfil1" target="_blank"><i class="fab fa-linkedin linkedin-icon"></i></a>
+      </div>
+      <div class="col-md-6 team-member">
+        <img src="{{ url_for('static', filename='images/WhatsApp Image 2024-11-25 at 19.07.43.jpeg') }}" alt="Miembro del Equipo 2">
+        <h4>Nombre 2</h4>
+        <a href="https://www.linkedin.com/in/tu-perfil2" target="_blank"><i class="fab fa-linkedin linkedin-icon"></i></a>
+      </div>
+      <div class="col-md-6 team-member">
+        <img src="{{ url_for('static', filename='images/WhatsApp Image 2024-11-25 at 19.07.43.jpeg') }}" alt="Miembro del Equipo 3">
+        <h4>Nombre 3</h4>
+        <a href="https://www.linkedin.com/in/tu-perfil3" target="_blank"><i class="fab fa-linkedin linkedin-icon"></i></a>
+      </div>
+      <div class="col-md-6 team-member">
+        <img src="{{ url_for('static', filename='images/WhatsApp Image 2024-11-25 at 19.07.43.jpeg') }}" alt="Miembro del Equipo 4">
+        <h4>Nombre 4</h4>
+        <a href="https://www.linkedin.com/in/tu-perfil4" target="_blank"><i class="fab fa-linkedin linkedin-icon"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 def validation_function(user,vorigen):
       
@@ -36,7 +36,6 @@ def validation_function(user,vorigen):
     
     
 def validate_project_data(project):
-
     vValid = 0
     verr = ''
 
@@ -50,11 +49,13 @@ def validate_project_data(project):
         vValid = 1
         verr += '<br>' + error_message
     else:
-        # Optional: Check if the admin exists in the database
-        if not project.admin_exists():
+        #  Check if the admin exists in the database
+        
+        if project.admin_exists:
             error_message = "Admin does not exist."
-            vValid = 1
-            verr += '<br>' + error_message
+            vValid=1
+            verr = verr + '<br>' + error_message      
+        
 
     # Validate Number of People
     if not isinstance(project.number_of_people, int) or project.number_of_people <= 0:
@@ -77,13 +78,20 @@ def validate_project_data(project):
         verr += '<br>' + error_message
 
     # Validate Start Date
-    if not isinstance(project.start_date, datetime):
-        error_message = "Invalid start date format. Use YYYY-MM-DD."
+    if not isinstance(project.start_date, str):
+        error_message = "Invalid start date format. It must be a string in YYYY-MM-DD format."
         vValid = 1
-        verr += '<br>' + error_message
+        verr += '<br>' + error_message   
+    try:
+        # Intentar convertir el string a un objeto datetime
+        datetime.strptime(project.start_date, "%Y-%m-%d")
+    except ValueError:
+            error_message = "Invalid start date format. Use YYYY-MM-DD."
+            vValid = 1
+            verr += '<br>' + error_message
 
     # Validate Completion Estimate (Months)
-    if not isinstance(project.completion_estimate, int) or project.completion_estimate <= 0:
+    if not isinstance(project.completion_estimate_months, int) or project.completion_estimate_months <= 0:
         error_message = "Completion estimate must be a positive integer representing months."
         vValid = 1
         verr += '<br>' + error_message

@@ -1,0 +1,297 @@
+/* Estilos específicos para la página Home */
+body.home {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth; /* Para un desplazamiento suave entre secciones */
+  }
+  /* Full-screen carousel */
+  .carousel-item {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 10%; /* Más a la izquierda */
+    transform: translateY(-50%);
+    text-align: left;
+    max-width: 50%;
+  }
+  
+  .carousel-caption h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Mejora la legibilidad */
+    margin-bottom: 20px; /* Separación del párrafo */
+  }
+  
+  .carousel-caption p {
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Mejora la legibilidad */
+  }
+  
+  /* Sección de Instrucciones */
+  #instructions {
+    padding: 60px 0;
+  }
+  
+  #instructions h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #003366; /* Azul marino */
+    margin-bottom: 40px;
+  }
+  
+  #instructions p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333333;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Sección Our Purpose */
+  #our-purpose {
+    background-color: #0047AB; /* Azul cobalto */
+    padding: 60px 0;
+  }
+  
+  /* Título de la sección fuera del contenedor */
+  #our-purpose .section-title {
+    text-align: left; /* Alinear a la izquierda */
+    margin: 40px 30px 20px 30px; /* Margen superior, derecho, inferior, izquierdo */
+    padding-left: 0; /* Sin padding adicional */
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #FFFFFF; /* Texto blanco */
+  }
+  
+  #our-purpose .container {
+    max-width: 1000px;
+    padding-left: 30px; /* Mantener padding a la izquierda */
+    padding-right: 30px; /* Mantener padding a la derecha */
+    margin-top: 20px; /* Separar el contenido del título */
+  }
+  
+  #our-purpose .purpose-item {
+    margin-bottom: 30px;
+  }
+  
+  #our-purpose .purpose-item h4 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #FFFFFF; /* Texto blanco */
+    margin-bottom: 15px;
+  }
+  
+  #our-purpose .purpose-item p {
+    font-size: 1.1rem;
+    color: #FFFFFF; /* Texto blanco */
+    text-align: justify;
+  }
+  
+  /* Sección de Datos Importantes */
+  #data {
+    padding: 0;
+  }
+  
+  #data .data-item {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+    margin-bottom: 0; /* Eliminar margen inferior para que los elementos estén alineados */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Colores personalizados para cada dato */
+  .data-item-1 {
+    background-color: #00AEEF; /* Azul claro más vivo */
+    color: #FFFFFF; /* Texto Blanco */
+  }
+  
+  .data-item-2 {
+    background-color: #003366; /* Azul Marino */
+    color: #FFFFFF; /* Texto Blanco */
+  }
+  
+  .data-item-3 {
+    background-color: #000000; /* Negro */
+    color: #FFFFFF; /* Texto Blanco */
+  }
+  
+  #data .data-item h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+  
+  #data .data-item p {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    max-width: 250px;
+  }
+  
+  /* Sección Historia de la App */
+  #app-history {
+    background-color: #ffffff; /* Blanco */
+    padding: 60px 0;
+  }
+  
+  /* Título de la sección fuera del contenedor */
+  #app-history .section-title {
+    text-align: left; /* Alinear a la izquierda */
+    margin: 40px 30px 20px 30px; /* Margen superior, derecho, inferior, izquierdo */
+    padding-left: 0; /* Sin padding adicional */
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #003366; /* Azul marino */
+  }
+  
+  #app-history .container {
+    max-width: 800px;
+    padding-left: 30px; /* Mantener padding a la izquierda */
+    padding-right: 30px; /* Mantener padding a la derecha */
+    margin-top: 20px; /* Separar el contenido del título */
+  }
+  
+  #app-history p {
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #333333;
+    margin-bottom: 20px;
+  }
+  
+  /* Sección Nuestro Equipo */
+  #our-team {
+    background-color: #003366; /* Azul marino */
+    color: white;
+    padding: 80px 0; /* Aumentar padding para más espacio */
+  }
+  
+  #our-team h2 {
+    text-align: center;
+    margin-bottom: 60px; /* Más espacio entre el título y los integrantes */
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #FFFFFF;
+  }
+  
+  .team-member {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .team-member img {
+    width: 150px; /* Reducir tamaño */
+    height: 150px; /* Reducir tamaño */
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 4px solid #fff;
+  }
+  
+  .team-member h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+  
+  .linkedin-icon {
+    color: #0e76a8;
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+  
+  .linkedin-icon:hover {
+    color: #084d6e;
+  }
+  
+  /* Footer styles */
+  footer {
+    background-color: #003366; /* Azul marino */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  /* Eliminar línea blanca entre header y carrusel */
+  #carouselSection {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  /* Sección de Datos Importantes: Ocupando todo el ancho */
+  #data .row {
+    margin: 0;
+  }
+  
+  #data .data-item {
+    flex: 1;
+    min-height: 200px; /* Asegurar altura mínima para mejor apariencia */
+  }
+  
+  /* Sección Nuestro Equipo: Filas de dos integrantes */
+  #our-team .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .team-member {
+    flex: 1 1 calc(50% - 30px);
+    max-width: calc(50% - 30px);
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .carousel-caption {
+      max-width: 80%;
+    }
+  
+    .team-member {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  
+    #data .data-item {
+      padding: 20px;
+    }
+  
+    #our-purpose .purpose-item {
+      margin-bottom: 20px;
+    }
+  
+    /* Alinear títulos a la izquierda en móviles */
+    #our-purpose .section-title,
+    #app-history .section-title {
+      text-align: left; /* Mantener alineación a la izquierda */
+      margin-left: 15px; /* Separar del borde */
+    }
+  
+    /* Ajustar padding en secciones */
+    #our-purpose .container,
+    #app-history .container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    /* Aumentar margen top en títulos para separación adicional */
+    #our-purpose .section-title,
+    #app-history .section-title {
+      margin-top: 20px;
+    }
+  }

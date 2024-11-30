@@ -1,0 +1,65 @@
+
+
+    /* Custom Styles for Layout */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 15px;
+        margin-bottom: 0px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Align Admin and Language Spoken in the same row */
+    .form-row .half-width {
+        flex: 1;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Specific Styles for Project Fields */
+    #project_stage,
+    #language_spoken,
+    #keywords,
+    #positions_needed {
+        width: 100%;
+    }
+
+    /* Button Styling */
+    button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    /* Error Message Styling */
+    .error-message {
+        color: red;
+        margin-bottom: 10px;
+    }

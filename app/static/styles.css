@@ -741,3 +741,51 @@ h2 {
   display: block;
   color: #333; /* Ajusta el color según el tema */
 }
+
+/* Header Principal */
+.navbar-primary {
+  background-color: #003366; /* Azul marino */
+  padding: 15px 30px;
+}
+
+.navbar-primary .logo {
+  color: #fff;
+  font-size: 24px;
+  margin-right: auto;
+  font-weight: 700;
+}
+
+.navbar-primary nav a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-primary nav a:hover {
+  color: #ffcc00; /* Amarillo IE */
+}
+
+/* Header Secundario */
+.navbar-secondary {
+  background-color: #FFFFFF; /* Blanco */
+  padding: 10px 30px;
+  border-bottom: 1px solid #e0e0e0; /* Línea gris suave */
+}
+
+.navbar-secondary nav a {
+  color: #000000; /* Negro */
+  margin-right: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-bottom: 1px solid transparent; /* Inicialmente transparente */
+  transition: border-bottom 0.3s, color 0.3s;
+  padding-bottom: 2px; /* Espacio para la línea */
+}
+
+.navbar-secondary nav a:hover {
+  border-bottom: 1px solid #000000; /* Subrayado al pasar el cursor */
+  color: #00AEEF; /* Cambia a azul claro más vivo al pasar el cursor */
+}
+
+

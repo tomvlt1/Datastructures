@@ -78,7 +78,7 @@ def generate_random_data(num_rows):
     "Master in Customer Experience & Innovation",
     "Master in Talent Development & Human Resources"]
     email_suffixes = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com", "@icloud.com", "@protonmail.com", "@aol.com", "@zoho.com", "@yandex.com", "@mail.com"]
-
+    photos = ["person1.png", "person2.png", "person3.png", "person4.png", "milei.jpeg", "trump.jpeg", "biden.jpeg"]
     data = []
     
     for _ in range(num_rows):
@@ -110,9 +110,10 @@ def generate_random_data(num_rows):
         
         availability = random.randint(2, 20)
         sort_value = 0.0
+        photo = random.choice(photos)
 
         
-        data.append([first_name, last_name, rating, age, DOB, nationality, country_of_residence, degree, graduation_year, gpa, availability, topics, email, description, additional_information, sort_value])
+        data.append([first_name, last_name, rating, age, DOB, nationality, country_of_residence, degree, graduation_year, gpa, availability, topics, email, description, additional_information, sort_value,photo])
 
     return data
 
@@ -123,7 +124,7 @@ def generate_email(first_name, email_suffixes):
 
 def write_to_csv(data, filename):
     
-    headers = ["First Name", "Last Name","Rating" ,"Age","DOB", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Topics of Interest", "Email", "Description", "Additional Information", "Sort Value"]
+    headers = ["First Name", "Last Name","Rating" ,"Age","DOB", "Nationality", "Country of Residence", "Degree", "Graduation Year", "GPA", "Availability", "Topics of Interest", "Email", "Description", "Additional Information", "Sort Value", "Photo"]
 
     
     df = pd.DataFrame(data, columns=headers)
@@ -138,5 +139,5 @@ def main():
     write_to_csv(generated_data, 'generated_database.csv')
     
 
-#main()
+main()
 

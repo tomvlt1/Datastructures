@@ -8,8 +8,8 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
         return data 
     
     if (not looking_for_interest or looking_for_interest =='') and (not looking_for_degree or looking_for_degree ==''): #check for the emty spece aswell
-        data['Sort Value'] = pd.to_numeric(data['Rating'], errors='coerce') / 5 
-        return data 
+        data['Sort Value'] = 100*(pd.to_numeric(data['Rating'], errors='coerce') / 5 )
+        return data     
 
     if looking_for_interest:
         interest_similarities = [TF(interest, looking_for_interest) for interest in data['Topics of Interest']]
@@ -26,7 +26,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
         
     data['Rating'] = pd.to_numeric(data['Rating'], errors='coerce') #rating to numefic, if not string 
 
-    data['Sort Value'] = ( 0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
+    data['Sort Value'] = 100*(0.5 * data['Interest Similarity']  + 0.2 * data['Degree Similarity']  + 0.3 * (data['Rating'] / 5) )
     
     sorter = DataFramePrioritySorter(data,'Sort Value')
     sorted_data = sorter.sort()
@@ -58,7 +58,7 @@ def AddSortValueProjects(dataDic, keywords, position):
         
     
 
-    data['Sort Value'] = ( 0.6 * data['Keywords Similarity']  + 0.4 * data['Positions Similarity'] )
+    data['Sort Value'] = 100*( 0.6 * data['Keywords Similarity']  + 0.4 * data['Positions Similarity'] )
     
     sorter = DataFramePrioritySorter(data,'Sort Value')
     sorted_data = sorter.sort()

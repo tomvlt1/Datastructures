@@ -58,6 +58,7 @@ To fully test all the user features we have created a step by step guide. This i
 5. **Searching**:
 
     a. **Filters**, first remove out any section of people or projects that you are not interested in.
+    
     b.**Interest**, input whichever specific subjects or degree or position you are looking for and our word embedding technology will recommend the people and projects that are closest to your desires.
 
 6. **Reaching out**, you will be able to see an email address that you will be able to reach out to.

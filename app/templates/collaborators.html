@@ -120,7 +120,7 @@
     // Función para crear una tarjeta de usuario
     function createUserCard(user) {
       // Usar una imagen de placeholder si no se proporciona la URL de la foto
-      var photoUrl = user.photo_url || 'https://via.placeholder.com/200x250?text=No+Image';
+      var photoUrl = user['Image'] || 'https://via.placeholder.com/200x250?text=No+Image';
       
       // Crear elemento de tarjeta
       var card = `

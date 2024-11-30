@@ -1,162 +1,281 @@
 {% extends 'base.html' %}
 
 {% block title %}Collaborators{% endblock %}
+
 {% block stylesAdd %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-{% endblock stylesAdd%} 
+<!-- Bootstrap Icons para las estrellas -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+<!-- Eliminado CSS de DataTables ya que no se utiliza -->
+<style>
+  .card-horizontal {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    border-radius: 15px; /* Esquinas redondeadas */
+    overflow: hidden; /* Para que las esquinas redondeadas afecten a los hijos */
+    position: relative; /* Para posicionar el botón absoluto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #ffffff; /* Fondo blanco */
+    height: 100%; /* Asegura que la tarjeta se expanda según el contenido */
+  }
+  .card-horizontal img {
+    width: 200px;
+    object-fit: cover;
+  }
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+  }
+  .sort-rating-section {
+    width: 150px;
+    background-color: #0d6efd; /* Azul más intenso */
+    color: #ffffff; /* Texto en blanco para mejor contraste */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alineación al inicio */
+    border-left: 1px solid #dee2e6;
+  }
+  .sort-rating-section p {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .match-value-number {
+    font-size: 1.8rem; /* Tamaño de fuente más grande */
+    margin-bottom: 10px;
+  }
+  .view-profile-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    background-color: #003366; /* Azul oscuro personalizado */
+    border: none;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .view-profile-btn:hover {
+    background-color: #002244; /* Azul aún más oscuro al pasar el cursor */
+    text-decoration: none;
+    color: #ffffff;
+  }
+  /* Manejo de desbordamiento de contenido */
+  .card-body-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-body-content p {
+    margin-bottom: 8px;
+  }
+  @media (max-width: 768px) {
+    .card-horizontal {
+      flex-direction: column;
+      height: auto;
+    }
+    .sort-rating-section {
+      width: 100%;
+      border-left: none;
+      border-top: 1px solid #dee2e6;
+      background-color: #0a58ca; /* Ajuste del azul para dispositivos móviles */
+    }
+    .view-profile-btn {
+      position: static;
+      margin-top: 10px;
+    }
+  }
+</style>
+{% endblock stylesAdd %} 
+
 {% block scriptshead %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Parse JSON data sent from Flask safely
-      var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
-        
-    // DataTables configuration
-      var table = $('#collaborators_table').DataTable({
-        data: collaborators_data,
-        columns: [
-          {
-            // Combine First Name and Last Name into Full Name
-            data: null, // Use null since we'll handle the data rendering
-            title: 'Full Name',
-            render: function (data, type, row) {
-              return row['First Name'] + ' ' + row['Last Name'];
-            }
-          },
-          { data: 'Rating', title: 'Rating' },
-          { data: 'Age', title: 'Age' },
-          // Removed the DOB column
-          { data: 'Nationality', title: 'Nationality' },
-          { data: 'Country of Residence', title: 'Country of Residence' },
-          { data: 'Degree', title: 'Degree' },
-          { data: 'Graduation Year', title: 'Graduation Year' },
-          { data: 'GPA', title: 'GPA' },
-          { data: 'Availability', title: 'Availability (hours/week)' },
-          { data: 'Topics of Interest', title: 'Topics of Interest' },
-          { data: 'Email', title: 'Email' },
-          { data: 'Description', title: 'Description' },
-          { data: 'Additional Information', title: 'Additional Information' },
-          { data: 'Sort Value', title: 'MatchValue' },
-        ],
-        ordering: false, // Disable automatic ordering
-        paging: true,
-        searching: true,
-        pageLength: 5,
-        lengthMenu: [5, 10, 25, 50],
-        info: true,
-        autoWidth: true,
-        dom: '<"top"i>rt<"bottom"flp><"clear">',
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
+<!-- Eliminado JS de DataTables ya que no se utiliza -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Parse JSON data sent from Django safely
+    var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
+    
+    // Función para generar estrellas basado en el rating
+    function generateStars(rating) {
+      var stars = '';
+      var maxStars = 5;
+      for (var i = 0; i < rating; i++) {
+        stars += '<i class="bi bi-star-fill" style="color: gold;"></i> ';
+      }
+      for (var i = rating; i < maxStars; i++) {
+        stars += '<i class="bi bi-star" style="color: gold;"></i> ';
+      }
+      return stars;
+    }
+
+    // Función para crear una tarjeta de usuario
+    function createUserCard(user) {
+      // Usar una imagen de placeholder si no se proporciona la URL de la foto
+      var photoUrl = user.photo_url || 'https://via.placeholder.com/200x250?text=No+Image';
+      
+      // Crear elemento de tarjeta
+      var card = `
+        <div class="card card-horizontal">
+          <img src="${photoUrl}" class="card-img-left" alt="${user['First Name']} ${user['Last Name']}">
+          <div class="card-body">
+            <a href="/profile/${user.id}" class="btn view-profile-btn">View Profile</a>
+            <div class="card-body-content">
+              <h5 class="card-title">${user['First Name']} ${user['Last Name']}</h5>
+              <p class="card-text"><strong>Age:</strong> ${user['Age']}</p>
+              <p class="card-text"><strong>Country of Residence:</strong> ${user['Country of Residence']}</p>
+              <p class="card-text"><strong>Degree:</strong> ${user['Degree']}</p>
+              <p class="card-text"><strong>GPA:</strong> ${user['GPA']}</p>
+              <p class="card-text"><strong>Availability:</strong> ${user['Availability']} hours/week</p>
+              <p class="card-text"><strong>Email:</strong> <a href="mailto:${user['Email']}">${user['Email']}</a></p>
+            </div>
+          </div>
+          <div class="sort-rating-section">
+            <p><strong>Match Value:</strong> <span class="match-value-number">${user['Sort Value']}</span></p>
+            <p><strong>Rating:</strong> ${generateStars(user['Rating'])}</p>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+    
+    // Función para renderizar todas las tarjetas de usuario
+    function renderUserCards(data) {
+      var container = $('#collaborators_container');
+      container.empty(); // Limpiar tarjetas existentes
+      if (data.length === 0) {
+        container.append('<p>No se encontraron colaboradores.</p>');
+        return;
+      }
+      data.forEach(function(user) {
+        container.append(createUserCard(user));
+      });
+    }
+
+    // Renderización inicial
+    renderUserCards(collaborators_data);
+
+    // Filtrado Dinámico
+    $('#filter_form').submit(function (e) {
+      e.preventDefault(); // Prevenir el envío del formulario por defecto
+
+      var formData = $(this).serializeArray();
+      var data = {};
+
+      formData.forEach(function (field) {
+        data[field.name] = field.value;
       });
 
-      // Dynamic Filtering
-      $('#filter_form').submit(function (e) {
-        e.preventDefault(); // Prevent default form submission
-  
-        var formData = $(this).serializeArray();
-        var data = {};
-  
-        formData.forEach(function (field) {
-          data[field.name] = field.value;
-        });
-  
-        // Make AJAX request
-        $.ajax({
-          url: '/collaborators', // Server URL
-          type: 'POST', // POST method
-          contentType: 'application/json',
-          data: JSON.stringify(data),
-          success: function (response) {  
-            table.clear();
-            if (response && response.data) {
-              table.rows.add(response.data);
-              table.draw();
-            } else {
-              console.error("The response does not contain the expected data.");
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-            console.log("Server response:", xhr.responseText);
+      // Realizar solicitud AJAX
+      $.ajax({
+        url: '/collaborators', // URL del servidor
+        type: 'POST', // Método POST
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {  
+          if (response && response.data) {
+            renderUserCards(response.data);
+          } else {
+            console.error("La respuesta no contiene los datos esperados.");
+            $('#collaborators_container').html('<p>Error al cargar los colaboradores.</p>');
           }
-        });
+        },
+        error: function (xhr, status, error) {
+          console.error("Error al obtener los datos:", error);
+          console.log("Respuesta del servidor:", xhr.responseText);
+          $('#collaborators_container').html('<p>Error al cargar los colaboradores.</p>');
+        }
       });
-  
-      // Initialize Sliders
-      // Function to initialize sliders with integer values
-      function initIntegerSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
-        var slider = document.getElementById(sliderId);
-        noUiSlider.create(slider, {
-            start: startValues,
-            connect: true,
-            step: 1, // Values increment by 1
-            range: {
-                min: min,
-                max: max
-            },
-            format: {
-                to: function (value) {
-                    return Math.round(value); // Ensure integer values
-                },
-                from: function (value) {
-                    return value;
-                }
-            }
-        });
-        slider.noUiSlider.on('update', function (values) {
-            // Update the hidden input fields and the labels
-            document.getElementById(minInputId).value = values[0];
-            document.getElementById(maxInputId).value = values[1];
-            document.getElementById(labelMinId).textContent = values[0];
-            document.getElementById(labelMaxId).textContent = values[1];
-        });
-      }
-
-      // Function to initialize sliders with decimal values
-      function initDecimalSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
-        var slider = document.getElementById(sliderId);
-        noUiSlider.create(slider, {
-            start: startValues,
-            connect: true,
-            range: {
-                min: min,
-                max: max
-            }
-        });
-        slider.noUiSlider.on('update', function (values) {
-            // Update the hidden input fields and the labels
-            document.getElementById(minInputId).value = values[0];
-            document.getElementById(maxInputId).value = values[1];
-            document.getElementById(labelMinId).textContent = values[0];
-            document.getElementById(labelMaxId).textContent = values[1];
-        });
-      }
-
-      // Initialize the slider for age with integer values
-      initIntegerSlider('age_slider', 18, 100, [18, 99], 'min_age', 'max_age', 'age_min_label', 'age_max_label');
-
-      // Initialize the slider for availability with integer values
-      initIntegerSlider('availability_slider', 0, 60, [0, 40], 'min_hours', 'max_hours', 'hours_min_label', 'hours_max_label');
-
-      // Initialize the slider for GPA with decimal values
-      initDecimalSlider('gpa_slider', 0.0, 10.0, [0.0, 10.0], 'min_gpa', 'max_gpa', 'gpa_min_label', 'gpa_max_label');
-
     });
-  </script>
 
-{% endblock scriptshead%} 
+    // Inicializar Sliders
+    // Función para inicializar sliders con valores enteros
+    function initIntegerSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
+      var slider = document.getElementById(sliderId);
+      noUiSlider.create(slider, {
+          start: startValues,
+          connect: true,
+          step: 1, // Valores incrementan de 1 en 1
+          range: {
+              min: min,
+              max: max
+          },
+          format: {
+              to: function (value) {
+                  return Math.round(value); // Asegurar valores enteros
+              },
+              from: function (value) {
+                  return value;
+              }
+          }
+      });
+      slider.noUiSlider.on('update', function (values) {
+          // Actualizar los campos de entrada ocultos y las etiquetas
+          document.getElementById(minInputId).value = values[0];
+          document.getElementById(maxInputId).value = values[1];
+          document.getElementById(labelMinId).textContent = values[0];
+          document.getElementById(labelMaxId).textContent = values[1];
+      });
+    }
+
+    // Función para inicializar sliders con valores decimales
+    function initDecimalSlider(sliderId, min, max, startValues, minInputId, maxInputId, labelMinId, labelMaxId) {
+      var slider = document.getElementById(sliderId);
+      noUiSlider.create(slider, {
+          start: startValues,
+          connect: true,
+          range: {
+              min: min,
+              max: max
+          },
+          step: 0.1,
+          format: {
+              to: function (value) {
+                  return parseFloat(value).toFixed(1);
+              },
+              from: function (value) {
+                  return parseFloat(value);
+              }
+          }
+      });
+      slider.noUiSlider.on('update', function (values) {
+          // Actualizar los campos de entrada ocultos y las etiquetas
+          document.getElementById(minInputId).value = values[0];
+          document.getElementById(maxInputId).value = values[1];
+          document.getElementById(labelMinId).textContent = values[0];
+          document.getElementById(labelMaxId).textContent = values[1];
+      });
+    }
+
+    // Inicializar el slider para edad con valores enteros
+    initIntegerSlider('age_slider', 18, 100, [18, 99], 'min_age', 'max_age', 'age_min_label', 'age_max_label');
+
+    // Inicializar el slider para disponibilidad con valores enteros
+    initIntegerSlider('availability_slider', 0, 60, [0, 40], 'min_hours', 'max_hours', 'hours_min_label', 'hours_max_label');
+
+    // Inicializar el slider para GPA con valores decimales
+    initDecimalSlider('gpa_slider', 0.0, 10.0, [0.0, 10.0], 'min_gpa', 'max_gpa', 'gpa_min_label', 'gpa_max_label');
+
+  });
+</script>
+{% endblock scriptshead %} 
+
 {% block content %}
 <div class="container mt-5">
-  <!-- Filters Sidebar -->
+  <!-- Barra Lateral de Filtros -->
   <aside class="filters">
     <h2>Filters</h2>
     <form id="filter_form" method="post" action="/collaborators">
-    
 
-      <!-- Row for Looking For -->
+      <!-- Fila para "Looking For" -->
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
@@ -166,7 +285,7 @@
         </div>
       </div>
 
-      <!-- Row for Looking for Degree -->
+      <!-- Fila para "Looking for Degree" -->
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
@@ -176,7 +295,7 @@
         </div>
       </div>
 
-      <!-- Sliders Row -->
+      <!-- Fila de Sliders -->
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
@@ -213,65 +332,68 @@
         </div>
       </div>
 
-      <!-- Row for Nationality and Country of Residence -->
+      <!-- Fila para Nationality y Country of Residence -->
       <div class="row">
-       
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="nationality" class="form-label">Nationality:</label>
             <input type="text" id="nationality" name="nationality" class="form-control">
           </div>
-        
-       
+        </div>
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="country_of_residence" class="form-label">Country of Residence:</label>
             <input type="text" id="country_of_residence" name="country_of_residence" class="form-control">
           </div>
-        
+        </div>
       </div>
 
-      <!-- Row for Graduation Year and Degree -->
+      <!-- Fila para Graduation Year y Degree -->
       <div class="row">
-        
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="graduation_year" class="form-label">Graduation Year:</label>
             <input type="text" id="graduation_year" name="graduation_year" class="form-control">
-          
+          </div>
         </div>
-        
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="degree" class="form-label">Degree:</label>
             <input type="text" id="degree" name="degree" class="form-control">
           </div>
-        
+        </div>
       </div>
 
-      <!-- Buttons -->
+      <!-- Botones -->
       <div class="d-flex justify-content-between">
         <button type="submit" class="btn btn-primary">Apply Filters</button>
-        <button type="button" class="btn btn-primary" onclick="location.reload()">Clear</button>
+        <button type="button" class="btn btn-secondary" onclick="location.reload()">Clear</button>
       </div>
     </form>
   </aside>
 
-  <!-- Main Content -->
-  <section class="content">
-    <div class="d-flex align-items-start">
+  <!-- Contenido Principal -->
+  <section class="content mt-4">
+    <div class="d-flex align-items-start mb-4">
       <h2 class="custom-title me-3 mb-0">Collaborators</h2>
       <form id="search_form" method="post" action="javascript:void(0);" class="d-flex align-items-start">
         <input type="text" class="form-control me-2 align-start" placeholder="Search" name="search_query" id="search_query" style="height: 40px; width: 200px; font-size: 0.9rem;">
-        <button class="btn btn-primary align-self-start" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;" onclick="showHello()">Search</button>
+        <button class="btn btn-primary align-self-start" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;">Search</button>
       </form>
       <span id="hello_message" class="ms-3" style="font-size: 1rem; font-weight: bold;"></span>
     </div>
-    <table id="collaborators_table" class="display table table-bordered"></table>
+    
+    <!-- Contenedor para las Tarjetas de Usuarios -->
+    <div id="collaborators_container">
+      <!-- Las tarjetas de usuario serán inyectadas aquí por JavaScript -->
+    </div>
   </section>
   
-<script>
-function showHello()
-{
-const messageElement = document.getElementById('hello_message');
-messageElement.textContent = ''; 
-}
-</script>
+  <script>
+    function showHello() {
+      const messageElement = document.getElementById('hello_message');
+      messageElement.textContent = ''; 
+    }
+  </script>
 </div>
 {% endblock %}

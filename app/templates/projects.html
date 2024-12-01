@@ -164,7 +164,7 @@
     // Dynamic Filtering
     $('#filter_form').submit(function (e) {
       e.preventDefault(); // Prevent default form submission
-
+      $('#loading').show()
       var formData = $(this).serializeArray();
       var data = {};
 
@@ -181,6 +181,8 @@
         success: function (response) {  
           if (response && response.data) {
             renderProjectCards(response.data);
+            $('#loading').hide(); // Hide the spinner after the request completes
+            
           } else {
             console.error("The response does not contain the expected data.");
             $('#projects_container').html('<p>Error loading projects.</p>');
@@ -237,10 +239,16 @@
       <form id="filter_form" method="post" action="/projects">
 
         <!-- Search Field -->
+        <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p>Loading, please wait...</p>
+        </div>
         <div class="row">
           <div class="col-md-12">
             <div class="mb-3">
-              <label for="looking_for" class="form-label">Looking for: (Search may take up to 10 seconds)</label>
+              <label for="looking_for" class="form-label"></label>
               <input type="text" id="looking_for" name="looking_for" class="form-control" placeholder="e.g., Collaboration, Funding">
             </div>
           </div>
@@ -250,7 +258,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="mb-3">
-              <label for="looking_for_positions_needed" class="form-label">Positions Needed: (Search may take up to 10 seconds)</label>
+              <label for="looking_for_positions_needed" class="form-label">Positions Needed:</label>
               <input type="text" id="looking_for_positions_needed" name="looking_for_positions_needed" class="form-control" placeholder="e.g., Developer, Designer">
             </div>
           </div>

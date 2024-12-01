@@ -5,16 +5,11 @@ import os
 import ast
 from validation import validation_function
 
-account_bp = Blueprint('account', __name__)
-user_data = {}
 
-# Ruta para mostrar el perfil y los datos del usuario
-@account_bp.route('/account_page', methods=['GET', 'POST'])
-def account_page():
-    if session.get('IsLogged') != True:
-        return redirect(url_for('login'))     
-    user_data = User.get_user_data_from_csv(session['email'])
-    topics = [
+account_bp = Blueprint('account', __name__)
+account_c_bp = Blueprint('accountC', __name__)
+user_data = {}
+topics = [
     "Architecture", "Business", "Culinary Arts", "CrossFit", "Cycling", "Dance", 
     "Development", "Education", "Entrepreneurship", "Feminism", "Film", "Fitness", 
     "Gymnastics", "International Relations", "Languages", "Mindfulness", 
@@ -22,6 +17,13 @@ def account_page():
     "Skateboarding", "Skiing", "Sports", "Surfing", "Sustainability", "Tennis", 
     "Travel", "Vegetarianism", "Yoga"
 ]
+# Ruta para mostrar el perfil y los datos del usuario
+@account_bp.route('/account_page', methods=['GET', 'POST'])
+def account_page():
+    if session.get('IsLogged') != True:
+        return render_template('login.html')
+    user_data = User.get_user_data_from_csv(session['email'])
+  
    
     if request.method == 'POST':
             # Get form data
@@ -153,5 +155,24 @@ def user_Topics_function(user_data,topicsList):
         # Actualizar datos del usuario
         user_data['Matched Topics'] = matched_topics        
         user_data['Other Topics'] = unmatched_topics           
-        return user_data
-           
+        return user_data           
+
+
+@account_bp.route('/account_page/Consult', methods=['POST'])
+def account_page_consult():
+  collaborator_email = request.form.get('collaborator_email')
+
+  try:   
+     
+    user_data = User.get_user_data_from_csv(collaborator_email)   
+   
+    print (user_data)
+    user_data =user_Topics_function(user_data,topics)
+      
+    #to show some fields I recover the line breaks
+    user_data['Description'] = user_data['Description'].replace('\\n', '\n') 
+    user_data['Additional Information'] = user_data['Additional Information'].replace('\\n', '\n')
+              
+    return render_template('profileConsult.html', user=user_data, topics=topics)
+  except:
+    pass

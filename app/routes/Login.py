@@ -25,8 +25,11 @@ def login():
                 session['IsLogged'] = True #session variables that are saved for all the pages.
                 # Assuming session['email'] contains an email with extra spaces
                 session['email']= email.lower().strip()  # Get email from session and remove leading/trailing spaces
-                
-                return redirect(url_for('account.account_page'))  # redirects, is like render_template of the profile page. 
+                if session.get('createdP' , None)!= 1:                      
+                    return redirect(url_for('account.account_page'))  # redirects, is like render_template of the profile page. 
+                else:
+                    session['createdP'] = 0
+                    return render_template('createProject.html',admin=session['email'])
     # If user not found or password is incorrect, dont reach the return
     session['IsLogged'] = False
     session['email'] = ''

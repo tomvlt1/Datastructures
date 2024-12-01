@@ -6,3 +6,4 @@ pdfminer.six==20240706
 torch==2.2.2
 transformers==4.46.2
 numpy<2
+request==2.32.3

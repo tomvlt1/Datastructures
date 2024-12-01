@@ -1,22 +1,39 @@
-import random
 import pandas as pd
 
-def add_random_image_column_to_file(file_name):
-    # List of possible image names
-    image_names = ["milei.jpeg", "person1.png", "person2.png", "person3.png", "person4.png", "biden.jpeg", "trump.jpeg"]
+def add_autonumeric_id_proyect(file_name):
+    """
+    Añade una columna 'id_proyect' autoincremental al archivo CSV especificado.
     
-    # Load the dataset from the CSV file
-    dataset = pd.read_csv(file_name)
+    Parameters:
+    file_name (str): El nombre del archivo CSV al que se añadirá la columna.
     
-    # Add a new column "Image" with random selection from image_names
-    dataset['Image'] = [random.choice(image_names) for _ in range(len(dataset))]
-    
-    # Save the updated dataset back to the same file
-    dataset.to_csv(file_name, index=False)
+    """
+    try:
+        # Cargar el dataset desde el archivo CSV
+        dataset = pd.read_csv(file_name)
+        
+        # Verificar si la columna 'id_proyect' ya existe
+        if 'id_proyect' in dataset.columns:
+            print(f"La columna 'id_proyect' ya existe en '{file_name}'. No se realizará ningún cambio.")
+            return
+        
+        # Crear una lista de IDs autoincrementales comenzando desde 1
+        dataset['id_proyect'] = range(1, len(dataset) + 1)
+        
+        # Guardar el dataset actualizado de vuelta al mismo archivo CSV
+        dataset.to_csv(file_name, index=False)
+        
+        print(f"La columna 'id_proyect' ha sido añadida exitosamente a '{file_name}'.")
+        
+    except FileNotFoundError:
+        print(f"El archivo '{file_name}' no se encontró. Por favor, verifica el nombre y la ruta del archivo.")
+    except pd.errors.EmptyDataError:
+        print(f"El archivo '{file_name}' está vacío.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
 
-# Example usage
-file_name = "generated_database.csv"
-add_random_image_column_to_file(file_name)
-print(f"The file '{file_name}' has been updated with a random 'Image' column.")
+# Uso de ejemplo
+file_name = "generated_project_database.csv"
+add_autonumeric_id_proyect(file_name)
 
 

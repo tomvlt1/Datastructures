@@ -1,7 +1,5 @@
-
 import csv
 from userclass import User 
-
 
 class Project:
     def __init__(
@@ -15,7 +13,9 @@ class Project:
         start_date,
         completion_estimate_months,
         project_description,
-        positions_needed
+        positions_needed,
+        sort_value,
+        id_project
      
     ):
 
@@ -29,6 +29,8 @@ class Project:
         self.number_of_people = number_of_people
         self.completion_estimate_months = completion_estimate_months
         self.start_date = start_date
+        self.sort_value=sort_value
+        self.id_project=id_project
    
     def validate_project_stage(self):
         valid_stages = ["Planning", "Development", "Testing", "Deployment", "Completed"]
@@ -44,14 +46,15 @@ class Project:
                 return True 
         return False  
 
+    
     def save_to_csv(self):
         fieldnames = [
             "Project Name", "Admin", "Number of People", "Keywords",
             "Project Stage", "Language Spoken", "Start Date",
             "Completion Estimate (Months)", "Project Description",
-            "Positions Needed"
+            "Positions Needed", "Sort Value", "id_project"
         ]
-
+        
         projects = []
         project_exists = False
 
@@ -59,9 +62,10 @@ class Project:
             with open("generated_project_database.csv", mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    if row["Project Name"].lower() == self.project_name.lower():
-                        # Update existing project
+                    if int(row["id_project"]) == int(self.id_project):
+                        # Si el proyecto ya existe, lo actualizamos
                         project_exists = True
+                        row["Project Name"] = self.project_name
                         row["Admin"] = self.admin
                         row["Number of People"] = self.number_of_people
                         row["Keywords"] = self.keywords
@@ -71,12 +75,14 @@ class Project:
                         row["Completion Estimate (Months)"] = self.completion_estimate_months
                         row["Project Description"] = self.project_description
                         row["Positions Needed"] = self.positions_needed
-                    projects.append(row)
+                        row['Sort Value'] = self.sort_value
+                        row["id_project"] = self.id_project
+                    projects.append(row)  # Agregamos el proyecto al listado
         except FileNotFoundError:
             pass
 
         if not project_exists:
-            # Add new project
+            # Si el proyecto no existía, lo agregamos como nuevo
             projects.append({
                 "Project Name": self.project_name,
                 "Admin": self.admin,
@@ -87,13 +93,16 @@ class Project:
                 "Start Date": self.start_date,
                 "Completion Estimate (Months)": self.completion_estimate_months,
                 "Project Description": self.project_description,
-                "Positions Needed": self.positions_needed               
+                "Positions Needed": self.positions_needed,
+                "Sort Value": self.sort_value,
+                "id_project": self.id_project
             })
 
-        with open("generated_project_database.csv", mode="w", newline="", encoding="utf-8") as file:
+        with open("generated_project_database.csv", mode="w", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(projects)
+            writer.writeheader()  
+            writer.writerows(projects) 
+
     @staticmethod
     def load_all_projects_data(UserEmail=None):      
         projects = []
@@ -114,12 +123,12 @@ class Project:
         return projects
 
     @staticmethod
-    def get_project_data_from_csv(project_name):
+    def get_project_data_from_csv(id_project):
         try:
             with open("generated_project_database.csv", mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    if row["Project Name"].lower() == project_name.lower():
+                    if int(row["id_project"]) == int(id_project):
                         return row  # Returns the project data
         except FileNotFoundError:
             pass

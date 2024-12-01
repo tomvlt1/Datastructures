@@ -24,20 +24,10 @@
     </div>
   </div>
 
-  <div class="upload-container">
-    <button type="button" id="fileButton" onclick="triggerFileInput()">Upload File</button>
-  </div>
+  
 </section>
 
-<form id="profile-form" method="POST" action="{{ url_for('account.account_page') }}" enctype="multipart/form-data" >
-
-  <!-- Show error message if it exists -->
-  {% if error_message %}
-  <div class="error-message" style="color: red; margin-bottom: 10px;">
-      {{ error_message | safe}}
-  </div>
-{% endif %}
-
+<form id="profile-form"  enctype="multipart/form-data" >
 
 <div class="profile-content-wrapper">  
   <section class="profile-content profile-specific left-section" >     
@@ -98,10 +88,7 @@
     <div class="profile-row">        
       <div class="profile-item">
         <p><strong>LinkedIn:</strong> <input type="url" id="linkedin" name="linkedin" value="{{ user['LinkedIn'] }}" disabled></p>         
-        <div class="file-upload">
-          <!-- Hidden input to upload image -->
-          <input type="file" id="imagef" name="imagef" accept="image/*" onchange="updateFileName()" style="display:none;"> 
-        </div>
+        
         <!-- Hidden field to store the filename -->
         <input type="hidden" id="image" name="image" value="{{ user['Image'] if user['Image'] else '' }}">
       </div>
@@ -131,15 +118,10 @@
         <textarea name="other_topics" placeholder="other topics" rows="3"  readonly disabled style="width: 100%;">{{ ', '.join(user['Other Topics']) }}</textarea>
        </div>
     
-      <!-- Campo oculto para enviar los temas seleccionados como lista -->
-      <input type="hidden" id="selected_topics" name="selected_topics" value="{{ ', '.join(user['Matched Topics']) }}">
+     
     </section>
        
-    <div class="save-button left-section">
-      <!-- Enable editing button and save button -->
-      <button id="edit-button" type="button" class="btn btn-success">Enable Editing</button>  
-      <button id="save-button" type="submit" class="btn btn-success" disabled>Save Changes</button>
-    </div>
+    
   </div>
 </div>
 </form>
@@ -148,31 +130,15 @@
 
 <script>   
   document.addEventListener('DOMContentLoaded', function () {
-    const editButton = document.getElementById('edit-button');
-    const saveButton = document.getElementById('save-button');
-    const imageButton = document.getElementById('imagef');
+    
     const imagetext = document.getElementById('image');
     const formInputs = document.querySelectorAll('#profile-form input, #profile-form select','#profile-form textarea');
     const formTextareas = document.querySelectorAll('#profile-form textarea');
-
-    // Función para habilitar los campos de formulario
-    function enableEditing() {
-      formInputs.forEach(input => input.disabled = false);  // Habilita los inputs selects y texareas
-      formTextareas.forEach(textarea => textarea.readOnly = false);  // cambia el readonly de los textareas
-      formTextareas.forEach(textarea => textarea.disabled = false);  
-      saveButton.disabled = false; // Habilita el botón Save
-      imageButton.disabled = false; // Habilita el botón de subir imagen
-      imagetext.disabled = false; // Habilita el botón de subir imagen
-      editButton.textContent = 'Disable Editing'; // Cambia el texto del botón
-      fileButton
-      
-    }
 
     // Función para deshabilitar los campos de formulario
     function disableEditing() {
       formInputs.forEach(input => input.disabled = true);  // Deshabilita los inputs selects y texareas
       formTextareas.forEach(textarea => textarea.readOnly = true);  // cambia el readonly de los textareas
-      formTextareas.forEach(textarea => textarea.disabled = true);  
       saveButton.disabled = true; // Deshabilita el botón Save
       imageButton.disabled = false; // Habilita el botón de subir imagen
       imagetext.disabled = false; // Habilita el botón de subir imagen
@@ -182,41 +148,11 @@
     // Inicialmente, deshabilitamos los campos siempre 
     disableEditing();
 
-    // Evento para alternar entre habilitar y deshabilitar
-    editButton.addEventListener('click', function () {
-      if (formInputs[0].disabled) {
-        enableEditing(); // Si los inputs están deshabilitados, habilítalos
-      } else {
-        disableEditing(); // Si los inputs están habilitados, deshabilítalos
-      }
-    });
+    
   });
 
 </script>
-<script>
-  // Trigger file input on button click
-  function triggerFileInput() {
-    document.getElementById('imagef').disabled = false;
-    document.getElementById('image').disabled = false;
-    const formTextareas = document.querySelectorAll('#profile-form textarea');
-    formTextareas.forEach(textarea => textarea.disabled = false); 
-    document.getElementById('imagef').click();
-  }
-</script>
-<script>
-  function updateFileName() {
-    // Habilita la edición del formulario
-    const inputs = document.querySelectorAll('#profile-form input');
-    inputs.forEach(input => input.disabled = false);
-    
-    document.getElementById('save-button').disabled = false;
-   
-    // Envía el formulario automáticamente
-    const form = document.getElementById('profile-form');
-    form.submit();
-  }
 
-</script>
 <script>
   function updateTopics() {
     // Encuentra todos los checks marcados

@@ -119,9 +119,9 @@
 
     // Function to create a user card
     function createUserCard(user) {
-      // Use a placeholder image if no photo URL is provided
-      var photoUrl = user['Image'] ? ('static/images/' + user['Image']) : 'https://via.placeholder.com/200x250?text=No+Image';
       
+      var photoUrl = user['Image'] ? ('/static/images/' + user['Image']) : 'https://via.placeholder.com/200x250?text=No+Image';
+      ;
       // Format Sort Value as a percentage with 0 decimals
       var sortValue = user['Sort Value'];
       // Check if Sort Value is between 0 and 1
@@ -137,7 +137,12 @@
         <div class="card card-horizontal">
           <img src="${photoUrl}" class="card-img-left" alt="${user['First Name']} ${user['Last Name']}">
           <div class="card-body">
-            <a href="/profile/${user.id}" class="btn view-profile-btn">View Profile</a>
+          <form action="{{ url_for('account.account_page_consult') }}" method="POST">
+              <!-- Hidden input field to pass the email -->
+             <input type="hidden" name="collaborator_email" value="${user['Email']}">
+              <button type="submit" class="btn view-profile-btn">View Profile</button>
+         </form>
+
             <div class="card-body-content">
               <h5 class="card-title">${user['First Name']} ${user['Last Name']}</h5>
               <p class="card-text"><strong>Age:</strong> ${user['Age']}</p>

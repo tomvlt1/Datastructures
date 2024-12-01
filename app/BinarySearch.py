@@ -1,7 +1,7 @@
 import pandas as pd
 import random
 
-df = pd.read_csv('app/generated_database.csv')
+df = pd.read_csv('generated_database.csv')
 
 lstFullNames = []
 

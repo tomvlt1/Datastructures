@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}ProfileE{% endblock %}
+{% block title %}Profile{% endblock %}
 {% block stylesAdd %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 {% endblock stylesAdd%} 
@@ -53,8 +53,15 @@
     </div>
     <div class="profile-row">
       <div class="profile-item">
+        <label for="cv_upload">Upload CV (PDF):</label>
+        <input type="file" id="cv_upload" name="cv" accept=".pdf">
+        <button type="button" class="btn btn-primary" id="generate_description">Generate Description</button>
+      </div>
+    </div>
+    <div class="profile-row">
+      <div class="profile-item">
         <label for="description">Short Description</label>
-        <textarea name="description" placeholder="Short Description (Optional)" rows="3" readonly disabled style="width: 100%;">{{ user['Description'] }}</textarea>
+        <textarea id = "description" name="description" placeholder="Short Description (Optional)" rows="3" readonly disabled style="width: 100%;">{{ user['Description'] }}</textarea>
     </div>
     <div class="profile-item">   
         <label for="additional_info">Additional Information</label>
@@ -226,6 +233,46 @@
     // Actualiza el campo oculto con los temas seleccionados como lista
     document.getElementById('selected_topics').value = selected.join(', ');
   }
+</script>
+
+<script>
+  // Event listener for generating the description
+  document.getElementById('generate_description').addEventListener('click', function () {
+    const fileInput = document.getElementById('cv_upload');
+    const descriptionBox = document.getElementById('description');
+
+    if (!fileInput.files.length) {
+        alert('Please upload a CV.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('cv', fileInput.files[0]);
+
+    fetch('/account/upload_cv', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            // Temporarily enable the description box to set its value
+            descriptionBox.disabled = false;
+            descriptionBox.readOnly = false;
+            descriptionBox.value = data.description;
+            // Optionally disable it again if you need
+            descriptionBox.disabled = true;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to generate description. Please try again.');
+    });
+});
+
+
 </script>
 
 {% endblock %}

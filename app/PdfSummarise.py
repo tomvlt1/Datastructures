@@ -1,47 +1,39 @@
 import openai
 from pdfminer.high_level import extract_text
 
-def extract_text_from_pdf(pdf_path):
-    return extract_text(pdf_path)
 
-def get_key_words(text):
-    
-    openai.api_key = "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"
-    client = openai.OpenAI(api_key="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")
 
-    examples = """Computer Science", "Entrepreneurship", "Art", "Music", "Sports", "Tech", "Machine Learning", "Data Science", "Business", "Finance", "Economics", "Politics", "Philosophy", "History", "Literature", "Languages", "Mathematics", "Physics", "Chemistry", "Biology", "Medicine", "Psychology", "Sociology", "Anthropology", "Geography", "Environmental Science", "Law", "Architecture", "Design", "Fashion", "Film", "Theatre", "Dance", "Photography", "Culinary Arts", "Travel", "Fitness", "Health", "Nutrition", "Yoga", "Meditation", "Mindfulness", "Sustainability", "Climate Change", "Renewable Energy", "Urban Planning", "Transportation", "Public Policy", "International Relations", "Global Affairs", "Development", "Human Rights", "Social Justice", "Equality", "Diversity", "Inclusion", "Feminism", "LGBTQ+", "Mental Health", "Wellness", "Self-Care", "Parenting", "Education", "Child Development", "Youth Empowerment", "Elderly Care", "Disability Rights", "Animal Rights", "Veganism", "Vegetarianism", "Healthy Living", "Fitness", "Sports", "Outdoor Activities", "Adventure", "Travel", "Exploration", "Camping", "Hiking", "Cycling", "Running", "Swimming", "Skiing", "Snowboarding", "Surfing", "Skateboarding", "Basketball", "Football", "Soccer", "Tennis", "Golf", "Cricket", "Rugby", "Baseball", "Softball", "Volleyball", "Handball", "Table Tennis", "Badminton", "Squash", "Gymnastics", "Dance", "Yoga", "Pilates", "Martial Arts", "Boxing", "Wrestling", "Weightlifting", "CrossFit", "Bodybuilding", "Powerlifting", "Parkour", "Rock Climbing", "Mountaineering", "Sailing", "Rowing", "Canoeing", "Kayaking", "Surfing", "Kitesurfing", "Windsurfing", "Scuba Diving", "Snorkeling", "Fishing", "Hunting", "Cycling", "Mountain Biking","AI", "Blockchain", "SaaS", "IoT", "Fintech", "Edtech", "Healthcare", "Sustainability", "Agritech", "E-commerce"""
+def summarise_pdf(file):
+    text = extract_text(file)
+    key = "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" #plz dont steal my key toni :( - thomas
+    #client = openai.OpenAI(api_key="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")
+    client = openai.OpenAI(api_key=key)
+    example = """As a student at IE University, I am pursuing a double degree in Business Management and Data Science, combining technical know-how with business insights. I am passionate about applying data-driven solutions to real-world problems and exploring the intersection of finance, technology, and sustainability. 
+
+I have gained hands-on experience in various domains, such as M&A, digital strategy, and web development, through my internships at Tikehau Capital and UENI Ltd. I have also completed a JPMorgan Chase course on investment banking, enhancing my skills in DCF valuations and company analysis. I am proficient in Python and versed in SQL, R, and web tech (HTML & CSS). In addition, I am committed to community service, having tutored underprivileged students in math and computer science. I am bilingual in French and English, and have foundational Spanish skills."""
     prompt = f"""
-    Extract the keywords from the following text: {text}
-    Keywords should be inspired by the following examples: {examples}.
-    Format your output as a valid Python list of strings comma separated values AND NOTHING ELSE, examples [value1, value2, value3] ].
+    Read the following text: {text}.
+    I want you to create a short description of the person based on the text.
+    This should be in the first person and should be a few sentences long, describing the person's interests, skills, and background.
+    Image you are that person. Make yourself sound interesting and engaging as this is for a professional profile on a networking site.
+    You can use this example as a reference: {example}
     """
 
     try:
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": prompt}]
+                {"role": "system", "content": prompt}
+            ]
         )
         
-        key_words = response.choices[0].message.content.strip()
-        print("Raw API Output:", key_words)
+        summary = response.choices[0].message.content.strip()
+        print("Raw API Output:", summary)
 
-        cleaned_key_words = key_words.strip('"')
-        keywords = eval(cleaned_key_words)
+        summary = str(summary)
         
-        return keywords
+        return summary
     except Exception as e:
         return str(e)
 
-
-if __name__ == "__main__":
-    pdf_path = '/Users/tom/Downloads/cv v1 finance target (1).pdf'  
-    text = extract_text_from_pdf(pdf_path)
-    if text:
-        keywords = get_key_words(text)
-        print("Extracted Keywords:", keywords)
-        print(keywords[1]) #to test if proper list
-    else:
-        print("No text extracted from PDF.")
-        
 

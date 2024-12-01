@@ -52,11 +52,32 @@ main {
 
 /* Footer */
 footer {
-  background-color: black;
-  color: white;
+  background-color: #003366; /* Azul marino */
+  color: #fff;
   text-align: center;
-  padding: 10px;
-  margin-top: 20px;
+  padding: 20px 0;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px;
+}
+
+.footer-content p {
+  margin: 0; 
+  font-size: 14px; 
+}
+
+.footer-content a {
+  color: #90caf9; 
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
 }
 
 /* Banner / Page Title */

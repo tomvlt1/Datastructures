@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request,session,url_for,redirect
+from flask import Blueprint, render_template, request,session,jsonify
 from userclass import User  # Class user.py
 from datetime import datetime
 import os
 import ast
 from validation import validation_function
+from PdfSummarise import summarise_pdf
 
 
 account_bp = Blueprint('account', __name__)
@@ -176,3 +177,29 @@ def account_page_consult():
     return render_template('profileConsult.html', user=user_data, topics=topics)
   except:
     pass
+
+
+@account_bp.route('/upload_cv', methods=['POST'])
+def upload_cv():
+    if 'cv' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    cv_file = request.files['cv']
+    if cv_file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    try:
+        temp_file_path = os.path.join('uploads', cv_file.filename)
+        os.makedirs('uploads', exist_ok=True)
+        cv_file.save(temp_file_path)
+
+        # Assume summarise_pdf is implemented in PdfSummarise.py
+        description = summarise_pdf(temp_file_path)
+
+        # Remove the temporary file
+        os.remove(temp_file_path)
+
+        return jsonify({'description': description})
+    except Exception as e:
+        print(f"Error processing file: {e}")
+        return jsonify({'error': 'Failed to process the CV'}), 500

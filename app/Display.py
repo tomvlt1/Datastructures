@@ -9,8 +9,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     
     if (not looking_for_interest or looking_for_interest =='') and (not looking_for_degree or looking_for_degree ==''): #check for the emty spece aswell
         data['Sort Value'] = 100*(pd.to_numeric(data['Rating'], errors='coerce') / 5 )
-        return data     
-
+        
     if looking_for_interest:
         interest_similarities = [TF(interest, looking_for_interest) for interest in data['Topics of Interest']]
         data['Interest Similarity'] = pd.Series(interest_similarities, index=data.index)

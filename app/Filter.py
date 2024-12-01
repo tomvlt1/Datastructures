@@ -53,3 +53,24 @@ def filter_data(filters, data):
             filtered_data.append(user)
     # Return the filtered data
     return filtered_data
+
+def filter_data_fullname(fullname, data):
+    filtered_data = []
+    # Loop through each user in the data list
+    for user in data:
+        match = True  
+        UserFullName=user.get('First Name', '') + user.get('Last Name', '')
+        UserFullName= UserFullName.replace(" ", "")
+        UserFullName=UserFullName.lower()
+        UserFullName1=user.get('Last Name', '') + user.get('First Name', '')
+        UserFullName1= UserFullName.replace(" ", "")
+        UserFullName1=UserFullName1.lower()   
+        
+        fullname= fullname.replace(" ", "")
+        fullname=fullname.lower() 
+       
+                   # If the filter value is an empty string, we don't need to apply it
+        if fullname == UserFullName or fullname == UserFullName1:       
+            filtered_data.append(user)
+    # Return the filtered data
+    return filtered_data

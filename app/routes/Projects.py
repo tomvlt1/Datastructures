@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, jsonify
+from flask import Blueprint, render_template, request,session, jsonify
 from projectclass import Project
 from datetime import datetime
 from validation import  validate_project_data
@@ -136,7 +136,7 @@ def create_project():
         
       
          # Validate user data
-        is_valid,verr= validate_project_data(project)
+        is_valid,verr= validate_project_data(project,0)
        
         if not is_valid:
             return render_template('createProject.html', admin=session['email'],error_message=verr)
@@ -252,7 +252,7 @@ def update_project():
         
       
          # Validate user data
-        is_valid,verr= validate_project_data(project)
+        is_valid,verr= validate_project_data(project,1)
        
         if not is_valid:
            return render_template('Project.html', project_data=project,error_message=verr)

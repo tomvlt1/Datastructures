@@ -35,27 +35,27 @@ def validation_function(user,vorigen):
         return vValid, verr
     
     
-def validate_project_data(project):
+def validate_project_data(project,vorigen):
     vValid = 0
     verr = ''
-
+    #solo se verifica si existe el admin cuando se crea. No en update
+    if vorigen==0:
+        if not project.admin or project.admin.strip() == '':
+                error_message = "Admin is required."
+                vValid = 1
+                verr += '<br>' + error_message
+        else:        #  Check if the admin exists in the databas                    
+            if project.admin_exists:
+                error_message = "Admin does not exist."
+                vValid=1
+                verr = verr + '<br>' + error_message  
+    
     if not project.project_name or project.project_name.strip() == '':
         error_message = "Project name is required."
         vValid = 1
         verr += '<br>' + error_message
 
-    if not project.admin or project.admin.strip() == '':
-        error_message = "Admin is required."
-        vValid = 1
-        verr += '<br>' + error_message
-    else:
-        #  Check if the admin exists in the database
-        
-        if project.admin_exists:
-            error_message = "Admin does not exist."
-            vValid=1
-            verr = verr + '<br>' + error_message      
-        
+    
 
     # Validate Number of People
     if not isinstance(project.number_of_people, int) or project.number_of_people <= 0:
@@ -113,12 +113,13 @@ def validate_project_data(project):
             vValid = 1
             verr += '<br>' + error_message
 
-    # Optional: Validate Keywords (if necessary)
+
     if project.keywords:
         if not isinstance(project.keywords, list) or not all(isinstance(keyword, str) for keyword in project.keywords):
             error_message = "Keywords must be a list of keywords."
             vValid = 1
             verr += '<br>' + error_message
-
+            
+        
     return vValid, verr
 

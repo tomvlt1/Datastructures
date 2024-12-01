@@ -167,7 +167,7 @@
       var container = $('#collaborators_container');
       container.empty(); // Clear existing cards
       if (data.length === 0) {
-        container.append('<p>No se encontraron colaboradores.</p>');
+        container.append('<p>No collaboratos found.</p>');
         return;
       }
       data.forEach(function(user) {
@@ -391,11 +391,22 @@
   <section class="content mt-4">
     <div class="d-flex align-items-start mb-4">
       <h2 class="custom-title me-3 mb-0">Collaborators</h2>
-      <form id="search_form" method="post" action="javascript:void(0);" class="d-flex align-items-start">
-        <input type="text" class="form-control me-2 align-start" placeholder="Search" name="search_query" id="search_query" style="height: 40px; width: 200px; font-size: 0.9rem;">
-        <button class="btn btn-primary align-self-start" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;">Search</button>
-      </form>
-      <span id="hello_message" class="ms-3" style="font-size: 1rem; font-weight: bold;"></span>
+      <form id="search_form" method="POST" action={{ url_for('collaborators.search_collaborators') }} class="d-flex align-items-start">
+        <input 
+            type="text" 
+            class="form-control me-2 align-start" 
+            placeholder="Search" 
+            name="search_query" 
+            id="search_query" 
+            style="height: 40px; width: 200px; font-size: 0.9rem;">
+        <button 
+            class="btn btn-primary align-self-start" 
+            type="submit" 
+            style="height: 40px; font-size: 0.9rem; padding: 0 12px;">
+            Search
+        </button>
+    </form>
+      <span id="" class="ms-3" style="font-size: 1rem; font-weight: bold;">{{ vbinary }}</span>
     </div>
     
     <!-- Container for User Cards -->
@@ -404,11 +415,6 @@
     </div>
   </section>
   
-  <script>
-    function showHello() {
-      const messageElement = document.getElementById('hello_message');
-      messageElement.textContent = ''; 
-    }
-  </script>
+  
 </div>
 {% endblock %}

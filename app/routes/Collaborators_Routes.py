@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from Filter import filter_data
+from Filter import filter_data, filter_data_fullname
 from Display import AddSortValue
 from userclass import User 
 
@@ -42,3 +42,33 @@ def collaborators():
         
         # Return an error response if something goes wrong
         return jsonify({'error': 'An unexpected error occurred'}), 500
+    
+@collaborators_bp.route('/search_collaborators', methods=[ 'POST'])
+def search_collaborators():
+    try:
+        if request.method == 'POST':  
+           
+            data_json =User.load_all_user_data() 
+            # Get the filter values from the request
+            search_query=request.form.get('search_query').strip()
+           
+            if search_query==None or search_query=='':
+                pass
+ 
+            # Filter the data based on the filters
+            vbinary=User.full_names(search_query)
+          
+            filtered_data = filter_data_fullname(search_query, data_json)  
+            sorted_data = AddSortValue(filtered_data,'', '')  
+           
+            # Convert sorted data to dictionary (json). todict
+            data_json = sorted_data.to_dict(orient='records')             
+           
+            return render_template('collaborators.html', data=data_json,vbinary=vbinary)
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
+        # Return an error response if something goes wrong
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+

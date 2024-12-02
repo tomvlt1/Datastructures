@@ -16,7 +16,7 @@ I have gained hands-on experience in various domains, such as M&A, digital strat
     I want you to create a short description of the person based on the text.
     This should be in the first person and should be a few sentences long, describing the person's interests, skills, and background.
     Image you are that person. Make yourself sound interesting and engaging as this is for a professional profile on a networking site.
-    You can use this example as a reference: {example}
+    You can use this example as a reference: {example}. Make it at most 200 words.
     """
 
     try:
@@ -30,7 +30,7 @@ I have gained hands-on experience in various domains, such as M&A, digital strat
         summary = response.choices[0].message.content.strip()
         print("Raw API Output:", summary)
 
-        summary = str(summary)
+        summary = (summary)
         
         return summary
     except Exception as e:

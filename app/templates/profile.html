@@ -62,10 +62,7 @@
       <div class="profile-item">
         <label for="description">Short Description</label>
         <textarea id="description" name="description" placeholder="Short Description (Optional)" rows="3" readonly style="width: 100%;">{{ user['Description'] }}</textarea>
-        <input type="hidden" id="description_hidden" name="description_hidden" value="{{ user['Description'] }}">
-
-
-    </div>
+        <input type="hidden" id="description_hidden" name="description_hidden" value="{{ user['Description'] }}">    </div>
     <div class="profile-item">   
         <label for="additional_info">Additional Information</label>
         <textarea name="additional_info" placeholder="Additional Information (Optional)" rows="3" readonly disabled style="width: 100%;">{{ user['Additional Information'] }}</textarea>
@@ -96,15 +93,35 @@
       </div>
     </div>
     <div class="profile-row">
+      <!-- User Type -->
       <div class="profile-item">
-        <label for="user_type">User Type</label>
-        <input type="text" id="user_type" name="user_type" value="{{ user['Type'] }}" disabled>
+        <div class="form-group">
+          <label for="user_type">User Type</label>
+          <select name="user_type" id="user_type" required onchange="toggleFields()" disabled>
+            <option value="">Select your status</option>
+            <option value="Student" {% if user['Type'] == 'Student' %}selected{% endif %}>Student</option>
+            <option value="Alumni" {% if user['Type'] == 'Alumni' %}selected{% endif %}>Alumni</option>
+          </select>
+        </div>
       </div>
+      
+      <!-- Mentor Option -->
       <div class="profile-item">
-        <label for="availability">Availability</label>
-        <input type="text" id="availability" name="availability" value="{{ user['Availability'] }}" disabled>
+        <div class="form-group">
+          <label for="mentor">Do you want to be a Mentor?</label>
+          <input type="checkbox" name="mentor" id="mentor" {% if user['Mentor'] == 'True' %}checked{% endif %}> 
+        </div>
+      </div>
+    
+      <!-- Availability -->
+      <div class="profile-item">
+        <div class="form-group">
+          <label for="availability">Availability</label>
+          <input type="text" id="availability" name="availability" value="{{ user['Availability'] }}" disabled>
+        </div>
       </div>
     </div>
+
     <div class="profile-row">        
       <div class="profile-item">
         <p><strong>LinkedIn:</strong> <input type="url" id="linkedin" name="linkedin" value="{{ user['LinkedIn'] }}" disabled></p>         
@@ -237,12 +254,14 @@
     document.getElementById('selected_topics').value = selected.join(', ');
   }
 </script>
+
 <script>
-document.getElementById('generate_description').addEventListener('click', function () {
+  // Event listener for generating the description
+  document.getElementById('generate_description').addEventListener('click', function () {
     const fileInput = document.getElementById('cv_upload');
     const descriptionBox = document.getElementById('description');
     const hiddenDescription = document.getElementById('description_hidden');
-
+    
     if (!fileInput.files.length) {
         alert('Please upload a CV.');
         return;
@@ -260,12 +279,12 @@ document.getElementById('generate_description').addEventListener('click', functi
         if (data.error) {
             alert(data.error);
         } else {
-            const sanitizedDescription = data.description.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-            descriptionBox.disabled = false; // Enable temporarily to set value
-            descriptionBox.readOnly = false;
-            descriptionBox.value = sanitizedDescription;
-            hiddenDescription.value = sanitizedDescription; // Update hidden input
-            descriptionBox.disabled = true; // Re-disable for readonly behavior
+          const sanitizedDescription = data.description.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+          descriptionBox.disabled = false; // Enable temporarily to set value
+          descriptionBox.readOnly = false;
+          descriptionBox.value = sanitizedDescription;
+          hiddenDescription.value = sanitizedDescription; // Update hidden input
+          descriptionBox.disabled = true; // Re
         }
     })
     .catch(error => {
@@ -274,7 +293,22 @@ document.getElementById('generate_description').addEventListener('click', functi
     });
 });
 
+
 </script>
+<script>
+  // Automatically select user type to 'Alumni' if graduation year is less than the current year
+  document.getElementById('graduation_year').addEventListener('change', function() {
+      const graduationYear = parseInt(this.value); // Convert the value to an integer
+      const currentYear = new Date().getFullYear();
+      const userTypeSelect = document.getElementById('user_type');
+      
+      // Check if the input value is a valid number and less than the current year
+      if (graduationYear && graduationYear < currentYear) {
+          userTypeSelect.value = 'Alumni'; // Set to alumni if graduation year is in the past
+          toggleFields();  // Show mentor option for alumni
+      }
+  });
 
-
+  
+</script>
 {% endblock %}

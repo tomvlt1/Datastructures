@@ -257,7 +257,6 @@ class User:
         # Crear la lista de nombres completos
         lst = [f"{df['First Name'].iloc[i]} {df['Last Name'].iloc[i]}" for i in range(len(df["First Name"]))]    
         # Ordenar la lista
-        
         sorted_lst = User.sortingmechanism(lst)  
        
         return User.binarysearch(sorted_lst,fullname)
@@ -294,8 +293,7 @@ class User:
                 elif fullnameslist[mid] > fullname:
                     end = mid - 1
                 else:
-                    start = mid + 1    
-            # Return None if not found
+                    start = mid + 1   
             return None    
 
    

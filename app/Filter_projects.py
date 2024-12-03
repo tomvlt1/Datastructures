@@ -69,7 +69,7 @@ def filter_projects(filters, data):
 
 def filter_data_fullname(fullname, data):
     filtered_data = []
-    # we have to loop through each user in the data list
+    #we are looping through each user in the data list
     for project in data:
         match = True  
         UserFullName=project.get('Project Name', '') 
@@ -79,6 +79,8 @@ def filter_data_fullname(fullname, data):
         fullname= fullname.replace(" ", "")
         fullname=fullname.lower() 
        
+        # If the filter value is an empty string, we don't need to apply it
         if fullname == UserFullName :       
             filtered_data.append(project)
+    # Return the filtered data
     return filtered_data

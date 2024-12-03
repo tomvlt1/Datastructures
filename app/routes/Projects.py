@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request,session, jsonify
+from flask import Blueprint, render_template, request, redirect, session, url_for, jsonify
 from projectclass import Project
 from datetime import datetime
 from validation import  validate_project_data
-from Filter_projects import filter_projects
+from Filter_projects import filter_projects,filter_data_fullname
 from Display import AddSortValueProjects
 import csv
 
@@ -34,13 +34,14 @@ def projects():
             sorted_data = AddSortValueProjects(filtered_data, looking_for, looking_for_positions_needed)   
             # Convert sorted data to dictionary (json). todict
             data_json = sorted_data.to_dict(orient='records')             
-           
-            return jsonify({'data':  data_json})
-
+            vtot=len(data_json)            
+            return jsonify({'data':data_json,'vtot': vtot})
         else:
             # If no POST data is sent, return the full data
-            data_json =Project.load_all_projects_data()          
-            return render_template('projects.html', data=data_json)
+            data_json =Project.load_all_projects_data()   
+            vtot=len(data_json)
+            return render_template('projects.html', data=data_json,vbinary='',vtot=vtot)       
+           
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -75,15 +76,17 @@ def Myprojects():
                       
             sorted_data = AddSortValueProjects(filtered_data, looking_for, looking_for_positions_needed)   
             # Convert sorted data to dictionary (json). todict
-            data_json = sorted_data.to_dict(orient='records')             
-           
-            return jsonify({'data':  data_json})
+            data_json = sorted_data.to_dict(orient='records')  
+            vtot=len(data_json)           
+            return jsonify({'data':data_json,'vtot': vtot})
 
         else:
             # If no POST data is sent, return the full data
             data_json =Project.load_all_projects_data(session['email'])      
-            print (data_json)
-            return render_template('Myprojects.html', data=data_json)
+          
+            vtot=len(data_json)
+            return render_template('Myprojects.html', data=data_json,vbinary='',vtot=vtot)
+      
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -286,3 +289,63 @@ def get_max_id_project():
         pass
     return max_id
 
+@projects_bp.route('/search_projects', methods=[ 'POST'])
+def search_projects():
+    try:
+        if request.method == 'POST':  
+           
+            data_json =Project.load_all_projects_data()
+            # Get the filter values from the request
+            search_query=request.form.get('search_query').strip()
+           
+            if search_query==None or search_query=='':
+                pass
+ 
+            # Filter the data based on the filters
+            vbinary=Project.full_names(search_query)
+          
+            filtered_data = filter_data_fullname(search_query, data_json)  
+            sorted_data =  AddSortValueProjects(filtered_data,'', '')  
+           
+            # Convert sorted data to dictionary (json). todict
+            data_json = sorted_data.to_dict(orient='records')          
+            vtot=len(data_json)
+            return render_template('projects.html', data=data_json,vbinary=vbinary,vtot=vtot)
+
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
+        # Return an error response if something goes wrong
+        return jsonify({'error': 'An unexpected error occurred'}), 500
+
+@projects_bp.route('/search_myprojects', methods=[ 'POST'])
+def search_myprojects():
+    try:
+        if request.method == 'POST':  
+           
+            data_json =Project.load_all_projects_data(session['email'])
+            # Get the filter values from the request
+            search_query=request.form.get('search_query').strip()
+           
+            if search_query==None or search_query=='':
+                pass
+ 
+            # Filter the data based on the filters
+            vbinary=Project.full_names(search_query)
+          
+            filtered_data = filter_data_fullname(search_query, data_json)  
+            sorted_data =  AddSortValueProjects(filtered_data,'', '')  
+           
+            # Convert sorted data to dictionary (json). todict
+            data_json = sorted_data.to_dict(orient='records')  
+                 
+            vtot=len(data_json)
+            return render_template('Myprojects.html', data=data_json,vbinary=vbinary,vtot=vtot)
+
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
+        # Return an error response if something goes wrong
+        return jsonify({'error': 'An unexpected error occurred'}), 500

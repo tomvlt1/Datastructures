@@ -29,13 +29,17 @@ def collaborators():
             sorted_data = AddSortValue(filtered_data, looking_for, looking_for_degree)   
             # Convert sorted data to dictionary (json). todict
             data_json = sorted_data.to_dict(orient='records')             
-           
-            return jsonify({'data':  data_json})
+            vtot=len(data_json)
+            
+            return jsonify({'data':data_json,'vtot': vtot})
 
         else:
             # If no POST data is sent, return the full data
-            data_json =User.load_all_user_data()          
-            return render_template('collaborators.html', data=data_json)
+            data_json =User.load_all_user_data()  
+            vtot=len(data_json)
+            
+            return render_template('collaborators.html', data=data_json,vbinary='',vtot=vtot)        
+           
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -62,9 +66,11 @@ def search_collaborators():
             sorted_data = AddSortValue(filtered_data,'', '')  
            
             # Convert sorted data to dictionary (json). todict
-            data_json = sorted_data.to_dict(orient='records')             
-           
-            return render_template('collaborators.html', data=data_json,vbinary=vbinary)
+            data_json = sorted_data.to_dict(orient='records')  
+            total_recs=len(data_json)           
+            vtot=len(data_json)
+            return render_template('collaborators.html', data=data_json,vbinary=vbinary,vtot=vtot)
+
 
     except Exception as e:
         print(f"An error occurred: {e}")

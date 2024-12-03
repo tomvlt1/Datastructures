@@ -7,7 +7,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
     if data.empty: 
         return data 
     
-    if (not looking_for_interest or looking_for_interest =='') and (not looking_for_degree or looking_for_degree ==''): #check for the emty spece aswell
+    if (not looking_for_interest or looking_for_interest =='') and (not looking_for_degree or looking_for_degree ==''): #check for the empty spece aswell
         data['Sort Value'] = 100*(pd.to_numeric(data['Rating'], errors='coerce') / 5 )
         
     if looking_for_interest:

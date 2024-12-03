@@ -7,7 +7,7 @@ def filter_data(filters, data):
         for i, filter_value in filters.items():
             # If the filter value is an empty string, we don't need to apply it
             if filter_value == '':
-                continue  # Skip this filter if it's empty
+                continue  # Skip if empty .
             if i == 'min_age':
                 if float(user.get('Age', 0)) < float(filter_value):
                     match = False  
@@ -55,10 +55,9 @@ def filter_data(filters, data):
                 if filter_value != user.get('Graduation Year', ''):
                     match = False 
                     break           
-        # If the user passed all the filters, add them to the filtered data list
+        #if use r passed all the filters add them to the list with the filltered data
         if match:
             filtered_data.append(user)
-    # Return the filtered data
     return filtered_data
 
 def filter_data_fullname(fullname, data):
@@ -79,5 +78,4 @@ def filter_data_fullname(fullname, data):
                    # If the filter value is an empty string, we don't need to apply it
         if fullname == UserFullName or fullname == UserFullName1:       
             filtered_data.append(user)
-    # Return the filtered data
     return filtered_data

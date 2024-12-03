@@ -71,7 +71,13 @@ class User:
             self.availability = 0
         else:
             self.availability = availability
-
+    
+    def validate_GPA(self):
+        try:
+            number = float(self.gpa)  # Try converting to a float
+            return True  # It's a valid number
+        except ValueError:
+            return False  # Invalid number
 
     def validate_email(self):
         return bool(re.fullmatch(r"[^@]+@[^@]+\.[^@]+", self.email)) # returns true or false 

@@ -1,5 +1,7 @@
 import csv
 from userclass import User 
+import pandas as pd
+import random
 
 class Project:
     def __init__(
@@ -134,6 +136,56 @@ class Project:
             pass
         return {}
     
+    @staticmethod
+    #to binary search
+    def full_names(fullname):       
+        # Leer el archivo CSV
+        df = pd.read_csv('generated_project_database.csv')         
+        # Crear la lista de nombres completos
+        lst = [f"{df['Project Name'].iloc[i]}" for i in range(len(df["Project Name"]))]    
+        # Ordenar la lista
+        
+        sorted_lst = User.sortingmechanism(lst)  
+       
+        return User.binarysearch(sorted_lst,fullname)
+    @staticmethod
+   # Definir el mecanismo de ordenación
+    def sortingmechanism(lst):
+            if len(lst) <= 1:
+                return lst
+            else:
+                randompivotval = random.randint(0, len(lst) - 1)
+                randompivot = lst[randompivotval]
+                lst.pop(randompivotval)
+                lower_bound = [i for i in lst if randompivot > i]
+                upper_bound = [i for i in lst if randompivot <= i]
+                return User.sortingmechanism(lower_bound) + [randompivot] + User.sortingmechanism(upper_bound) 
+    
+    @staticmethod      
+    def binarysearch(fullnameslist,fullname):  
+            
+            # Validate the input list
+            if not isinstance(fullnameslist, list):
+                return 'No list was provided'
+            if not fullnameslist:
+                return 'The provided list is empty'    
+            # Binary search algorithm
+            start = 0
+            end = len(fullnameslist) - 1    
+            while start <= end:
+                mid = (start + end) // 2        
+                # Check if fullname is at the midpoint
+                if fullnameslist[mid] == fullname:
+                    return fullnameslist[mid]  # Return the fullname if found
+                # Adjust the search range
+                elif fullnameslist[mid] > fullname:
+                    end = mid - 1
+                else:
+                    start = mid + 1    
+            # Return None if not found
+            return None    
+
+   
 
 
 

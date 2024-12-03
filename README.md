@@ -69,6 +69,10 @@ To fully test all the user features we have created a step by step guide. This i
 7. **Enjoy!**
 
 8. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
+
+## 📐 High Level Overview of the architecture
+
+![Overview](app/static/images/flowchart.png)
 ## 📃 Authors
 
 - [@JavierCruz2](https://github.com/JavierCruz2)

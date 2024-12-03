@@ -61,7 +61,10 @@
     <div class="profile-row">
       <div class="profile-item">
         <label for="description">Short Description</label>
-        <textarea id = "description" name="description" placeholder="Short Description (Optional)" rows="3" readonly disabled style="width: 100%;">{{ user['Description'] }}</textarea>
+        <textarea id="description" name="description" placeholder="Short Description (Optional)" rows="3" readonly style="width: 100%;">{{ user['Description'] }}</textarea>
+        <input type="hidden" id="description_hidden" name="description_hidden" value="{{ user['Description'] }}">
+
+
     </div>
     <div class="profile-item">   
         <label for="additional_info">Additional Information</label>
@@ -234,12 +237,11 @@
     document.getElementById('selected_topics').value = selected.join(', ');
   }
 </script>
-
 <script>
-  // Event listener for generating the description
-  document.getElementById('generate_description').addEventListener('click', function () {
+document.getElementById('generate_description').addEventListener('click', function () {
     const fileInput = document.getElementById('cv_upload');
     const descriptionBox = document.getElementById('description');
+    const hiddenDescription = document.getElementById('description_hidden');
 
     if (!fileInput.files.length) {
         alert('Please upload a CV.');
@@ -258,12 +260,12 @@
         if (data.error) {
             alert(data.error);
         } else {
-            // Temporarily enable the description box to set its value
-            descriptionBox.disabled = false;
+            const sanitizedDescription = data.description.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            descriptionBox.disabled = false; // Enable temporarily to set value
             descriptionBox.readOnly = false;
-            descriptionBox.value = data.description;
-            // Optionally disable it again if you need
-            descriptionBox.disabled = true;
+            descriptionBox.value = sanitizedDescription;
+            hiddenDescription.value = sanitizedDescription; // Update hidden input
+            descriptionBox.disabled = true; // Re-disable for readonly behavior
         }
     })
     .catch(error => {
@@ -272,7 +274,7 @@
     });
 });
 
-
 </script>
+
 
 {% endblock %}

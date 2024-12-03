@@ -167,7 +167,7 @@
       var container = $('#collaborators_container');
       container.empty(); // Clear existing cards
       if (data.length === 0) {
-        container.append('<p>No collaboratos found.</p>');
+        container.append('<p>No se encontraron colaboradores.</p>');
         return;
       }
       data.forEach(function(user) {
@@ -181,7 +181,8 @@
     // Dynamic Filtering
     $('#filter_form').submit(function (e) {
       e.preventDefault(); // Prevent default form submission
-      $('#loading').show();
+
+     $('#loading').show();
       var formData = $(this).serializeArray();
       var data = {};
 
@@ -194,12 +195,14 @@
         url: '/collaborators', // Server URL
         type: 'POST', // POST method
         contentType: 'application/json',
-        
         data: JSON.stringify(data),
         success: function (response) {  
+
+         $('#loading').hide();
+
           if (response && response.data) {
             renderUserCards(response.data);
-            $('#loading').hide();
+            document.getElementById('vtot').textContent = response.vtot  + ' records';
           } else {
             console.error("La respuesta no contiene los datos esperados.");
             $('#collaborators_container').html('<p>Error al cargar los colaboradores.</p>');
@@ -292,28 +295,28 @@
     <h2>Filters</h2>
     <form id="filter_form" method="post" action="/collaborators">
 
-      <!-- Row for "Looking For" -->
-      <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
+ 	    <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
         <p>Loading, please wait...</p>
       </div>
+      <!-- Row for "Looking For" -->
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
             <label for="looking_for" class="form-label">Looking For:</label>
-            <input type="text" id="looking_for" name="looking_for" class="form-control" placeholder="e.g., Innovative, analytical">
+            <input type="text" id="looking_for" name="looking_for" class="form-control">
           </div>
         </div>
       </div>
-      
+
       <!-- Row for "Looking for Degree" -->
       <div class="row">
         <div class="col-md-12">
           <div class="mb-3">
             <label for="looking_for_degree" class="form-label">Looking for Degree:</label>
-            <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control" placeholder="e.g., Marketing, Data Science">
+            <input type="text" id="looking_for_degree" name="looking_for_degree" class="form-control">
           </div>
         </div>
       </div>
@@ -393,7 +396,6 @@
         <button type="button" class="btn btn-secondary" onclick="location.reload()">Clear</button>
       </div>
     </form>
-   
   </aside>
 
   <!-- Main Content -->
@@ -415,8 +417,8 @@
             Search
         </button>
     </form>
-    
-      <span id="" class="ms-3" style="font-size: 1rem; font-weight: bold;">{{ vbinary }}</span>
+      <span id="" class="ms-3" style="font-size: 1rem; font-weight: bold; display: inline;">{{ vbinary }}</span>
+      <span id="vtot" class="ms-3" style="font-size: 1rem; font-weight: bold; display: inline;">{{ vtot }} records</span>
     </div>
     
     <!-- Container for User Cards -->

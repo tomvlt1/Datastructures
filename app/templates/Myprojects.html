@@ -183,11 +183,23 @@
     <section class="content mt-4">
       <div class="d-flex align-items-center mb-3">
         <h2 class="custom-title me-3 mb-0">My Projects</h2>
-        <form id="search_form" method="post" action="javascript:void(0);" class="d-flex align-items-center">
-          <input type="text" class="form-control me-2" placeholder="Search" name="search_query" id="search_query" style="height: 40px; width: 200px; font-size: 0.9rem;">
-          <button class="btn btn-primary" type="submit" style="height: 40px; font-size: 0.9rem; padding: 0 12px;" onclick="showHello()">Search</button>
-        </form>
-        <span id="hello_message" class="ms-3" style="font-size: 1rem; font-weight: bold;"></span>
+        <form id="search_form" method="POST" action={{ url_for('projects.search_myprojects') }} class="d-flex align-items-start">
+          <input 
+              type="text" 
+              class="form-control me-2 align-start" 
+              placeholder="Search" 
+              name="search_query" 
+              id="search_query" 
+              style="height: 40px; width: 200px; font-size: 0.9rem;">
+          <button 
+              class="btn btn-primary align-self-start" 
+              type="submit" 
+              style="height: 40px; font-size: 0.9rem; padding: 0 12px;">
+              Search
+          </button>
+      </form>
+          <span id="" class="ms-3" style="font-size: 1rem; font-weight: bold; display: inline;">{{ vbinary }}</span>
+          <span id="vtot" class="ms-3" style="font-size: 1rem; font-weight: bold; display: inline;">{{ vtot }} records</span>
         <!-- Create Project Button -->
         <a href="{{ url_for('projects.create_project') }}" class="btn btn-primary ms-auto">Create Project</a>
       </div>

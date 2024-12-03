@@ -23,7 +23,6 @@ def login():
             hashed_password = hashlib.sha256(password.encode()).hexdigest()
             if user['Password'] == hashed_password:
                 session['IsLogged'] = True #session variables that are saved for all the pages.
-                # Assuming session['email'] contains an email with extra spaces
                 session['email']= email.lower().strip()  # Get email from session and remove leading/trailing spaces
                 if session.get('createdP' , None)!= 1:                      
                     return redirect(url_for('account.account_page'))  # redirects, is like render_template of the profile page. 
@@ -36,7 +35,6 @@ def login():
     error_message = "Invalid login credentials. Please check your email and password."
     return render_template('login.html', error_message=error_message)
 
-# Route to register a new user
 @login_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -47,12 +45,12 @@ def register():
         password = request.form.get('password')
         
         description = request.form.get('description')              
-        description=description.replace('\r\n', '\n') #para uniformizar con windows'
-        description=description.replace('\r', '\n') #para uniformizar con mac antiguo'
+        description=description.replace('\r\n', '\n') 
+        description=description.replace('\r', '\n') 
         description=description.replace('\n', '\\n')               
         additional_info = request.form.get('additional_info') 
-        additional_info=additional_info.replace('\r\n', '\n') #para uniformizar con windows             
-        additional_info=additional_info.replace('\r', '\n') #para uniformizar con mac antiguo'
+        additional_info=additional_info.replace('\r\n', '\n')            
+        additional_info=additional_info.replace('\r', '\n') 
         additional_info=additional_info.replace('\n', '\\n') 
               
         age = request.form.get('age') 

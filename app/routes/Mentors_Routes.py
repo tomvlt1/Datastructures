@@ -69,5 +69,5 @@ def search_mentors():
     except Exception as e:
         print(f"An error occurred: {e}")
         
-        # Return an error response if something goes wrong
+        # Return an error response if something goes wrong. I hope everything goes well :)
         return jsonify({'error': 'An unexpected error occurred'}), 500

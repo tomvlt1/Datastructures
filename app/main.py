@@ -27,7 +27,7 @@ def logout():
     session.clear()  
     return redirect(url_for('home.home'))  
 
-def open_browser():
+#def open_browser():
     """Open the default web browser to the app's URL."""
     webbrowser.open_new('http://127.0.0.1:5000/')
 

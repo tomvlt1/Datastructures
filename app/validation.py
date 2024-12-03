@@ -1,7 +1,6 @@
 from datetime import datetime
 
 def validation_function(user,vorigen):
-      
         vValid=0
         verr='' 
         if vorigen==0:  
@@ -30,7 +29,10 @@ def validation_function(user,vorigen):
             error_message = "Invalid LinkedIn URL format"
             vValid=1
             verr = verr + '<br>' + error_message
-               
+        if not user.validate_GPA():
+            error_message = "Incorrect format of the GPA field, try this format 6.8"
+            vValid=1
+            verr = verr + '<br>' + error_message
        
         return vValid, verr
     

@@ -3,16 +3,6 @@ import pandas as pd
 from que import DataFramePrioritySorter
 
 def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
-    """Sorts the data based on the similarity of the interests and degree of the user and the data.
-
-    Args:
-        dataDic (dictionary): _description_
-        looking_for_interest (list): The list of the interests the person has given to themselves. Defaults to None.
-        looking_for_degree (list): the degree of the person. Defaults to None.
-
-    Returns:
-        _type_: _Returns a sorted dataset with the added sort value_
-    """
     data = pd.DataFrame(dataDic) #from json to dataframe 
     if data.empty: 
         return data 
@@ -44,16 +34,6 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
 
 
 def AddSortValueProjects(dataDic, keywords, position):
-    """Sorts the data based on the similarity of the interests and degree of the user and the data.
-
-    Args:
-        dataDic (dictionary): _description_
-        keywords (list): The keywords of the project (basically their description). Defaults to None.
-        position (list): The position the project is looking for.. Defaults to None.
-
-    Returns:
-        _type_: _Returns a sorted dataset with the added sort value_
-    """
     data = pd.DataFrame(dataDic) #from json to dataframe 
     if data.empty: 
         return data 

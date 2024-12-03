@@ -11,30 +11,37 @@ def filter_data(filters, data):
             if i == 'min_age':
                 if float(user.get('Age', 0)) < float(filter_value):
                     match = False  
+                    print("Hola1")
                     break
             if i == 'max_age':
                 if float(user.get('Age', 0)) > float(filter_value):
                     match = False  
+                    print("Hola2")
                     break
             if i == 'min_gpa':
                 if float(user.get('GPA', 0)) < float(filter_value):
                     match = False  
+                    print("Hola3")
                     break
             if i == 'max_gpa':
                 if float(user.get('GPA', 0)) > float(filter_value):
                     match = False  
+                    print("Hola4")
                     break
             if i == 'min_hours':
                 if float(user.get('Availability', 0)) < float(filter_value):
                     match = False  
+                    print("Hola5")
                     break
             if i == 'max_hours':
                 if float(user.get('Availability', 0)) > float(filter_value):
                     match = False  
+                    print("Hola6")
                     break
             if i == 'nationality':
                 if filter_value.lower() != user.get('Nationality', '').lower():
                     match = False  
+
                     break
             if i == 'country_of_residence':
                 if filter_value.lower() != user.get('Country of Residence', '').lower():
@@ -46,7 +53,7 @@ def filter_data(filters, data):
                     break
             if i == 'graduation_year':
                 if filter_value != user.get('Graduation Year', ''):
-                    match = False  
+                    match = False 
                     break           
         # If the user passed all the filters, add them to the filtered data list
         if match:

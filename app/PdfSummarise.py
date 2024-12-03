@@ -4,9 +4,9 @@ from pdfminer.high_level import extract_text
 
 
 def summarise_pdf(file):
-    text = extract_text(file)
-    key = "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" #plz dont steal my key toni :( - thomas
-    #client = openai.OpenAI(api_key="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")
+    text = extract_text(file) #extract the content from the CV literally as it was given
+    #plz dont steal my key toni :( - thomas
+    key = "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" 
     client = openai.OpenAI(api_key=key)
     example = """As a student at IE University, I am pursuing a double degree in Business Management and Data Science, combining technical know-how with business insights. I am passionate about applying data-driven solutions to real-world problems and exploring the intersection of finance, technology, and sustainability. 
 
@@ -28,7 +28,7 @@ I have gained hands-on experience in various domains, such as M&A, digital strat
         )
         summary = response.choices[0].message.content.strip()
 
-        summary = summary.encode('ascii', 'ignore').decode('ascii')
+        summary = summary.encode('ascii', 'ignore').decode('ascii') #clean the output as we were getting errors when is was being outputted to the html
         print("Raw API Output:", summary)
 
         summary = (summary)

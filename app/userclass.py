@@ -29,7 +29,6 @@ class User:
         mentor,
         image=None
     ):
-    # Initialize text attributes
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -75,12 +74,12 @@ class User:
     def validate_GPA(self):
         try:
             number = float(self.gpa)  # Try converting to a float
-            return True  # It's a valid number
+            return True  
         except ValueError:
-            return False  # Invalid number
+            return False 
 
     def validate_email(self):
-        return bool(re.fullmatch(r"[^@]+@[^@]+\.[^@]+", self.email)) # returns true or false 
+        return bool(re.fullmatch(r"[^@]+@[^@]+\.[^@]+", self.email)) # returns true or false /boool
 
     def validate_password(self):
         return bool(

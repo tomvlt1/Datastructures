@@ -11,8 +11,8 @@ def collaborators():
         if request.method == 'POST':  
             data_json =User.load_all_user_data() 
             # Get the filter values from the request
-            filters_values = request.get_json() #get_json from the html form. 
-            print("Received filters:", filters_values) 
+            filters_values = request.get_json() #get_json from the html form. Using json for it to go faster
+            print("Received filters:", filters_values) #to see what the post of the user is.
             # Filter the data based on the filters
             filtered_data = filter_data(filters_values, data_json)  
             

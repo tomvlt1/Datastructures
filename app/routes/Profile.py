@@ -18,7 +18,7 @@ topics = [
     "Skateboarding", "Skiing", "Sports", "Surfing", "Sustainability", "Tennis", 
     "Travel", "Vegetarianism", "Yoga"
 ]
-# Ruta para mostrar el perfil y los datos del usuario
+
 @account_bp.route('/account_page', methods=['GET', 'POST'])
 def account_page():
     if session.get('IsLogged') != True:
@@ -31,10 +31,9 @@ def account_page():
               first_name = request.form.get('first_name')
               last_name = request.form.get('last_name')              
               
-              description = request.form.get('description')              
-              description=description.replace('\r\n', '\n') #para uniformizar con windows'
-              description=description.replace('\r', '\n') #para uniformizar con mac antiguo'
-              description=description.replace('\n', '\\n')               
+              description = request.form.get('description_hidden', '')
+              description = description.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '\\n')
+    
               additional_info = request.form.get('additional_info') 
               additional_info=additional_info.replace('\r\n', '\n') #para uniformizar con windows             
               additional_info=additional_info.replace('\r', '\n') #para uniformizar con mac antiguo'

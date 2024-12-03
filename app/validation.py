@@ -57,54 +57,46 @@ def validate_project_data(project,vorigen):
         vValid = 1
         verr += '<br>' + error_message
 
-    
-
-    # Validate Number of People
     if not isinstance(project.number_of_people, int) or project.number_of_people <= 0:
         error_message = "Number of people must be a positive integer."
         vValid = 1
         verr += '<br>' + error_message
 
-    # Validate Project Stage
     allowed_stages = ['Idea', 'Planning', 'Execution', 'Completed']
     if project.project_stage not in allowed_stages:
         error_message = f"Project stage must be one of the following: {', '.join(allowed_stages)}."
         vValid = 1
         verr += '<br>' + error_message
 
-    # Validate Language Spoken
     allowed_languages = ['English', 'Spanish', 'French', 'German']  # Extend this list as needed
     if project.language_spoken not in allowed_languages:
         error_message = f"Language spoken must be one of the following: {', '.join(allowed_languages)}."
         vValid = 1
         verr += '<br>' + error_message
 
-    # Validate Start Date
     if not isinstance(project.start_date, str):
         error_message = "Invalid start date format. It must be a string in YYYY-MM-DD format."
         vValid = 1
         verr += '<br>' + error_message   
     try:
-        # Intentar convertir el string a un objeto datetime
+        # Intento convertir el string a un objeto datetime
         datetime.strptime(project.start_date, "%Y-%m-%d")
     except ValueError:
             error_message = "Invalid start date format. Use YYYY-MM-DD."
             vValid = 1
             verr += '<br>' + error_message
 
-    # Validate Completion Estimate (Months)
     if not isinstance(project.completion_estimate_months, int) or project.completion_estimate_months <= 0:
         error_message = "Completion estimate must be a positive integer representing months."
         vValid = 1
         verr += '<br>' + error_message
 
-    # Validate Project Description
+
     if not project.project_description or project.project_description.strip() == '':
         error_message = "Project description is required."
         vValid = 1
         verr += '<br>' + error_message
 
-    # Validate Positions Needed
     if project.positions_needed:
         if not isinstance(project.positions_needed, list) or not all(isinstance(pos, str) for pos in project.positions_needed):
             error_message = "Positions needed must be a list of position names."

@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 
-tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2") #we found these on hugging face (if i remember correctly)
 model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 
 def TakeFields(person_data, target_data):

@@ -1,4 +1,4 @@
-/* General Styles */
+/* general styles for the whole page */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   font-family: Arial, sans-serif;
 }
 
-/* Ensure the body takes up the full height and the footer stays at the bottom */
+/* trying to make body full height so footer sticks to bottom */
 html, body {
   height: 100%;
   margin: 0;
@@ -24,8 +24,7 @@ main {
   overflow-x: auto;
 }
 
-
-/* Navbar */
+/* navbar styles */
 .navbar {
   background-color: #003366;
   color: white;
@@ -50,9 +49,9 @@ main {
   text-decoration: none;
 }
 
-/* Footer */
+/* footer area */
 footer {
-  background-color: #003366; /* Azul marino */
+  background-color: #003366;
   color: #fff;
   text-align: center;
   padding: 20px 0;
@@ -80,7 +79,7 @@ footer {
   text-decoration: underline;
 }
 
-/* Banner / Page Title */
+/* banner section, page title stuff */
 .banner {
   background-color: #ccc;
   padding: 15px;
@@ -89,7 +88,7 @@ footer {
   color: #333;
 }
 
-/* Activity Section (Home Page) */
+/* activity section on home page */
 .activity-section {
   display: flex;
   justify-content: center;
@@ -151,14 +150,14 @@ footer {
 }
 .profile-info {
   display: flex;
-  flex-direction: column; /* Coloca los elementos de la información en columna */
+  flex-direction: column;
   gap: 10px;
   background-color: #0073e6;
   padding: 15px;
   border-radius: 10px;
   color: white;
-  max-width: 400px; /* Limita el ancho máximo de la sección */
-  flex-grow: 1; /* Permite que la sección crezca para ocupar el espacio restante */
+  max-width: 400px;
+  flex-grow: 1;
   margin-top: 20px;
  
 }
@@ -201,22 +200,21 @@ footer {
   font-size: 0.9em;
 }
 
-
-/* Collaborators Page */
+/* styles for collaborators page */
 .container {
   display: flex;
   padding: 20px;
 }
 
 .filters {
-  width: 300px; /* Set width of the filter sidebar */
-  padding: 15px; /* Add padding for spacing */
-  background-color: white; /* Background color for the filter section */
-  border-right: 1px solid #ccc; /* Add border between filters and content */
+  width: 300px;
+  padding: 15px;
+  background-color: white;
+  border-right: 1px solid #ccc;
 }
 
 .filters h2, .filters p {
-  font-weight: bold; /* Make labels bold for better readability */
+  font-weight: bold;
   margin-bottom: 5px;
   
 }
@@ -298,41 +296,42 @@ footer {
   cursor: pointer;
 }
 
-/* Styles for the filter buttons */
+/* filter buttons styles */
 .filters .button-container {
-  display: flex; /* Use flexbox to align buttons horizontally */
-  justify-content: space-between; /* Ensure buttons are spaced out evenly */
-  gap: 40px; /* Optional: small gap between buttons */
-  width: 100%; /* Make the container take full available width */
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
 }
 
 .filters .button-container .btn {
-  height: 40px; /* Set the same height for both buttons */
+  height: 40px;
   display: inline-block;
-  padding: 0 20px; /* Set consistent padding */
-  font-size: 1em; /* Same font size */
-  line-height: 1; /* Ensures proper alignment */
+  padding: 0 20px;
+  font-size: 1em;
+  line-height: 1;
 }
 
 /* Ensures the submit button has consistent styling */
 .filters form .btn {
-  height: 50px; /* Same height as the Clean Filters button */
-  padding: 0 20px; /* Same padding */
+  height: 50px;
+  padding: 0 20px;
 }
 
 /* Clean Filters button outside form */
 #clean_filters {
-  height: 50px; /* Same height as the submit button */
-  padding: 0 20px; /* Same padding */
+  height: 50px;
+  padding: 0 20px;
 }
 
 /* Optional: ensure both buttons take equal space */
 .filters .button-container .btn-primary,
 #clean_filters {
-  flex: 1; /* Make buttons stretch to fill available space */
-  width: auto; /* Ensure buttons are not fixed-width */
+  flex: 1;
+  width: auto;
 }
-/* Asegurarse de que la tabla no cambie de tamaño y el pie de página se quede en su lugar */
+
+/* make sure table size stays fixed and footer sticks around */
 #collaborators_table_wrapper {
   position: relative;
 }
@@ -344,100 +343,98 @@ footer {
   z-index: 1000;
 }
 
-/* Asegura que el contenido de la tabla se mantenga en su lugar */
+/* Keep table content in place */
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_paginate {
   padding: 10px;
   text-align: center;
 }
 #collaborators_table_paginate {
-  background-color: #f8f9fa; /* Color de fondo para el pie de la tabla */
+  background-color: #f8f9fa;
 }
-/* Filtros Section */
+
+/* Filters section */
 .filters {
-  width: 35%; /* Aumentar el ancho del contenedor de filtros */
-  padding-right: 30px; /* Añadir más espacio a la derecha */
+  width: 35%;
+  padding-right: 30px;
   margin-bottom: 20px;
-  background-color: #f8f9fa; /* Fondo de color claro para resaltar los filtros */
+  background-color: #f8f9fa;
   
   padding-top: 20px;
   padding-bottom: 20px;
 }
-/* Solo se aplica a la página de filtros */
+/* Only applies to filters page */
 .filters-page button {
-  width: 20%; /* Reducir el ancho de los botones a 20% */
-  margin-right: 4%; /* Espacio entre los botones */
-  padding: 5px; /* Altura consistente */
-  background-color: #007bff; /* Color de fondo (azul) */
-  color: white; /* Color del texto */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  font-size: 16px; /* Tamaño de fuente */
+  width: 20%;
+  margin-right: 4%;
+  padding: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
   margin-right: 10px;
 }
 
-
-/* Cambio de color cuando el ratón pasa sobre los botones en la página de filtros */
+/* Change button color on hover in filters page */
 .filters-page button:hover {
-  background-color: #0056b3; /* Color de fondo más oscuro cuando se pasa el ratón */
+  background-color: #0056b3;
 }
 
-/* Evitar que el segundo botón se mueva hacia la siguiente línea */
+/* Remove margin from last button */
 .filters-page .filters button:last-child {
-  margin-right: 0; /* Sin margen en el último botón */
+  margin-right: 0;
 }
 
-/* Estilos para los campos de texto y selectores dentro de los filtros */
+/* Styles for text fields and selectors in filters */
 .filters-page .filters input, .filters-page .filters select {
   width: 100%;
-  margin-bottom: 10px; /* Separación entre los campos */
+  margin-bottom: 10px;
 }
-/* Asegura que haya espacio entre los botones */
+/* Make sure there's space between buttons */
 .d-flex button {
-  width: 48%; /* Reduce el ancho de los botones */
-  margin-right: 4%; /* Añade espacio entre los botones */
+  width: 48%;
+  margin-right: 4%;
 }
 
-/* Evita que el margen se aplique al último botón */
+/* Prevent margin from applying to the last button */
 .d-flex button:last-child {
-  margin-right: 0; /* El último botón no tendrá margen derecho */
+  margin-right: 0;
 }
 
-/* Estilo para los botones cuando se pasa el mouse por encima */
+/* Button hover styles */
 .d-flex button:hover {
-  background-color: #0056b3; /* Cambio de color al pasar el ratón */
+  background-color: #0056b3;
 }
 
 .normal-label {
-  display: block; /* Hace que la etiqueta sea un bloque */
-  font-weight: normal; /* Remove bold from the label */
-  margin-right: 80px; /* Add spacing between label and input */
-  white-space: nowrap; /* Prevent the label from wrapping */
- 
-   
+  display: block;
+  font-weight: normal;
+  margin-right: 80px;
+  white-space: nowrap;
 }
-/* Apply Flexbox to the container holding the label and input */
+/* Use flexbox for label and input container */
 .row {
   display: flex;
-  align-items: center; /* Align the label and input vertically in the center */
+  align-items: center;
 }
 
 .row .col-md-6 {
   display: flex;
-  flex-direction: row; /* Ensure they are in the same row */
-  align-items: center; /* Alinea los elementos verticalmente al principio */
-  gap: 10px; /* Añade espacio entre los inputs, */
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 #dob {
-  width: 40%;  /* Hace que el input ocupe la mitad del ancho del contenedor */
+  width: 40%;
 }
-/* Profile Section */
+/* Profile section styles */
 .profile-section {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
-/* Profile Header */
+/* Profile header styles */
 .profile-header {
   display: flex;
   justify-content: center;
@@ -445,13 +442,13 @@ footer {
   flex-direction: column;
   text-align: center;
 }
-/* Left part (Profile Picture and Name) */
+/* Left side: profile pic and name */
 .profile-left {
   display: flex;
-  flex-direction: row; /* Alineamos la imagen y el nombre en una fila */
-  align-items: center; /* Centrado vertical de los elementos */
-  justify-content: center; /* Centra los elementos horizontalmente */
-  margin-bottom: 20px; /* Separación entre la parte superior y el botón */
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
   gap: 15px;
 }
 .profile-left p {
@@ -459,9 +456,9 @@ footer {
   color-scheme:#f8f9fa ;
 }
 
-/* Profile picture styles */
+/* Styles for profile picture */
 .profile-pic-large {
-  font-size: 4em; /* Ajusta el tamaño según sea necesario */
+  font-size: 4em;
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -481,18 +478,17 @@ footer {
   width: 100%;
   height: 100%;
   text-align: center;
-  line-height: 120px; /* Centra el icono dentro del círculo */
+  line-height: 120px;
   border-radius: 50%;
 }
 
-/* Right part (Profile details) */
+/* Right side: profile details */
 .profile-right {
   flex-grow: 1;
   text-align: left;
 }
 
-
-/* Form inputs */
+/* Form input styles */
 .info-item {
   margin-bottom: 15px;
 }
@@ -510,7 +506,7 @@ footer {
   border: 1px solid #ccc;
 }
 
-/* Submit button */
+/* Styles for submit button */
 button[type="submit"] {
   padding: 10px 15px;
   background-color: #003366;
@@ -520,7 +516,7 @@ button[type="submit"] {
   cursor: pointer;
   margin-top: 20px;
 }
-/* Submit button */
+/* Styles for button */
 button[type="button"] {
   padding: 10px 15px;
   background-color: #003366;
@@ -533,31 +529,30 @@ button[type="button"] {
 button[type="submit"]:hover {
   background-color: #024487;
 }
-/* Modern Profile Styles */
-/* Profile Header Adjustments */
+/* Adjustments for modern profile header */
 .profile-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 20px;
-  background-color: #003366; /* Fondo azul */
+  background-color: #003366;
   color: white;
   border-radius: 5px;
   margin-bottom: 20px;
 }
-/* Profile Content Adjustments */
+/* Adjustments for profile content */
 .profile-content-wrapper {
-  display: grid; /* Activamos layout de columnas */
+  display: grid;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 2px 20px; /* 2px entre filas, 5px entre columnas */
-  padding: 0px 20px; /* 0 arriba y abajo, 20 izquierda y derecha */ 
+  gap: 2px 20px;
+  padding: 0px 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Lado izquierdo más grande que el derecho */ 
-  grid-template-rows: repeat(2, auto); /* Dos filas automáticas */
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, auto);
   margin-top:0px; 
-  min-height: auto; /* Elimina restricciones innecesarias */
-  height: auto; /* Ajusta la altura al contenido */
+  min-height: auto;
+  height: auto;
   
 }
 .profile-content {
@@ -571,7 +566,7 @@ button[type="submit"]:hover {
   margin-top: 0px; 
 }
 
-/* Form Input Styling */
+/* Styling form inputs */
 .info-row {
   display: flex;
   justify-content: space-between;
@@ -587,52 +582,52 @@ button[type="submit"]:hover {
 }
 
 .info-item.small-item {
-  flex: 0.4; /* Ajustamos el tamaño del campo */
+  flex: 0.4;
 }
 .d-flex.justify-content-between > .btn {
-  align-self: center; /* Ensure buttons align vertically within the container */
-  margin: 0;          /* Remove any extra margins */
-  height: 100%;       /* Optional: Ensures both buttons have the same height */
+  align-self: center;
+  margin: 0;
+  height: 100%;
   
 }
 .custom-title {
-  font-size: 2rem; /* Ajusta el tamaño si es necesario */
-  text-transform: uppercase; /* Opcional: Mayúsculas */
+  font-size: 2rem;
+  text-transform: uppercase;
   color:#003366
 }
 
 #search_query, #search_form button {
-  height: 40px; /* Same height for input and button */
+  height: 40px;
   font-size: 0.9rem;
   margin-top: 0;
 }
 
 h2 {
-  margin-bottom: 0; /* Remove bottom margin for proper alignment */
+  margin-bottom: 0;
   
 }
-/* Cambiar el color del fondo del slider */
+/* Customizing slider colors */
 .noUi-connect {
-  background-color: #003366; /* Azul (puedes cambiarlo al color que desees) */
+  background-color: #003366;
 }
 
-/* Cambiar el color del borde y fondo del "handle" (control deslizante) */
+/* Changing handle color and border */
 .noUi-handle {
-  background: #070bff; /* Amarillo (puedes cambiarlo al color que desees) */
-  border-color:  #070bff; /* Color del borde del handle */
+  background: #070bff;
+  border-color:  #070bff;
 }
 
-/* Cambiar el color de las pistas no conectadas */
+/* Changing color of disconnected tracks */
 .noUi-target {
-  background: #f8f9fa; /* Gris claro */
-  border: 1px solid #dee2e6; /* Borde gris */
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
 }
 
-/* Cambiar el color al interactuar con el handle */
+/* Handle active state color */
 .noUi-handle:active {
   background: #003366; 
 }
-/* Cambiar el color de la barra del medio del slider */
+/* Changing middle bar color */
 .noUi-connect {
   background: #003366 
 }
@@ -642,22 +637,22 @@ h2 {
 .noUi-base {
   background: #f4f6f8 
 }
-/* Estilo exclusivo para esta sección */
+/* profile-specific styles */
 .profile-specific {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 .profile-row {
-  display: flex; /* Convierte el contenedor en un layout de Flexbox */
-  gap: 20px; /* Espacio entre columnas */
-  flex-wrap: nowrap; /* Previene que los elementos se envíen a una nueva fila */
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
 
 }
 
 .profile-item {
-  flex: 1; /* Distribuye el ancho de las columnas equitativamente */
-  min-width: 200px; /* Evita que las columnas se reduzcan demasiado */
+  flex: 1;
+  min-width: 200px;
 }
 .profile-item label {
   display: block;
@@ -672,13 +667,13 @@ h2 {
   font-weight: bold;
 }
 .profile-item input {
-  width: 100%; /* Asegura que el input ocupe todo el ancho del contenedor */
+  width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
 }
-/* Estilo del botón */
+/* File button styles */
 #fileButton {
   background-color: #4c96af;
   color: white;
@@ -692,80 +687,81 @@ h2 {
 #fileButton:hover {
   background-color: #4554a0;
 }
-/* Estilo del nombre del archivo seleccionado */
+/* Selected file name style */
 #fileName {
   font-size: 14px;
   margin-left: 10px;
 }
-/* Estilo para el nombre y apellido */
+/* Name and surname styles */
 .user-name {
   font-size: 30px;
   font-weight: bold;
   margin-top: 20px;
 }
-/* Estilos para el contenedor del botón */
+/* Styles for button container */
 .upload-container {
   display: flex;
   justify-content: center;
-  margin-top: 0px; /* Espacio entre el nombre y el botón */}
+  margin-top: 0px; 
+}
 
-  /* Sección Topics of Interest */
+/* Second block styles */
 .second-block {
-  flex: 0.6; /* Ocupa menos espacio */
-  border-left: 1px solid #ccc; /* Línea divisoria */
-  padding-left: 20px; /* Espaciado interno */
+  flex: 0.6;
+  border-left: 1px solid #ccc;
+  padding-left: 20px;
   background-color: #f9f9f9;
 }
 
-    /* Styles for Topics of Interest section */
-    .topics-container {
-      display: flex;
-      flex-wrap: wrap; /* Allow wrapping to multiple rows */
-      gap: 10px; /* Spacing between columns */
-    }
+/* Styles for Topics of Interest section */
+.topics-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 
-    .topics-column {
-      flex: 1 1 calc(33.333% - 10px); /* 3 columns with equal spacing */
-      max-width: calc(33.333% - 10px); /* Ensure columns don't exceed 1/3 of the width */
-    }
+.topics-column {
+  flex: 1 1 calc(33.333% - 10px);
+  max-width: calc(33.333% - 10px);
+}
 
-    .topics-item {
-      background-color: #f9f9f9; /* Light background for each item */
-      padding: 5px;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .container-grid{
-      display: grid;
-    }
-    .right-section {
-      grid-column: 2; /* Se ubica en la segunda columna */
-      grid-row: span 2; /* Ocupa ambas filas */
-      flex: 2; /* Más ancho que el lado izquierdo */
-  }
-  
+.topics-item {
+  background-color: #f9f9f9;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.container-grid{
+  display: grid;
+}
+.right-section {
+  grid-column: 2;
+  grid-row: span 2;
+  flex: 2;
+}
+
 .left-section {
-  grid-column: 1; /* Se queda en la primera columna */
-  gap: 2px; /* Reduce el espacio entre los elementos */
+  grid-column: 1;
+  gap: 2px;
 }
 .save-button {
-  margin: 0; /* Elimina márgenes innecesarios */
-  padding: 0; /* Elimina padding innecesario */
+  margin: 0;
+  padding: 0;
 }
-/* Estilo del h3 para que sea como los labels del lado izquierdo */
+/* Style h3 to look like labels on left */
 .custom-title {
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 10px;
   display: block;
-  color: #333; /* Ajusta el color según el tema */
+  color: #333;
 }
 
-/* Header Principal */
+/* Main header */
 .navbar-primary {
-  background-color: #003366; /* Azul marino */
+  background-color: #003366;
   padding: 15px 30px;
 }
 
@@ -784,29 +780,27 @@ h2 {
 }
 
 .navbar-primary nav a:hover {
-  color: #ffcc00; /* Amarillo IE */
+  color: #ffcc00;
 }
 
-/* Header Secundario */
+/* Secondary header */
 .navbar-secondary {
-  background-color: #FFFFFF; /* Blanco */
+  background-color: #FFFFFF;
   padding: 10px 30px;
-  border-bottom: 1px solid #e0e0e0; /* Línea gris suave */
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .navbar-secondary nav a {
-  color: #000000; /* Negro */
+  color: #000000;
   margin-right: 20px;
   text-decoration: none;
   font-size: 16px;
-  border-bottom: 1px solid transparent; /* Inicialmente transparente */
+  border-bottom: 1px solid transparent;
   transition: border-bottom 0.3s, color 0.3s;
-  padding-bottom: 2px; /* Espacio para la línea */
+  padding-bottom: 2px;
 }
 
 .navbar-secondary nav a:hover {
-  border-bottom: 1px solid #000000; /* Subrayado al pasar el cursor */
-  color: #00AEEF; /* Cambia a azul claro más vivo al pasar el cursor */
+  border-bottom: 1px solid #000000;
+  color: #00AEEF;
 }
-
-

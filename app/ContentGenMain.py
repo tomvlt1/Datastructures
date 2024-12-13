@@ -143,7 +143,7 @@ def write_to_csv(data, filename):
 
 def main():
     
-    generated_data = generate_random_data(5000) #This is where we specify the number of users we are generating.
+    generated_data = generate_random_data(50) #This is where we specify the number of users we are generating.
     write_to_csv(generated_data, 'generated_database.csv')
     
 

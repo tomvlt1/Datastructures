@@ -1,4 +1,4 @@
-# This script starts a Flask web application. It imports and registers different route blueprints 
+# This script starts the Flask web application. It imports and registers different route blueprints 
 # (home, collaborators, login, account, mentors, and projects), sets a secret key for sessions
 # provides a logout function, and automatically opens the app in a web browser when it runs.
 import threading

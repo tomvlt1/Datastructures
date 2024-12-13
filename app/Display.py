@@ -1,8 +1,11 @@
+#This file is used to add and calculate the sort value to the records inorder to display it to the user.
+
 from Embedding import TakeFields as TF
 import pandas as pd
 from que import DataFramePrioritySorter
 
 def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
+    #This functions adds the sort value to the users, which is calculated as a weighted average taking into account the word embedding. 
     data = pd.DataFrame(dataDic) #from json to dataframe 
     if data.empty: 
         return data 
@@ -34,6 +37,7 @@ def AddSortValue(dataDic, looking_for_interest=None, looking_for_degree=None):
 
 
 def AddSortValueProjects(dataDic, keywords, position):
+    #This functions adds the sort value to the projects, which is calculated as a weighted average taking into account the word embedding. 
     data = pd.DataFrame(dataDic) #from json to dataframe 
     if data.empty: 
         return data 

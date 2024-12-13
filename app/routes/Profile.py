@@ -110,6 +110,7 @@ def account_page():
                     user_data = User.get_user_data_from_csv(session['email'])   
                     
                     user_data =user_Topics_function(user_data,topics) 
+                    #to show some fields I recover the line breaks
                     user_data['Description'] = user_data['Description'].replace('\\n', '\n') 
                     user_data['Additional Information'] = user_data['Additional Information'].replace('\\n', '\n')       
                    
@@ -120,6 +121,7 @@ def account_page():
       
        user_data =user_Topics_function(user_data,topics)
       
+        #to show some fields I recover the line breaks
        user_data['Description'] = user_data['Description'].replace('\\n', '\n') 
        user_data['Additional Information'] = user_data['Additional Information'].replace('\\n', '\n')
               

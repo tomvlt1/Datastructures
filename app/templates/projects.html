@@ -107,14 +107,21 @@
     
     // Function to create a project card
     function createProjectCard(project) {
-      // Format the Match Value as a percentage without decimals
-      var matchValue = project['Sort Value'];
-      if (matchValue <= 1) {
-        matchValue = Math.round(matchValue * 100) + '%';
-      } else {
-        matchValue = Math.round(matchValue) + '%';
+      // Handle the Sort Value
+      var originalSortValue = project['Sort Value'];
+      var numericSortValue = originalSortValue;
+
+      // If sort value is between 0 and 1, convert to percentage
+      if (numericSortValue <= 1) {
+        numericSortValue = numericSortValue * 100;
       }
-      
+
+      numericSortValue = Math.round(numericSortValue);
+      var sortValue = numericSortValue + '%';
+
+      // Determine color: if > 50%, use gold color for the text
+      var matchValueStyle = numericSortValue > 50 ? 'color: gold;' : '';
+
       // Create the HTML for the card
       var card = `
         <div class="card card-horizontal">
@@ -126,10 +133,9 @@
               <p class="card-text"><strong>Start Date:</strong> ${project['Start Date']}</p>
               
               <form action="{{ url_for('projects.viewproject') }}" method="POST">
-                        <input type="hidden" name="id_project" value="${project['id_project']}">
-                        <button type="submit" class="btn view-profile-btn">View Project</button>
-                    </form>
-
+                <input type="hidden" name="id_project" value="${project['id_project']}">
+                <button type="submit" class="btn view-profile-btn">View Project</button>
+              </form>
             </div>
           </div>
           <div class="status-section">
@@ -138,7 +144,7 @@
           </div>
           <div class="match-value-section">
             <span class="match-label">Match Value</span>
-            <span class="match-value">${matchValue}</span>
+            <span class="match-value" style="${matchValueStyle}">${sortValue}</span>
           </div>
         </div>
       `;
@@ -179,7 +185,7 @@
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) { 
-            // Ocultar el spinner al recibir una respuesta
+          // Hide the spinner after receiving a response
           $('#loading').hide(); 
           if (response && response.data) {
             renderProjectCards(response.data);
@@ -345,9 +351,8 @@
           </div>
         </div>
 
-        <!-- Keywords and Positions Needed -->
+        <!-- Positions Needed -->
         <div class="row">
-         
           <div class="col-md-6">
             <div class="mb-3">
               <label for="positions_needed" class="form-label">Positions Needed:</label>
@@ -356,8 +361,6 @@
           </div>
         </div>
 
-        <!-- Project Description -->
-        
         <!-- Buttons -->
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Apply Filters</button>

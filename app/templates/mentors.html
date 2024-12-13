@@ -119,19 +119,23 @@
 
     // Function to create a user card
     function createUserCard(user) {
-      
       var photoUrl = user['Image'] ? ('/static/images/' + user['Image']) : 'https://via.placeholder.com/200x250?text=No+Image';
-      ;
-      // Format Sort Value as a percentage with 0 decimals
-      var sortValue = user['Sort Value'];
-      // Check if Sort Value is between 0 and 1
-      if (sortValue <= 1) {
-        sortValue = Math.round(sortValue * 100) + '%';
-      } else {
-        // If already between 0 and 100
-        sortValue = Math.round(sortValue) + '%';
+
+      // Handle Sort Value
+      var originalSortValue = user['Sort Value'];
+      var numericSortValue = originalSortValue;
+
+      // If sort value is between 0 and 1, it's a fraction, convert to percentage
+      if (numericSortValue <= 1) {
+        numericSortValue = numericSortValue * 100;
       }
-      
+
+      numericSortValue = Math.round(numericSortValue);
+      var sortValue = numericSortValue + '%';
+
+      // Determine color: if > 50%, use gold, else default
+      var matchValueStyle = numericSortValue > 50 ? 'color: gold;' : '';
+
       // Create the card HTML
       var card = `
         <div class="card card-horizontal">
@@ -154,7 +158,7 @@
             </div>
           </div>
           <div class="sort-rating-section">
-            <p><strong>Match Value:</strong> <span class="match-value-number">${sortValue}</span></p>
+            <p><strong>Match Value:</strong> <span class="match-value-number" style="${matchValueStyle}">${sortValue}</span></p>
             <p><strong>Rating:</strong> ${generateStars(user['Rating'])}</p>
           </div>
         </div>

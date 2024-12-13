@@ -230,6 +230,20 @@
     initIntegerSlider('completion_slider', 1, 24, [1, 12], 'min_completion', 'max_completion', 'completion_min_label', 'completion_max_label');
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const infoBtn = document.getElementById('info-btn');
+    const infoTooltip = document.getElementById('info-tooltip');
+
+    // Show on hover
+    infoBtn.addEventListener('mouseenter', () => {
+      infoTooltip.style.display = 'block';
+    });
+    infoBtn.addEventListener('mouseleave', () => {
+      infoTooltip.style.display = 'none';
+    });
+  });
+</script>
 {% endblock scriptshead %}
 
 {% block content %}
@@ -237,6 +251,15 @@
     <!-- Filters Sidebar -->
     <aside class="filters">
       <h2>Filters</h2>
+      <button id="info-btn" type="button" class="btn btn-info btn-sm" style="margin-left: 10px;">
+        Info
+      </button>
+      <div id="info-tooltip"
+       style="display: none; position: absolute; top: 240px; left: 0px; padding: 6px; background: #eef; border: 1px solid #ccc;">
+       The match value is a combination of the User's rating (if applicable) <br>
+       and both the match values that were calculated with word embedding
+       <br> from the two input boxes below.
+      </div>
       <form id="filter_form" method="post" action="/projects">
         <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
           <div class="spinner-border text-primary" role="status">

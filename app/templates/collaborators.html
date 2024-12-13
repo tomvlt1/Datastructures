@@ -102,6 +102,10 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Parse JSON data sent from Django safely
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl)
+    })
     var collaborators_data = JSON.parse(`{{ data | tojson | safe }}`);
     
     // Function to generate stars based on the rating
@@ -286,6 +290,21 @@
 
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const infoBtn = document.getElementById('info-btn');
+    const infoTooltip = document.getElementById('info-tooltip');
+
+    // Show on hover
+    infoBtn.addEventListener('mouseenter', () => {
+      infoTooltip.style.display = 'block';
+    });
+    infoBtn.addEventListener('mouseleave', () => {
+      infoTooltip.style.display = 'none';
+    });
+  });
+</script>
+
 {% endblock scriptshead %} 
 
 {% block content %}
@@ -293,8 +312,18 @@
   <!-- Sidebar Filters -->
   <aside class="filters">
     <h2>Filters</h2>
+ 
+    <button id="info-btn" type="button" class="btn btn-info btn-sm" style="margin-left: 10px;">
+      Info
+    </button>
+    <div id="info-tooltip"
+     style="display: none; position: absolute; top: 240px; left: 0px; padding: 6px; background: #eef; border: 1px solid #ccc;">
+     The match value is a combination of the User's rating (if applicable) <br>
+     and both the match values that were calculated with word embedding
+     <br> from the two input boxes below.
+    </div>
     <form id="filter_form" method="post" action="/collaborators">
-
+   
  	    <div id="loading" style="display: none; text-align: center; margin-top: 20px;">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>

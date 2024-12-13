@@ -17,7 +17,7 @@ Then navigate to the app folder within the Datastructures folder
 ``` cd Datastructures/app ```
 
 ## ⬇️ Imports 
-This project was primarily developed and tested on **macOS Monterey (Version 12.6.9), macOS Sequoia 15.1, Windows 11 Home 23H2**. It should also work on other Unix-based systems or Windows with the required dependencies. 
+This project was primarily developed and tested on **macOS Monterey (Version 12.6.9), macOS Sequoia 15.1, Windows 11 Home 23H2**. It should also work on other Unix-based systems or Windows versions.
 
 
 This will ensures that you are using the correct python version and the correct libraries prior to running the project

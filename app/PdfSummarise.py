@@ -6,7 +6,7 @@ from pdfminer.high_level import extract_text
 def summarise_pdf(file):
     text = extract_text(file) #extract the content from the CV literally as it was given
     #plz dont steal my key toni :( - thomas
-    key = "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" 
+    key = "" 
     client = openai.OpenAI(api_key=key)
     example = """As a student at IE University, I am pursuing a double degree in Business Management and Data Science, combining technical know-how with business insights. I am passionate about applying data-driven solutions to real-world problems and exploring the intersection of finance, technology, and sustainability. 
 

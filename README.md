@@ -17,6 +17,9 @@ Then navigate to the app folder within the Datastructures folder
 ``` cd Datastructures/app ```
 
 ## ⬇️ Imports 
+This project was primarily developed and tested on **macOS Monterey (Version 12.6.9)**. It should also work on other Unix-based systems or Windows with the required dependencies. 
+
+
 This will ensures that you are using the correct python version and the correct libraries prior to running the project
 
 ``` pip3 install -r requirements.txt ```
@@ -24,6 +27,12 @@ This will ensures that you are using the correct python version and the correct 
 or
 
 ``` pip install -r requirements.txt```
+
+We used the following libraries and python version 
+
+```Python 3.12.1, Flask==3.1.0, openai==1.55.3, pandas==2.2.3, pdfminer==20191125, pdfminer.six==20240706, torch==2.2.2, transformers==4.46.2, numpy<2```
+
+
 
 ## 💻 Usage
 ``` python3 main.py ```
@@ -53,22 +62,26 @@ To fully test all the user features we have created a step by step guide. This i
 4. **Page Selection** Now you can start looking for whatever suits your needs best on each page.
 
     a. **Look for Collaborators**: If you are looking for people to work with or join one of your projects.
+   ![Home](app/static/images/collab.png)
+
 
     b. **Look for Projects**: If you are looking to join a pre-existing team/project.
+    ![Home](app/static/images/proj.png)
+
 
     c. **Look for a Mentor**: Perhaps you want someone more experienced to give you some tips for a certain industry you are looking to break into.
-
-5. **Searching**:
+    ![Home](app/static/images/ment.png)
+6. **Searching**:
 
     a. **Filters**, first remove out any section of people or projects that you are not interested in.
     
     b.**Interest**, input whichever specific subjects or degree or position you are looking for and our word embedding technology will recommend the people and projects that are closest to your desires. You will see the match value displayed to you.
 
-6. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
+7. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
 
-7. **Enjoy!**
+8. **Enjoy!**
 
-8. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
+9. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
 
 ## 📐 High Level Overview of the architecture
 

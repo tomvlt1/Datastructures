@@ -1,7 +1,7 @@
 import csv
 from userclass import User 
 import pandas as pd
-import random
+import heapq
 
 class Project:
     def __init__(
@@ -145,21 +145,20 @@ class Project:
         lst = [f"{df['Project Name'].iloc[i]}" for i in range(len(df["Project Name"]))]    
         # Ordenar la lista
         
-        sorted_lst = User.sortingmechanism(lst)  
+        sorted_lst = User.alphabetical_priority_sort(lst)  
        
         return User.binarysearch(sorted_lst,fullname)
     @staticmethod
    # Definir el mecanismo de ordenación
-    def sortingmechanism(lst):
-            if len(lst) <= 1:
-                return lst
-            else:
-                randompivotval = random.randint(0, len(lst) - 1)
-                randompivot = lst[randompivotval]
-                lst.pop(randompivotval)
-                lower_bound = [i for i in lst if randompivot > i]
-                upper_bound = [i for i in lst if randompivot <= i]
-                return User.sortingmechanism(lower_bound) + [randompivot] + User.sortingmechanism(upper_bound) 
+    def alphabetical_priority_sort(values):
+        heapq.heapify(values)
+
+        sorted_values = []
+        while values:
+            sorted_values.append(heapq.heappop(values))
+        
+        return sorted_values
+
     
     @staticmethod      
     def binarysearch(fullnameslist,fullname):  

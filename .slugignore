@@ -1,4 +1,8 @@
-static/*.png
-static/*.jpg
-static/*.jpeg
-.git
+.git/
+*.pyc
+*.log
+*.env
+__pycache__/
+*.sqlite3
+static/uploads/
+node_modules/

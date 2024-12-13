@@ -1,3 +1,7 @@
+#the file below has the objetive of implemmenting the account management functionality 
+#for a flask application, including user profile creation, updates, topic categorization,
+#profile consultation and finally CV upload
+
 from flask import Blueprint, render_template, request,session,jsonify
 from userclass import User  # Class user.py
 from datetime import datetime
@@ -20,6 +24,8 @@ topics = [
 ]
 
 @account_bp.route('/account_page', methods=['GET', 'POST'])
+#the functions below is meant to manage the accounts page functionality.
+#it also includes retrieving and updating user data 
 def account_page():
     if session.get('IsLogged') != True:
         return render_template('login.html')
@@ -35,8 +41,8 @@ def account_page():
               description = description.replace('\r\n', '\n').replace('\r', '\n').replace('\n', '\\n')
     
               additional_info = request.form.get('additional_info') 
-              additional_info=additional_info.replace('\r\n', '\n') #para uniformizar con windows             
-              additional_info=additional_info.replace('\r', '\n') #para uniformizar con mac antiguo'
+              additional_info=additional_info.replace('\r\n', '\n') #to standarize with windows             
+              additional_info=additional_info.replace('\r', '\n') #to standarize with old mac
               additional_info=additional_info.replace('\n', '\\n') 
               
               dob = request.form.get('dob')
@@ -79,8 +85,8 @@ def account_page():
               
               other_topics = request.form.get('other_topics')      
   
-              other_topics=other_topics.replace('\r\n', '\n') #para uniformizar con windows'
-              other_topics=other_topics.replace('\r', '\n') #para uniformizar con mac antiguo'
+              other_topics=other_topics.replace('\r\n', '\n') #to standarize with windows
+              other_topics=other_topics.replace('\r', '\n') #to standardize with old mac
               other_topics=other_topics.replace('\n', '\\n') 
                        
               other_topics = other_topics.split(', ')
@@ -127,7 +133,7 @@ def account_page():
               
        return render_template('profile.html', user=user_data, topics=topics)
   
-      
+#the function below has the objective of processing user topics to determine them either as matched or unmatched topics      
 def user_Topics_function(user_data,topicsList):
         user_topics_str = user_data.get('Topics of Interest')  
        
@@ -152,12 +158,13 @@ def user_Topics_function(user_data,topicsList):
               topic = topic.replace('\\n', '\n')
               unmatched_topics.append(topic)  
         
-        # Actualizar datos del usuario
+        #updates the user data 
         user_data['Matched Topics'] = matched_topics        
         user_data['Other Topics'] = unmatched_topics           
         return user_data           
 
-
+#the fuction below had the goal of managing consultaitons on the user profile 
+#it does such by retrieving another users data and displaying it
 @account_bp.route('/account_page/Consult', methods=['POST'])
 def account_page_consult():
   collaborator_email = request.form.get('collaborator_email')
@@ -177,7 +184,9 @@ def account_page_consult():
   except:
     pass
 
-
+#function below is meant to handle the uploads of CVs
+#moreover, it also processes the file using summarise_pdf
+#finally, it returns a summarized description
 @account_bp.route('/upload_cv', methods=['POST'])
 def upload_cv():
     if 'cv' not in request.files:

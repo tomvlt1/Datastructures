@@ -1,3 +1,7 @@
+#this file should manage user authorization and registration functionalities
+#it includes routes for rendering the login and registration pages
+#verifying user credentitals, managing a session's data, and lastly saving the new user data
+
 import hashlib
 from flask import Blueprint, render_template, request, redirect, session, url_for
 from userclass import User 
@@ -6,10 +10,14 @@ from validation import  validation_function
 
 login_bp = Blueprint('login', __name__)
 
+# the function below is able to render the login page template,
+#where user can enter their credentials
 @login_bp.route('/login_page')
 def login_page():
     return render_template('login.html')
 
+#the function below should handle user login by verifying credentials against stored user data
+# in the case it is valid, it sets session variables and redirects to the appropriate page.
 @login_bp.route('/submit_login', methods=['POST'])
 def login():
     email = request.form['email']
@@ -35,6 +43,9 @@ def login():
     error_message = "Invalid login credentials. Please check your email and password."
     return render_template('login.html', error_message=error_message)
 
+# this last function's goal is to manage user registration by collecing form data, validating this data
+# finally saving this data in a csv.
+# in the case validation fails, it re-renders the registration page with an error message
 @login_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':

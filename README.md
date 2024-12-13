@@ -12,12 +12,10 @@ Assuming we have made it public or have shared it:
 
 ```git clone https://github.com/tomvlt1/Datastructures```
 
-Then navigate to the app folder within the Datastructures folder
 
-``` cd Datastructures/app ```
 
 ## ⬇️ Imports 
-This project was primarily developed and tested on **macOS Monterey (Version 12.6.9)**. It should also work on other Unix-based systems or Windows with the required dependencies. 
+This project was primarily developed and tested on **macOS Monterey (Version 12.6.9), macOS Sequoia 15.1, Windows 11 Home 23H2**. It should also work on other Unix-based systems or Windows versions.
 
 
 This will ensures that you are using the correct python version and the correct libraries prior to running the project
@@ -30,11 +28,16 @@ or
 
 We used the following libraries and python version 
 
-```Python 3.12.1, Flask==3.1.0, openai==1.55.3, pandas==2.2.3, pdfminer==20191125, pdfminer.six==20240706, torch==2.2.2, transformers==4.46.2, numpy<2```
+```Python 3.12.1, Flask==3.1.0, openai==1.55.3, pandas==2.2.3, pdfminer==20191125, pdfminer.six==20240706, torch==2.2.2, transformers==4.46.2, numpy<2 gunicorn==21.2.0```
 
 
 
 ## 💻 Usage
+
+ navigate to the app folder within the Datastructures folder
+
+``` cd Datastructures/app ```
+
 ``` python3 main.py ```
 
 or 
@@ -72,16 +75,19 @@ To fully test all the user features we have created a step by step guide. This i
     c. **Look for a Mentor**: Perhaps you want someone more experienced to give you some tips for a certain industry you are looking to break into.
     ![Home](app/static/images/ment.png)
 6. **Searching**:
-
+    ![Home](app/static/images/before.png)
     a. **Filters**, first remove out any section of people or projects that you are not interested in.
     
     b.**Interest**, input whichever specific subjects or degree or position you are looking for and our word embedding technology will recommend the people and projects that are closest to your desires. You will see the match value displayed to you.
+   ![Home](app/static/images/after.png)
 
-7. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
+    
 
-8. **Enjoy!**
+8. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
 
-9. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
+9. **Enjoy!**
+
+10. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
 
 ## 📐 High Level Overview of the architecture
 

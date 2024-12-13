@@ -1,3 +1,8 @@
+# this file should define the collaborators blueprint which is meant to administer
+# the displaying as well as filtering of collaborator data.
+# this file englobes functionalities for displaying the full list of collaborators
+# and moreover handling search queries for collaborators based on user input
+
 from flask import Blueprint, render_template, request, jsonify
 from Filter import filter_data, filter_data_fullname
 from Display import AddSortValue
@@ -5,6 +10,8 @@ from userclass import User
 
 collaborators_bp = Blueprint('collaborators', __name__)
 
+# the function below manages GET and POST requests to display and filter collaborators
+# given specified filters
 @collaborators_bp.route('/', methods=['GET', 'POST'])
 def collaborators():
     try:
@@ -46,7 +53,9 @@ def collaborators():
         
         # Return an error response if something goes wrong
         return jsonify({'error': 'An unexpected error occurred'}), 500
-    
+
+# the function below is meant to handle the seach functionality for collaborators
+# also filtering and displaying collaborators based on search query
 @collaborators_bp.route('/search_collaborators', methods=[ 'POST'])
 def search_collaborators():
     try:

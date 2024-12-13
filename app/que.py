@@ -1,8 +1,11 @@
+#This file is used to create a priority queue that we will use to sort the Users or projects in tems of their sorting value.
+
 import heapq
 from itertools import count
 import pandas as pd
 
 class PriorityQueue:
+    #initialized the proprity queue class with its methods.
     def __init__(self):
         self.heap = []
         self.counter = count()  # Unique sequence count
@@ -23,6 +26,7 @@ class PriorityQueue:
 
 
 class DataFramePrioritySorter:
+    #Initializes the class that uses the priority queue to actually sort the data.
     def __init__(self, dataframe, sort_column):
         if sort_column not in dataframe.columns:
             raise ValueError(f"Column '{sort_column}' does not exist in the DataFrame.")

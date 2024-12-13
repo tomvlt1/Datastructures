@@ -1,5 +1,7 @@
+#This file's purpose is to filter projects based on the attributes specifed by the user when inputing data in the filters interface
 import datetime
 
+#This functions responsible for the filtedng of the data, it goest throguh all possible projects and it checks if the project within the bounrureis specified by the user, if the project tods not match, the element does not move on to be displayed, because the loop "breaks"that itteration.  
 def filter_projects(filters, data):
     filtered_data = []
     
@@ -66,7 +68,9 @@ def filter_projects(filters, data):
             filtered_data.append(project)
     
     return filtered_data
-
+    
+#This project function filters by project name, as in weather or not an observation matches the name that is being searched for
+#The function starts by standardizing the names of each proect and compares them to one another if they do match the data proceeds to be displayed the user. 
 def filter_data_fullname(fullname, data):
     filtered_data = []
     #we are looping through each user in the data list

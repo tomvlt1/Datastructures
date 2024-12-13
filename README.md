@@ -12,9 +12,7 @@ Assuming we have made it public or have shared it:
 
 ```git clone https://github.com/tomvlt1/Datastructures```
 
-Then navigate to the app folder within the Datastructures folder
 
-``` cd Datastructures/app ```
 
 ## ⬇️ Imports 
 This project was primarily developed and tested on **macOS Monterey (Version 12.6.9), macOS Sequoia 15.1, Windows 11 Home 23H2**. It should also work on other Unix-based systems or Windows versions.
@@ -35,6 +33,11 @@ We used the following libraries and python version
 
 
 ## 💻 Usage
+
+ navigate to the app folder within the Datastructures folder
+
+``` cd Datastructures/app ```
+
 ``` python3 main.py ```
 
 or 

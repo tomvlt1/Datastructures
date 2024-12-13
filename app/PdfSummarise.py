@@ -1,11 +1,11 @@
 import openai
-from pdfminer.high_level import extract_text
+from pdfminer.high_level import extract_text #this library will be used to extract the text from the PDF
 
 
 
 def summarise_pdf(file):
     text = extract_text(file) #extract the content from the CV literally as it was given
-    #plz dont steal my key toni :( - thomas
+    #plz dont steal my key toni :( - thomas - nevermind OpenAI shut it down after the github was made public
     key = "" 
     client = openai.OpenAI(api_key=key)
     example = """As a student at IE University, I am pursuing a double degree in Business Management and Data Science, combining technical know-how with business insights. I am passionate about applying data-driven solutions to real-world problems and exploring the intersection of finance, technology, and sustainability. 
@@ -21,8 +21,8 @@ I have gained hands-on experience in various domains, such as M&A, digital strat
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
+            model="gpt-4o", #using 4o, the most powerful model and pretty cheap
+            messages=[ 
                 {"role": "system", "content": prompt}
             ]
         )

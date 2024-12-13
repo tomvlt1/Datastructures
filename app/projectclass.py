@@ -1,3 +1,11 @@
+# This file is used to define a Project class for managing project's data. The functionalities it creates are:
+# - Storing project information (name, admin, keywords, stage, language, etc.).
+# - Validating the project stage and language.
+# - Checking if the admin (project owner) exists as a user.
+# - Saving and updating project data in our database.
+# - Loading project data from the database.
+# - Implementing search functionality using binary search on project names.
+
 import csv
 from userclass import User 
 import pandas as pd
@@ -18,9 +26,8 @@ class Project:
         positions_needed,
         sort_value,
         id_project
-     
     ):
-
+        # Initializes a Project instance with provided details.
         self.project_name = project_name
         self.admin = admin
         self.keywords = keywords
@@ -31,25 +38,29 @@ class Project:
         self.number_of_people = number_of_people
         self.completion_estimate_months = completion_estimate_months
         self.start_date = start_date
-        self.sort_value=sort_value
-        self.id_project=id_project
+        self.sort_value = sort_value
+        self.id_project = id_project
    
     def validate_project_stage(self):
+        # Validates that the project stage is one of the recognized stages.
         valid_stages = ["Planning", "Development", "Testing", "Deployment", "Completed"]
         return self.project_stage in valid_stages
 
     def validate_language_spoken(self):
+        # Validates that the language spoken field is not empty.
         return bool(self.language_spoken.strip())
    
     def admin_exists(self):
+        # Checks if the admin's email exists in the user database.
         user_data = User.load_all_user_data()
         for user in user_data:
-            if user["Email"] ==self.admin:
+            if user["Email"] == self.admin:
                 return True 
         return False  
 
-    
     def save_to_csv(self):
+        # Saves or updates the project's data into our project database'.
+        # If the project already exists, it updates its record if not, creates a new record.
         fieldnames = [
             "Project Name", "Admin", "Number of People", "Keywords",
             "Project Stage", "Language Spoken", "Start Date",
@@ -65,7 +76,7 @@ class Project:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if int(row["id_project"]) == int(self.id_project):
-                        # Si el proyecto ya existe, lo actualizamos
+                        # If the project already exists, update it.
                         project_exists = True
                         row["Project Name"] = self.project_name
                         row["Admin"] = self.admin
@@ -79,12 +90,13 @@ class Project:
                         row["Positions Needed"] = self.positions_needed
                         row['Sort Value'] = self.sort_value
                         row["id_project"] = self.id_project
-                    projects.append(row)  # Agregamos el proyecto al listado
+                    projects.append(row)
         except FileNotFoundError:
+            # If the file does not exist, it will be created below.
             pass
 
         if not project_exists:
-            # Si el proyecto no existía, lo agregamos como nuevo
+            # If the project does not exist, create it.
             projects.append({
                 "Project Name": self.project_name,
                 "Admin": self.admin,
@@ -106,19 +118,19 @@ class Project:
             writer.writerows(projects) 
 
     @staticmethod
-    def load_all_projects_data(UserEmail=None):      
+    def load_all_projects_data(UserEmail=None):
+        # Loads all projects or filters them by admin email if UserEmail is provided.
         projects = []
         try:
             with open("generated_project_database.csv", mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
-                if UserEmail==None or UserEmail=='':       
+                if UserEmail is None or UserEmail == '':
                     for row in reader:
-                        projects.append(row) 
+                        projects.append(row)
                 else:
-                    # Loop through each row in the CSV
+                    # If an admin email is provided, return only that admin's projects.
                     for row in reader:
-                        # Check if the 'Email' field is not empty and matches the filter 
-                        if row["Admin"].lower().strip()==UserEmail.lower().strip():
+                        if row["Admin"].lower().strip() == UserEmail.lower().strip():
                             projects.append(row)               
         except FileNotFoundError:
             pass
@@ -126,66 +138,52 @@ class Project:
 
     @staticmethod
     def get_project_data_from_csv(id_project):
+        # Retrieves and returns a project's data from the CSV by its id_project.
         try:
             with open("generated_project_database.csv", mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if int(row["id_project"]) == int(id_project):
-                        return row  # Returns the project data
+                        return row
         except FileNotFoundError:
             pass
         return {}
     
     @staticmethod
-    #to binary search
-    def full_names(fullname):       
-        # Leer el archivo CSV
+    def full_names(fullname):
+        # Performs the binary search created below.
         df = pd.read_csv('generated_project_database.csv')         
-        # Crear la lista de nombres completos
         lst = [f"{df['Project Name'].iloc[i]}" for i in range(len(df["Project Name"]))]    
-        # Ordenar la lista
-        
         sorted_lst = User.alphabetical_priority_sort(lst)  
        
-        return User.binarysearch(sorted_lst,fullname)
-    @staticmethod
-   # Definir el mecanismo de ordenación
-    def alphabetical_priority_sort(values):
-        heapq.heapify(values)
+        return User.binarysearch(sorted_lst, fullname)
 
+    @staticmethod
+    def alphabetical_priority_sort(values):
+        # Sorts a list of project names alphabetically using a min-heap.
+        heapq.heapify(values)
         sorted_values = []
         while values:
             sorted_values.append(heapq.heappop(values))
-        
         return sorted_values
 
-    
     @staticmethod      
-    def binarysearch(fullnameslist,fullname):  
-            
-            # Validate the input list
-            if not isinstance(fullnameslist, list):
-                return 'No list was provided'
-            if not fullnameslist:
-                return 'The provided list is empty'    
-            # Binary search algorithm
-            start = 0
-            end = len(fullnameslist) - 1    
-            while start <= end:
-                mid = (start + end) // 2        
-                # Check if fullname is at the midpoint
-                if fullnameslist[mid] == fullname:
-                    return fullnameslist[mid]  # Return the fullname if found
-                # Adjust the search range
-                elif fullnameslist[mid] > fullname:
-                    end = mid - 1
-                else:
-                    start = mid + 1    
-            # Return None if not found
-            return None    
+    def binarysearch(fullnameslist, fullname):
+        # A binary search on a list of names to try to find the inputed project name.
+        # If it is found it will return the fullname if not, it will return None.
+        if not isinstance(fullnameslist, list):
+            return 'No list was provided'
+        if not fullnameslist:
+            return 'The provided list is empty'    
 
-   
-
-
-
-
+        start = 0
+        end = len(fullnameslist) - 1    
+        while start <= end:
+            mid = (start + end) // 2        
+            if fullnameslist[mid] == fullname:
+                return fullnameslist[mid]
+            elif fullnameslist[mid] > fullname:
+                end = mid - 1
+            else:
+                start = mid + 1    
+        return None    

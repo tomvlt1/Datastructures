@@ -1,3 +1,6 @@
+#This file is used to validate the user data and proyect data when the user is registering and when a new project is created.
+# This allows us to build a comprehensive error message to display to the user so he can input the required data in the correct way.
+
 from datetime import datetime
 
 def validation_function(user,vorigen):

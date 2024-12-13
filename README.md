@@ -72,16 +72,19 @@ To fully test all the user features we have created a step by step guide. This i
     c. **Look for a Mentor**: Perhaps you want someone more experienced to give you some tips for a certain industry you are looking to break into.
     ![Home](app/static/images/ment.png)
 6. **Searching**:
-
+    ![Home](app/static/images/before.png)
     a. **Filters**, first remove out any section of people or projects that you are not interested in.
     
     b.**Interest**, input whichever specific subjects or degree or position you are looking for and our word embedding technology will recommend the people and projects that are closest to your desires. You will see the match value displayed to you.
+   ![Home](app/static/images/after.png)
 
-7. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
+    
 
-8. **Enjoy!**
+8. **Reaching out**, you will be able to see an email address that you will be able to reach out to.
 
-9. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
+9. **Enjoy!**
+
+10. **Come back**,Return to the platform to update your information or re use the features to your hearts desire.
 
 ## 📐 High Level Overview of the architecture
 
